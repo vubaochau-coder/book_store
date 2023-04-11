@@ -8,122 +8,81 @@ class ChoBanPage extends StatefulWidget {
   State<ChoBanPage> createState() => _ChoBanPageState();
 }
 
-class _ChoBanPageState extends State<ChoBanPage> {
+class _ChoBanPageState extends State<ChoBanPage>
+    with SingleTickerProviderStateMixin {
   int selectedIndex = 0;
+  late TabController tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(
+      length: 6,
+      vsync: this,
+      initialIndex: selectedIndex,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Row(
+        child: Column(
           children: [
-            NavigationRail(
-              backgroundColor: Colors.white,
-              elevation: 1,
-              labelType: NavigationRailLabelType.all,
-              unselectedLabelTextStyle: const TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w400,
-                fontSize: 13,
+            Container(
+              color: Colors.grey[200],
+              child: TabBar(
+                controller: tabController,
+                isScrollable: true,
+                unselectedLabelColor: Colors.grey[400],
+                labelColor: Colors.white,
+                indicator: BoxDecoration(
+                  color: themeColor,
+                ),
+                onTap: (value) {
+                  setState(() {
+                    selectedIndex = value;
+                  });
+                },
+                padding: EdgeInsets.zero,
+                indicatorPadding: EdgeInsets.zero,
+                labelPadding: EdgeInsets.zero,
+                tabs: [
+                  myTab('images/Category/textbook.png', "S. Giáo khoa"),
+                  myTab('images/Category/book.png', 'Tiểu thuyết'),
+                  myTab('images/Category/comic.png', "Truyện tranh"),
+                  myTab('images/Category/bookchild.png', "Trẻ em"),
+                  myTab('images/Category/science.png', 'Khoa học'),
+                  myTab('images/Category/world-book-day.png', "Khác"),
+                ],
               ),
-              useIndicator: true,
-              indicatorColor: themeColor,
-              selectedLabelTextStyle: TextStyle(
-                color: themeColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 13,
-              ),
-              selectedIndex: selectedIndex,
-              onDestinationSelected: (value) {
-                setState(() {
-                  selectedIndex = value;
-                });
-              },
-              minWidth: 56,
-              destinations: [
-                NavigationRailDestination(
-                  icon: Image.asset(
-                    'images/Category/textbook.png',
-                    height: 32,
-                  ),
-                  label: const SizedBox(
-                    width: 56,
-                    child: Text(
-                      'S. giáo khoa',
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.fade,
-                    ),
-                  ),
-                ),
-                NavigationRailDestination(
-                  icon: Image.asset(
-                    'images/Category/book.png',
-                    height: 32,
-                  ),
-                  label: const SizedBox(
-                    width: 56,
-                    child: Text(
-                      'Tiểu thuyết',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                NavigationRailDestination(
-                  icon: Image.asset(
-                    'images/Category/comic.png',
-                    height: 32,
-                  ),
-                  label: const SizedBox(
-                    width: 56,
-                    child: Text(
-                      'Truyện tranh',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                NavigationRailDestination(
-                  icon: Image.asset(
-                    'images/Category/bookchild.png',
-                    height: 32,
-                  ),
-                  label: const SizedBox(
-                    width: 56,
-                    child: Text(
-                      'Trẻ em',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                NavigationRailDestination(
-                  icon: Image.asset(
-                    'images/Category/science.png',
-                    height: 32,
-                  ),
-                  label: const SizedBox(
-                    width: 56,
-                    child: Text(
-                      'Khoa học',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                NavigationRailDestination(
-                  icon: Image.asset(
-                    'images/Category/world-book-day.png',
-                    height: 32,
-                  ),
-                  label: const SizedBox(
-                    width: 56,
-                    child: Text(
-                      'Khác',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ],
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget myTab(String img, String text) {
+    return Container(
+      width: 98,
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: const BoxDecoration(
+        border: Border(
+          left: BorderSide(
+            color: Colors.grey,
+            width: 1,
+          ),
+        ),
+      ),
+      child: Tab(
+        height: 60,
+        icon: Image.asset(
+          img,
+          height: 32,
+          fit: BoxFit.contain,
+        ),
+        text: text,
       ),
     );
   }

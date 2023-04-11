@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IBOO</string>
+    <string name="facebook_app_id">1821382268248906</string>
+    <string name="fb_login_protocol_scheme">fb1821382268248906</string>
+    <string name="facebook_client_token">d50b165fe82defc630a177151de5fc89</string>
+</resources>

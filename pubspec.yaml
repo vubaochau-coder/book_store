@@ -41,6 +41,12 @@ dependencies:
   badges: ^3.0.2
   expandable_text: ^2.3.0
 
+  firebase_auth: ^4.3.0
+  firebase_core: ^2.8.0
+  firebase_storage: ^11.0.16
+  google_sign_in: ^6.0.2
+  flutter_facebook_auth: ^5.0.8
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
