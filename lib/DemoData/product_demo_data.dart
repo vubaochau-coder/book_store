@@ -730,4 +730,303 @@ class ProductDemoData {
       images: 'other_dx008',
     ),
   ];
+
+  static List<ProductDemoData> demoBt005Datas = [
+    ProductDemoData(
+      title: 'Lưu Thông Máu Tốt Hóa Giải Bách Bệnh',
+      type: 'bt005',
+      description:
+          'Ngay từ tiêu đề sách, tác giả Akiyoshi Horie khẳng định việc lưu thông máu có thể hoá giải bách bệnh. Điều đó có thật không? Liệu rằng dòng chảy âm thầm của máu có thật sự tạo ra tác động ở cả mặt thể chất lẫn tinh thần?',
+      author: 'Akiyoshi Horie',
+      publisher: 'NXB Công Thương',
+      publishingYear: '2021',
+      price: 99000,
+      discount: 0.25,
+      images: 'science_dx001',
+    ),
+    ProductDemoData(
+      title: 'Cơ Thể Tự Chữa Lành: Phục Hồi Tuyến Giáp',
+      type: 'bt005',
+      description:
+          '“Theo ý kiến chuyên môn của tôi, có lẽ, cứ 10 người Mỹ thì có 7 người mắc bệnh tuyến giáp. Bằng cách đọc cuốn sách quý giá này, bạn sẽ có thêm nhiều hiểu biết sâu sắc về những chẩn đoán của mình và thu được thông tin cần thiết để bệnh tật không trầm trọng hơn. Sau khi đọc cuốn Cơ thể tự chữa lành – Phục hồi tuyến giáp của Anthony, tôi rõ ràng đã có thêm nhiều thông tin và giải pháp để áp dụng cho những ca bệnh phức tạp. Thật vậy, Anthony đã vô cùng chính xác khi viết rằng, không phải mọi bệnh nhân đều phản ứng với  nội tiết tố tuyến giáp theo cách chúng ta dự đoán hay hy vọng.”\n— Bác sĩ Prudence Hall, nhà sáng lập và giám đốc y khoa tại The Hall Center',
+      author: 'Anthony William',
+      publisher: 'NXB Thanh Niên',
+      publishingYear: '2021',
+      price: 180000,
+      discount: 0.25,
+      images: 'science_dx002',
+    ),
+    ProductDemoData(
+      title: 'Cơ Thể Tự Chữa Lành: Giải Cứu Gan',
+      type: 'bt005',
+      description:
+          'Cơ thể tự chữa lành - Giải cứu gan là cuốn sách tiếp theo trong bộ sách Cơ thể tự chữa lành của tác giả có sách bán chạy số 1 theo New York Times bình chọn: Anthony William. Trong tác phẩm mới này, ông sẽ hé mở bức màn bí mật về đặc điểm, cơ chế hoạt động và những điều bí ẩn xoay quanh lá gan của con người.',
+      author: 'Anthony William',
+      publisher: 'NXB Thanh Niên',
+      publishingYear: '2021',
+      price: 250000,
+      discount: 0.25,
+      images: 'science_dx003',
+    ),
+    ProductDemoData(
+      title: 'Cơ Thể Tự Chữa Lành',
+      type: 'bt005',
+      description:
+          'Cơ thể tự chữa lành tiết lộ nguyên nhân gốc rễ của nhiều căn bệnh mà các cộng đồng y tế còn nhầm lẫn hoặc chưa hiểu hết. Qua cuốn sách, tác giả đưa ra những phương pháp hoàn toàn tự nhiên để chữa lành rất nhiều căn bệnh đang hành hạ vô số người trong chúng ta, như bệnh Lyme, đau xơ cơ, mệt mỏi tuyến thượng thận, mệt mỏi mạn tính, mất cân bằng nội tiết tố, v.v... Hơn thế nữa, tác giả còn cung cấp nhiều giải pháp hồi phục tinh thần và linh hồn mỗi người, sau một thời gian dài phải chịu đựng cơn bệnh quái ác giằng xé. ',
+      author: 'Anthony William',
+      publisher: 'NXB Thanh Niên',
+      publishingYear: '2020',
+      price: 160000,
+      discount: 0.25,
+      images: 'science_dx004',
+    ),
+    ProductDemoData(
+      title: 'Cơ Thể Tự Chữa Lành: Thực Phẩm Thay Đổi Cuộc Sống',
+      type: 'bt005',
+      description:
+          'Cơ thể tự chữa lành: Thực phẩm thay đổi cuộc sống - Thần dược đến từ trái cây và rau củ giúp chúng ta tăng nhận thức và có cái nhìn mới về những loại trái cây và rau củ -  những tinh túy mà thiên nhiên đã ban tặng cho chúng ta. Đối với mỗi loại thực phẩm được liệt kê trong cuốn sách, tác giả sẽ kèm theo một danh sách các căn bệnh và triệu chứng mà thứ trái cây hoặc rau củ đó sẽ giúp giảm nhẹ tình trạng bệnh, đồng thời chỉ ra rất nhiều lợi ích của chúng trong việc hỗ trợ về mặt tinh thần và cảm xúc. Ngoài ra, còn có những công thức các món ăn ngon lành và dễ làm xuyên suốt cuốn sách.',
+      author: 'Anthony William',
+      publisher: 'NXB Thanh Niên',
+      publishingYear: '2020',
+      price: 185000,
+      discount: 0.25,
+      images: 'science_dx005',
+    ),
+    ProductDemoData(
+      title: 'Cơ Thể Tự Chữa Lành - Thanh Lọc Để Phục Hồi',
+      type: 'bt005',
+      description:
+          'Nếu bạn nghĩ rằng mình không cần phải thanh lọc - nếu bạn chắc chắn rằng bạn không thể chứa bất kỳ độc tố nào trong cơ thể - hãy nghĩ lại. Trong thế giới ngày nay, có những chất độc và mầm bệnh đe dọa sức khỏe của chúng ta bắt đầu từ trước khi chúng ta được sinh ra, và chúng tiếp tục kìm hãm chúng ta khi chúng ta gặp phải chúng trong cuộc sống hàng ngày.Thanh lọc là một công cụ quan trọng để chống lại những gánh nặng này - miễn là bạn thực hiện đúng cách.',
+      author: 'Anthony William',
+      publisher: 'NXB Thanh Niên',
+      publishingYear: '2022',
+      price: 295000,
+      discount: 0.25,
+      images: 'science_dx006',
+    ),
+    ProductDemoData(
+      title: 'Cơ Thể Tự Chữa Lành: Nước Ép Cần Tây',
+      type: 'bt005',
+      description:
+          'Cuốn sách tập trung bàn về bản chất, công dụng của nước ép cần tây trong việc điều trị bệnh và phục hồi sức khỏe. Đây là phương pháp đã được vô số người áp dụng và mang lại những hiệu quả vô cùng sâu sắc.',
+      author: 'Anthony William',
+      publisher: 'NXB Thanh Niên',
+      publishingYear: '2020',
+      price: 148000,
+      discount: 0.2,
+      images: 'science_dx007',
+    ),
+    ProductDemoData(
+      title: 'Giáo Trình Kỹ Thuật Lập Trình C Căn Bản & Nâng Cao',
+      type: 'bt005',
+      description:
+          'Cùng với sự phát triển như vũ bão của khoa học kỹ thuật nói chung, ngành Công nghệ Thông tin nói riêng đã và đang thâm nhập vào thực tiễn của mọi lĩnh vực trong cuộc sống và hoạt động của con người, trong đó công nghệ lập trình cũng không ngừng phát triển và ngày một ứng dụng rộng rãi hơn.Trong các ngôn ngữ lập trình, ngôn ngữ lập trình C từ lâu đã trở thành ngôn ngữ phổ biến vì tính đa dụng và linh hoạt của nó. Từ một nhà lập trình có tên tuổi cho đến một sinh viên công nghệ thông tin hoặc người yêu thích công nghệ thông tin đều không thể phủ nhận khả năng giải quyết vì xử lý nhanh một bài toán, từ đơn giản đến phức tạp, trên nhiều lĩnh vực khác nhau của ngôn ngữ C. Để đáp ứng nhu cầu mong muốn của nhiều bạn đọc, Nhà xuất bản Thông tin và Truyền thông trân trọng giới thiệu cuốn sách “Giáo trình Kỹ thuật lập trình C: Cơ sở và nâng cao” của PGS. TS Phạm Văn Ất, một tên tuổi quen thuộc với bạn đọc yêu thích ngôn ngữ C',
+      author: 'PGS. TS Phạm Văn Ất, TS. Đỗ Văn Tuấn',
+      publisher: 'NXB Thông Tin Và Truyền Thông',
+      publishingYear: '2022',
+      price: 135000,
+      discount: 0.15,
+      images: 'science_dx008',
+    ),
+    ProductDemoData(
+      title:
+          'Cẩm Nang Sử Dụng Máy Tính Khoa Học Casio Fx-880BTG Thế Hệ Mới Lớp 6-12',
+      type: 'bt005',
+      description:
+          'Bắt đầu từ năm 2021, chương trình Giáo dục phổ thông 2018 áp dụng cho lớp 6 và vào năm 2022 áp dụng cho lớp 10. Sự đổi mới này ban đầu gây ra rất nhiều lúng túng cho các nhà quản lý giáp dục, phụ huynh và toàn xã hội. Các hoạt động trải nhiệm thực tế, các chuyên đề trong chương trình là những nét rất mới và không kế thừa được các kinh nghiejm có sẵn vì đây là lần đầu tiên thực hiện chương trình này.\nQuyển sách Cẩm nang sử dụng máy tính khoa học Casio Fx-880BTG thế hệ mới Lớp 6-12 là tâm huyest của Ban lãnh đạo Công ty Bitex cùng Tiến sĩ Nguyễn Thái Sơn - Trưởng bộ phận nghiên cứu và Ứng dụng - Phòng phát triển Giáo dục - BITEX, nguyên trưởng khoa Toán Tin học - Đại học Sư Phạm thành phố Hồ Chí Minh ( 2000-2009), Nguyên Giám đốc - tổng biên tập nhà xuất bản ĐHSP Thành phố Hồ Chí Minh (2009-2011).',
+      author: 'TTNC ỨNG DỤNG GD',
+      publisher: 'Đại Học Sư Phạm Tp.HCM',
+      publishingYear: '2022',
+      price: 50000,
+      discount: 0.15,
+      images: 'science_dx009',
+    ),
+    ProductDemoData(
+      title: '100 Bí Ẩn Đáng Kinh Ngạc Về Vũ Trụ',
+      type: 'bt005',
+      description:
+          'Bạn nhỏ có biết rằng Trái Đất đã rất rộng lớn rồi, nhưng hơn một triệu Trái Đất... có thể nhét vừa vào Mặt Trời! \n- Có một đám mây ở không gian ngoài thiên thể... có vị giống dâu rừng?\n- Mặt trời không phải màu vàng đâu nhé, thật ra nó có màu trắng sáng đấy.\nHãy cùng khám phá những điều thú vị về vũ trụ qua các tiết lộ “đáng kinh ngạc” nhé!',
+      author: 'Alex Frith, Alice James, Jerome Martin',
+      publisher: 'NXB Thế Giới',
+      publishingYear: '2018',
+      price: 100000,
+      discount: 0.25,
+      images: 'science_dx010',
+    ),
+    ProductDemoData(
+      title: 'Khoa Học Khám Phá - Lược Sử Thời Gian (Tái Bản 2022)',
+      type: 'bt005',
+      description:
+          'Tò mò là một trong những phẩm chất bẩm sinh vô cùng quan trọng của chúng ta, và những vấn đề như Bản chất của vũ trụ là gì? Vũ trụ từ đâu ra? Chúng ta đến từ đâu và đóng vai trò gì trong vũ trụ? Có giới hạn cho sự nhận thức của con người không?... là những câu hỏi mà biết bao nhiêu thế hệ con người đã đặt ra dưới dạng này hoặc dạng khác từ khi bắt đầu biết nhận thức và suy ngẫm về thế giới này. Tất cả những vấn đề được nên ra trong tác phẩm Lược sử thời gian như Vũ trụ giãn nở, Lỗ đen, Nguồn gốc và số phận của vũ trụ, Mũi tên thời gian… đều là mong muốn của tác giả để phần nào trả lời được những câu hỏi đó, và hướng tới việc giải thích các giai đoạn lịch sử của toàn bộ vũ trụ.\nBằng ngôn ngữ sáng sủa, lập luận chặt chẽ rất thuyết phục, và sự dí dỏm rất riêng, tác giả Stephen Hawking đặt ra cho mình nhiệm vụ diễn tả những điều phức tạp nhất trong vật lý học một cách dễ hiểu đối với mọi người, không dùng bất kỳ công thức toán học nào, trừ phương trình nổi tiếng của Einstein: E = mc2',
+      author: 'Stephen Hawking',
+      publisher: 'NXB Trẻ',
+      publishingYear: '2022',
+      price: 115000,
+      discount: 0.15,
+      images: 'science_dx011',
+    ),
+    ProductDemoData(
+      title: 'Kỹ Thuật Sửa Chữa Ô Tô Cơ Bản (Tái Bản 2019)',
+      type: 'bt005',
+      description:
+          'Quyển sách cung cấp cho những người bắt đầu làm quen với ngành công nghiệp sửa chữa, bảo dưỡng ô tô. Cuốn sách được trình bày theo phương thức đơn giản, rõ ràng, dễ hiểu, dễ thực hành giúp người học nhanh chóng nắm vững được những khái niệm và kỹ năng thao tác cơ bản cho công việc sửa chữa và bảo dưỡng ô tô.\nCuốn sách cũng kết hợp với số lượng lớn hình ảnh minh họa tạo nên trực quan sinh động, phù hợp với cả người mới vào nghề và người thợ lâu năm.\nĐược biên soạn và tư vấn bởi nhiều chuyên gia và kỹ thuật viên lành nghề, cuốn sách sẽ trang bị cho bạn nhiều kiến thức hay và bổ ích.',
+      author: 'Đức Huy',
+      publisher: 'NXB Bách Khoa Hà Nội',
+      publishingYear: '2018',
+      price: 98000,
+      discount: 0.15,
+      images: 'science_dx012',
+    ),
+    ProductDemoData(
+      title: 'Sao Chúng Ta Lại Ngủ - Why We SLeep',
+      type: 'bt005',
+      description:
+          'Sao Chúng Ta Lại Ngủ - Why We SLeep\nLà cuốn sách về giấc ngủ đầu tiên được viết bởi chính một chuyên gia khoa học hàng đầu, giám đốc Trung tâm về Khoa học Giấc ngủ Con người của trường Đại học California, Berkeley, Sao chúng ta lại ngủ trở thành một cuộc khám phá mang tính đột phá về giấc ngủ, giải thích việc chúng ta có thể khai thác được sức mạnh biến đổi của giấc ngủ nhằm làm thay đổi cuộc sống của chúng ta trở nên tốt đẹp hơn như thế nào.',
+      author: 'Matthew Walker',
+      publisher: 'NXB Lao Động',
+      publishingYear: '2019',
+      price: 249000,
+      discount: 0.25,
+      images: 'science_dx013',
+    ),
+  ];
+
+  static List<ProductDemoData> demoBt004Datas = [
+    ProductDemoData(
+      title:
+          'Truyện Kể Bốn Mùa - Cơn Giận Chóng Qua - Giúp Con Kiểm Soát Cảm Xúc',
+      type: 'bt004',
+      description:
+          'Các bạn thân mến!\nThói quen đọc sách từ sớm không chỉ bồi dưỡng tâm hồn mỗi người mà còn giúp các bạn nhỏ hình thành những thói quen tích cực và phát triển kỹ năng học tập sau này\nTruyện kể bốn mùa là bộ sách mang lại cho độc giả nhí những trải nghiệm đọc sách thú vị. Làm quen với gấu Nono và những người bạn ở khu rừng vui vẻ, các bạn nhỏ sẽ được khám phá cuộc sống xung quanh mình và rút ra những bài học ý nghĩa, để rồi từ đó biết cách ứng biến khi gặp tình huống khó khăn, học cách kế bạn và sống hòa đồng, kiếm soát cảm xúc và vun đắp những tình cảm tốt đẹp..\nChúc các bạn có những khoảng thời gian đọc sách vui vẻ và phát hiện ra những món quà bất ngờ đằng sau mỗi truyện kể hấp dẫn này nhé!',
+      author: 'Marie Tibi, Fabien Öckto Lambert',
+      publisher: 'NXB Thanh Niên',
+      publishingYear: '2021',
+      price: 39000,
+      discount: 0.27,
+      images: 'child_dx001',
+    ),
+    ProductDemoData(
+      title:
+          'Những Lời Yêu Thương Của Con Trẻ Dành Tặng Các Mẹ - Vì Sao Tớ Yêu Mẹ (Tái Bản 2019)',
+      type: 'bt004',
+      description:
+          'Seri sách tranh “Vì sao tớ yêu...” được đông đảo bạn đọc nhỏ tuổi yêu thích và say mê đọc mỗi tối. Bằng tranh vẽ biểu cảm, thơ mộng về thế giới tự nhiên cùng lời văn êm ái, ngọt ngào như thơ, bộ sách “Vì sao tớ yêu...” là những lời yêu thương của con trẻ trên khắp thế giới dành tặng cho ông bà, cha mẹ mình...',
+      author: 'Daniel Howarth',
+      publisher: 'NXB Kim Đồng',
+      publishingYear: '2019',
+      price: 25000,
+      discount: 0.15,
+      images: 'child_dx002',
+    ),
+    ProductDemoData(
+      title: 'Mẹ Hỏi Bé Trả Lời 4-5 Tuổi (Tái Bản 2019)',
+      type: 'bt004',
+      description:
+          'Bộ sách nhỏ xinh “Mẹ hỏi bé trả lời” tập hợp những trò chơi phong phú, câu đố thông minh giúp bé và cha mẹ có thể “học mà chơi, chơi mà học” qua các chủ đề: cách ứng xử, câu hỏi về tự nhiên, không gian, phân biệt hình khối, ngôn ngữ, toán học...\nSách phân chia theo từng lứa tuổi với nội dung phong phú, những câu hỏi đáp hàm súc trí tuệ, hình ảnh dễ thương cùng nhiều phương pháp rèn luyện, hoàn toàn có thể khơi dậy trí thông minh và khả năng tiềm ẩn của bé.',
+      author: 'Yosbook, Xiao Li',
+      publisher: 'NXB Kim Đồng',
+      publishingYear: '2019',
+      price: 30000,
+      discount: 0.15,
+      images: 'child_dx003',
+    ),
+    ProductDemoData(
+      title: 'Ehon - Moi Moi',
+      type: 'bt004',
+      description:
+          'Năm 2017, "Moi Moi" ra đời sau 2 năm nghiên cứu bởi 5000 người, bao gồm Giáo sư Hiraki Kazuo cùng cộng sự tại Phòng Nghiên cứu trẻ sơ sinh thuộc Đại học Tokyo, và rất nhiều những ông bố, bà mẹ và em bé khác trên khắp Nhật Bản.\nNgay trong 7 tháng đầu tiên kể từ khi phát hành, "Moi Moi" bán ra hơn 100.000 bản. Theo thống kê, cứ 7 em bé Nhật Bản thì có 1 em bé đọc "Moi Moi". Cuốn Ehon này cũng liên tục đứng trong top những cuốn sách bán chạy nhất: #1 năm 2018 trên A, #1 “Ehon của năm 2018” của Rakuten Books,\nĐây thực sự là một cú hit lớn trong ngành Ehon Nhật Bản. Vậy cuốn ehon có điều gì mà có thể khiến các em bé ngừng khóc? - Đầu tiên, đó là hình ảnh minh họa. Em bé thường chú ý tới những hình vẽ có màu sắc rực rỡ, tươi sáng và hình dạng tương tự như khuôn mặt hay đôi mắt của con người. “Nhân vật chính” của Moi Moi đáp ứng được những điều kiện đó, và là hình minh họa được chính các em bé lựa chọn thông qua những cuộc thực nghiệm.',
+      author: 'Hiraki Kazuo',
+      publisher: 'NXB Lao Động Xã Hội',
+      publishingYear: '2019',
+      price: 39000,
+      discount: 0.15,
+      images: 'child_dx004',
+    ),
+    ProductDemoData(
+      title: 'Gieo Mầm Tính Cách - Tự Tin (Tái Bản 2019)',
+      type: 'bt004',
+      description:
+          'Tính cách của trẻ được hình thành từ rất sớm, thông qua sự giáo dục trong gia đình, qua những việc làm, lời nói, cách ứng xử của những người xung quanh. Nhưng ở độ tuổi nhỏ, không thể ép trẻ phát triển tính cách theo ý muốn của cha mẹ bằng lời dạy dỗ suông, bằng những bài học đạo đức khô khan, mà những tấm gương đẹp về tính cách đó phải được gieo vào trẻ từ từ bằng những câu chuyện sinh động, hấp dẫn.\nBộ sách Gieo mầm tính cách (12 tập) là tập hợp những câu chuyện như vậy. Mỗi tập là một hạt giống tính cách gieo vào trẻ những bài học Tử tế, Tha thứ, Kiên trì, Thật thà, Quan tâm, Yêu thương, Mạnh mẽ, Tự tin, Ước mơ, Lịch sự, Hiếu thảo, Công bằng bằng những câu chuyện cảm động, đầy ý nghĩa đáng để suy ngẫm.\nMỗi câu chuyện được trình bày kèm với một câu tục ngữ, thành ngữ, ca dao, danh ngôn nhằm nhấn mạnh thêm thông điệp mà người tuyển chọn muốn gửi gắm. Không chỉ vậy, những bài học sau mỗi câu chuyện được xây dựng gần gũi, nhiều gợi mở cho người đọc triển khai thêm nhiều suy nghĩ sau khi đọc truyện, so sánh, áp dụng thực tế và tự xét bản thân.',
+      author: 'Hà Yên',
+      publisher: 'NXB Trẻ',
+      publishingYear: '2019',
+      price: 32000,
+      discount: 0.15,
+      images: 'child_dx005',
+    ),
+    ProductDemoData(
+      title:
+          'Bách Khoa Tri Thức Về Khám Phá Thế Giới Cho Trẻ Em - Thiên Văn Học',
+      type: 'bt004',
+      description:
+          'Nội dung của bộ sách Bách Khoa Tri Thức Về Khám Phá Thế Giới Cho Trẻ Em đề cập đến rất nhiều những vấn đề mà trẻ muốn biết, từ vũ trụ, trái đất đến giới động vật, thực vật, từ khoa học kỹ thuật đến xã hội cuộc sống. Sách được minh họa bằng những bức tranh sinh động, ngôn ngữ của  đơn giản, dễ hiểu. Mỗi một chủ đề giúp trẻ nhận thức thế giới, tăng cường tri thức, nâng cao khả năng sáng tạo và trí tưởng tượng.\nNgoài ra, sách còn giới thiệu những trang web chứa đựng nhiều thông tin, trò chơi và hoạt động thú vị, cập nhật thêm các tin tức mới nhất về các chủ đề.',
+      author: 'Rachel Firth',
+      publisher: 'NXB Thế Giới',
+      publishingYear: '2018',
+      price: 45000,
+      discount: 0.27,
+      images: 'child_dx006',
+    ),
+    ProductDemoData(
+      title: 'Mẹ Hỏi Bé Trả Lời 1-2 Tuổi (Tái Bản 2019)',
+      type: 'bt004',
+      description:
+          'Bộ sách nhỏ xinh “Mẹ hỏi bé trả lời” tập hợp những trò chơi phong phú, câu đố thông minh giúp bé và cha mẹ có thể “học mà chơi, chơi mà học” qua các chủ đề: cách ứng xử, câu hỏi về tự nhiên, không gian, phân biệt hình khối, ngôn ngữ, toán học...\nSách phân chia theo từng lứa tuổi với nội dung phong phú, những câu hỏi đáp hàm súc trí tuệ, hình ảnh dễ thương cùng nhiều phương pháp rèn luyện, hoàn toàn có thể khơi dậy trí thông minh và khả năng tiềm ẩn của bé.',
+      author: 'Yosbook, Xiao Li',
+      publisher: 'NXB Kim Đồng',
+      publishingYear: '2019',
+      price: 30000,
+      discount: 0.15,
+      images: 'child_dx007',
+    ),
+    ProductDemoData(
+      title: 'Bé Khoẻ Mỗi Ngày: Nếu Không Rửa Tay Thì Sao?',
+      type: 'bt004',
+      description:
+          'Muốn phòng chống vi khuẩn, việc trước tiên ta cần làm chính là rửa tay sạch sẽ. Nhưng điều gì sẽ xảy ra khi bé Minh mải chơi không chịu rửa tay? Chúng mình cùng xem nhé!',
+      author: 'Hoàng Hoành, Kẹo Bông, Lan Phương',
+      publisher: 'NXB Kim Đồng',
+      publishingYear: '2021',
+      price: 30000,
+      discount: 0.15,
+      images: 'child_dx008',
+    ),
+    ProductDemoData(
+      title: 'Bé An Toàn Mỗi Ngày: Nếu Chẳng May Đi Lạc Thì Sao?',
+      type: 'bt004',
+      description:
+          'Hôm nay Minh và mẹ bắt tàu điện ngầm đi tham quan bảo tàng. Lúc lên tàu, do lơ đãng, không theo kịp mẹ nên Minh bị “rớt lại” bên ngoài khoang tàu. May sao, Minh đã bình tĩnh vận dụng những kiến thức đã học và tìm được mẹ. Minh đã làm thế nào nhỉ? Chúng mình cùng tìm hiểu nhé!',
+      author: 'Hoàng Hoành, Kẹo Bông',
+      publisher: 'NXB Kim Đồng',
+      publishingYear: '2021',
+      price: 35000,
+      discount: 0.15,
+      images: 'child_dx009',
+    ),
+    ProductDemoData(
+      title: '200 Miếng Bóc Dán Thông Minh - Bé Học Toán',
+      type: 'bt004',
+      description:
+          'Đây là cuốn sách được tuyển chọn và những trò chơi dán hình, giúp cho đôi tay của các em thêm linh hoạt, khéo léo, nhận biết được các hình để bóc và dán cho đúng chỗ...',
+      author: 'Ngọc Linh',
+      publisher: 'NXB Thanh Niên',
+      publishingYear: '2018',
+      price: 55000,
+      discount: 0.25,
+      images: 'child_dx010',
+    ),
+    ProductDemoData(
+      title:
+          'Truyện Kể Cho Bé Trước Giờ Đi Ngủ - Ngày Xửa Ngày Xưa: Cô Bé Quàng Khăn Đỏ',
+      type: 'bt004',
+      description:
+          'Truyện kể cho bé trước giờ đi ngủ - Ngày xửa ngày xưa mang đến những câu chuyện cổ tích quen thuộc đã trở thành kinh điển, tất cả được kể lại một cách ngắn gọn, súc tích cùng với hình ảnh minh họa sống động, nhiều màu sắc. Ở mỗi tập truyện, trẻ không chỉ được thả hồn vào thế giới cổ tích thần tiên, mà còn rút ra được cho mình nhiều bài học hay, đầy tính nhân văn.\nMỗi tập truyện còn có phần Câu hỏi gợi ý, Trò chơi thử thách, Bài học ý nghĩa kèm theo, giúp bố mẹ có thể tương tác nhiều hơn với trẻ trong khi kể chuyện. Qua những hoạt động gắn kết cùng bố mẹ, trẻ sẽ được vun đắp thêm tình cảm gia đình và lớn khôn lên mỗi ngày.',
+      author: 'Nhiều Tác Giả',
+      publisher: 'NXB Thanh Niên',
+      publishingYear: '2022',
+      price: 16000,
+      discount: 0.27,
+      images: 'child_dx011',
+    ),
+  ];
 }
