@@ -1,12 +1,13 @@
+import 'package:book_store/models/advertising_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 
 class BannerQuangCao extends StatefulWidget {
-  const BannerQuangCao(this.items, {super.key});
+  const BannerQuangCao({super.key, required this.datas});
 
-  final List<Widget> items;
+  final List<AdvertisingDataModel> datas;
 
   @override
   State<BannerQuangCao> createState() => _BannerQuangCaoState();
@@ -19,8 +20,14 @@ class _BannerQuangCaoState extends State<BannerQuangCao> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        CarouselSlider(
-          items: widget.items,
+        CarouselSlider.builder(
+          itemCount: widget.datas.length,
+          itemBuilder: (context, index, realIndex) {
+            return Image.network(
+              widget.datas[index].imgURL,
+              fit: BoxFit.cover,
+            );
+          },
           options: CarouselOptions(
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 5),
@@ -37,7 +44,7 @@ class _BannerQuangCaoState extends State<BannerQuangCao> {
         Positioned(
           bottom: 0,
           child: DotsIndicator(
-            dotsCount: widget.items.length,
+            dotsCount: widget.datas.length,
             axis: Axis.horizontal,
             position: _currentIndex.toDouble(),
             decorator: DotsDecorator(

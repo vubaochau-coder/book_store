@@ -1,15 +1,48 @@
-import 'package:book_store/CustomWidget/banner_quang_cao.dart';
+import 'package:book_store/CustomWidget/advertising_banner.dart';
 import 'package:book_store/CustomWidget/product_item.dart';
-import 'package:book_store/TrangChu/menu_category.dart';
-import 'package:book_store/TrangChu/thong_tin_san_pham_page.dart';
+import 'package:book_store/Home/bloc/home_bloc.dart';
+import 'package:book_store/Home/ui/category.dart';
+import 'package:book_store/Home/ui/product_detail_page.dart';
+import 'package:book_store/models/advertising_model.dart';
+import 'package:book_store/models/category_model.dart';
+import 'package:book_store/models/product_data_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TrangChuPage extends StatelessWidget {
-  const TrangChuPage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
   Widget build(BuildContext context) {
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoadingState) {
+          return homePageLoading();
+        } else if (state is HomeLoadingSuccessfulState) {
+          return homePageSuccess(state.products, state.advertisements);
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+
+  Widget homePageLoading() {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+
+  Widget homePageSuccess(
+      List<ProductDataModel> data, List<AdvertisingDataModel> adData) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -101,53 +134,27 @@ class TrangChuPage extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: BannerQuangCao(
-                  [
-                    Image.asset(
-                      'images/BookSales/bookSales_1.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                    Image.asset(
-                      'images/BookSales/bookSales_2.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                    Image.asset(
-                      'images/BookSales/bookSales_4.png',
-                      fit: BoxFit.cover,
-                    ),
-                    Image.asset(
-                      'images/BookSales/bookSales_5.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                    Image.asset(
-                      'images/BookSales/bookSales_6.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                    Image.asset(
-                      'images/BookSales/bookSales_7.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                    Image.asset(
-                      'images/BookSales/bookSales_8.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                    Image.asset(
-                      'images/BookSales/bookSales_9.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                    Image.asset(
-                      'images/BookSales/bookSales_10.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                  ],
+                  datas: adData,
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-              child: CategoriesMenu(),
-            ),
-            const SizedBox(
-              height: 4,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+              child: SizedBox(
+                height: 74,
+                child: ListView.builder(
+                  itemCount: Category.categories.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => null,
+                      child: CategorieItem(
+                        categoryData: Category.categories[index],
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
             Container(
               padding: const EdgeInsets.symmetric(
@@ -180,15 +187,19 @@ class TrangChuPage extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return const ThongTinSanPhamPage();
+                          return ProductDetailPage(
+                            productData: data[index],
+                          );
                         },
                       ),
                     );
                   },
-                  child: const ProductItem(),
+                  child: ProductItem(
+                    data: data[index],
+                  ),
                 );
               },
-              itemCount: 10,
+              itemCount: data.length,
             ),
           ],
         ),

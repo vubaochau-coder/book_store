@@ -1,8 +1,11 @@
+import 'package:book_store/models/product_data_model.dart';
 import 'package:book_store/theme.dart';
+import 'package:book_store/utils/convert.dart';
 import 'package:flutter/material.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({super.key});
+  final ProductDataModel data;
+  const ProductItem({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -23,23 +26,24 @@ class ProductItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         child: Column(
           children: [
-            Image.asset(
-              'images/product.png',
+            Image.network(
+              data.imageURL[0],
               height: 140,
               fit: BoxFit.contain,
             ),
             const SizedBox(
               height: 6,
             ),
-            const Text(
-              'Sách Tuổi Trẻ Đáng Giá Bao Nhiêu',
-              style: TextStyle(
+            Text(
+              data.title,
+              style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w400,
                 fontSize: 13,
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
+              softWrap: false,
             ),
             const SizedBox(
               height: 4,
@@ -55,7 +59,8 @@ class ProductItem extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '65.000',
+                  Converter.convertNumberToMoney(
+                      data.price - data.price * data.discount),
                   style: TextStyle(
                     color: themeColor,
                     fontSize: 18,
@@ -74,16 +79,16 @@ class ProductItem extends StatelessWidget {
                   color: Colors.amber[400],
                   size: 16,
                 ),
-                const Text(
-                  '4.9',
-                  style: TextStyle(
+                Text(
+                  data.star.toString(),
+                  style: const TextStyle(
                     fontSize: 12,
                   ),
                 ),
                 const Spacer(),
-                const Text(
-                  'Đã bán 1,5k',
-                  style: TextStyle(
+                Text(
+                  'Đã bán ${data.totalSold}',
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12,
                   ),

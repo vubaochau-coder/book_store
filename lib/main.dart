@@ -1,14 +1,15 @@
 import 'package:badges/badges.dart';
-import 'package:book_store/ChoBan/cho_ban_page.dart';
-import 'package:book_store/GioHang/gio_hang_page.dart';
-import 'package:book_store/TaiKhoan/tai_khoan_page.dart';
-import 'package:book_store/TinNhan/tin_nhan_page.dart';
-import 'package:book_store/TrangChu/trang_chu_page.dart';
+import 'package:book_store/Cart/cart_page.dart';
+import 'package:book_store/Home/bloc/home_bloc.dart';
+import 'package:book_store/Profile/tai_khoan_page.dart';
+import 'package:book_store/Notification/tin_nhan_page.dart';
+import 'package:book_store/Home/ui/home_page.dart';
 import 'package:book_store/Authentication%20Service/auth_service.dart';
 import 'package:book_store/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -26,13 +27,16 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    return MaterialApp(
-      debugShowCheckedModeBanner: true,
-      title: 'Book Store',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (context) => HomeBloc()..add(HomeLoadingEvent()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: true,
+        title: 'Book Store',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: AuthService().handleAuthState(),
       ),
-      home: AuthService().handleAuthState(),
     );
   }
 }
@@ -48,9 +52,9 @@ class _RootPageState extends State<RootPage> {
   int currentPage = 0;
 
   List<Widget> pages = const [
-    TrangChuPage(),
+    HomePage(),
     TinNhanPage(),
-    ChoBanPage(),
+    //ChoBanPage(),
     GioHangPage(),
     TaiKhoanPage(),
   ];
@@ -95,13 +99,13 @@ class _RootPageState extends State<RootPage> {
             ),
             title: const Text('Tin nhắn'),
           ),
-          SalomonBottomBarItem(
-            icon: const FaIcon(
-              FontAwesomeIcons.heart,
-              size: 18,
-            ),
-            title: const Text('Cho bạn'),
-          ),
+          // SalomonBottomBarItem(
+          //   icon: const FaIcon(
+          //     FontAwesomeIcons.heart,
+          //     size: 18,
+          //   ),
+          //   title: const Text('Cho bạn'),
+          // ),
           SalomonBottomBarItem(
             icon: const Badge(
               badgeContent: Text(

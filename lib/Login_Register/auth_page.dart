@@ -14,6 +14,7 @@ class AuthenticationPage extends StatefulWidget {
 class _AuthenticationPageState extends State<AuthenticationPage> {
   final controller = PageController(initialPage: 0);
   final backgroundController = PageController(initialPage: 1);
+  int t = 9;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
