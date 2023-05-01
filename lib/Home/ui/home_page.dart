@@ -2,7 +2,7 @@ import 'package:book_store/CustomWidget/advertising_banner.dart';
 import 'package:book_store/CustomWidget/product_item.dart';
 import 'package:book_store/Home/bloc/home_bloc.dart';
 import 'package:book_store/Home/ui/category.dart';
-import 'package:book_store/Home/ui/product_detail_page.dart';
+import 'package:book_store/ProductDetail/ui/product_detail_page.dart';
 import 'package:book_store/models/advertising_model.dart';
 import 'package:book_store/models/category_model.dart';
 import 'package:book_store/models/product_data_model.dart';

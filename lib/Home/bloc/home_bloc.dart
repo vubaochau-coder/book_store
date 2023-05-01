@@ -3,7 +3,6 @@ import 'package:bloc/bloc.dart';
 import 'package:book_store/models/advertising_model.dart';
 import 'package:book_store/models/product_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:diacritic/diacritic.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -22,10 +21,24 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     List<ProductDataModel> productDatas = [];
     List<AdvertisingDataModel> advertisingDatas = [];
 
+    //final bookCollection = FirebaseFirestore.instance.collection('Book');
+    // try {
+    //   for (ProductDemoData ele in ProductDemoData.demoBt002Datas) {
+    //     await FirebaseFirestore.instance
+    //         .collection('Book')
+    //         .add(ele.toJson())
+    //         .then((value) => print('add success'))
+    //         .onError(
+    //             (error, stackTrace) => print('error: ' + error.toString()));
+    //   }
+    // } on Exception catch (e) {
+    //   print("add error: " + e.toString());
+    // }
+
     final allProductQuery = await FirebaseFirestore.instance
         .collection("Book")
         .orderBy('totalSold', descending: true)
-        // .limit(10)
+        .limit(10)
         .get();
     for (var ele in allProductQuery.docs) {
       List<String> imgUrls = [];

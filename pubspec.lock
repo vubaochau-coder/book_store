@@ -141,6 +141,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  email_validator:
+    dependency: "direct main"
+    description:
+      name: email_validator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.17"
   equatable:
     dependency: "direct main"
     description:
@@ -422,6 +429,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.4"
+  jumping_dot:
+    dependency: "direct main"
+    description:
+      name: jumping_dot
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.6"
   lints:
     dependency: transitive
     description:

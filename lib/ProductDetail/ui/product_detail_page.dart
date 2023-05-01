@@ -1,5 +1,5 @@
-import 'package:book_store/Home/ui/product_images.dart';
-import 'package:book_store/Home/ui/star_point.dart';
+import 'package:book_store/ProductDetail/ui/product_images.dart';
+import 'package:book_store/ProductDetail/ui/star_point.dart';
 import 'package:book_store/models/product_data_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';

@@ -9,9 +9,9 @@ class ProductDemoData {
   final String publishingYear;
   final double price;
   final double discount;
-  late int star;
-  late int totalSold;
-  late String key;
+  // late int star;
+  // late int totalSold;
+  // late String key;
   final String images;
 
   ProductDemoData({
@@ -24,11 +24,12 @@ class ProductDemoData {
     required this.price,
     required this.discount,
     required this.images,
-  }) {
-    star = 0;
-    totalSold = 0;
-    key = removeDiacritics('$title $author').toLowerCase();
-  }
+  });
+  //  {
+  //   star = 0;
+  //   totalSold = 0;
+  //   //key = removeDiacritics('$title $author').toLowerCase();
+  // }
 
   Map<String, dynamic> toJson() {
     return {
@@ -40,9 +41,9 @@ class ProductDemoData {
       'publishingYear': publishingYear,
       'price': price,
       'discount': discount,
-      'star': star,
-      'totalSold': totalSold,
-      'searchKey': key,
+      'star': 0,
+      'totalSold': 0,
+      'searchKey': removeDiacritics('$title $author').toLowerCase(),
       'images': images,
     };
   }
@@ -194,9 +195,6 @@ class ProductDemoData {
       discount: 0.25,
       images: 'book_dx012',
     ),
-  ];
-
-  static List<ProductDemoData> demoBt001Datas = [
     ProductDemoData(
       title: 'Bộ sách giáo khoa lớp 1',
       type: 'bt001',
@@ -337,9 +335,6 @@ class ProductDemoData {
       discount: 0.15,
       images: 'sgk_bo_12',
     ),
-  ];
-
-  List<ProductDemoData> demoBt003Datas = [
     ProductDemoData(
       title: 'Conan Hoạt Hình Màu - Bài Thơ Tình Thẫm Đỏ - Tập 2',
       type: 'bt003',
@@ -629,9 +624,6 @@ class ProductDemoData {
       discount: 0.1,
       images: 'shin_dx003',
     ),
-  ];
-
-  static List<ProductDemoData> demoBt006Datas = [
     ProductDemoData(
       title: 'Nghĩ Giàu & Làm Giàu (Tái Bản 2020)',
       type: 'bt006',
@@ -729,9 +721,6 @@ class ProductDemoData {
       discount: 0.15,
       images: 'other_dx008',
     ),
-  ];
-
-  static List<ProductDemoData> demoBt005Datas = [
     ProductDemoData(
       title: 'Lưu Thông Máu Tốt Hóa Giải Bách Bệnh',
       type: 'bt005',
@@ -889,9 +878,6 @@ class ProductDemoData {
       discount: 0.25,
       images: 'science_dx013',
     ),
-  ];
-
-  static List<ProductDemoData> demoBt004Datas = [
     ProductDemoData(
       title:
           'Truyện Kể Bốn Mùa - Cơn Giận Chóng Qua - Giúp Con Kiểm Soát Cảm Xúc',

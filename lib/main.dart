@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:book_store/Cart/cart_page.dart';
 import 'package:book_store/Home/bloc/home_bloc.dart';
-import 'package:book_store/Profile/tai_khoan_page.dart';
+import 'package:book_store/Profile/ui/tai_khoan_page.dart';
 import 'package:book_store/Notification/tin_nhan_page.dart';
 import 'package:book_store/Home/ui/home_page.dart';
 import 'package:book_store/Authentication%20Service/auth_service.dart';
