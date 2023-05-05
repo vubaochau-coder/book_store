@@ -4,7 +4,6 @@ import 'package:book_store/models/advertising_model.dart';
 import 'package:book_store/models/product_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -21,7 +20,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     List<ProductDataModel> productDatas = [];
     List<AdvertisingDataModel> advertisingDatas = [];
 
-    //final bookCollection = FirebaseFirestore.instance.collection('Book');
+    // final bookCollection = FirebaseFirestore.instance.collection('Book');
     // try {
     //   for (ProductDemoData ele in ProductDemoData.demoBt002Datas) {
     //     await FirebaseFirestore.instance
@@ -41,18 +40,26 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         .limit(10)
         .get();
     for (var ele in allProductQuery.docs) {
-      List<String> imgUrls = [];
-      String imgPath = ele.get('images');
-      var urlRef = await FirebaseStorage.instance
-          .ref()
-          .child("Book")
-          .child(imgPath)
-          .listAll();
-      for (var imgItem in urlRef.items) {
-        String downloadURL = await imgItem.getDownloadURL();
-        imgUrls.add(downloadURL);
-      }
-      productDatas.add(ProductDataModel.fromShapshot(ele, imgUrls));
+      // List<String> imgUrls = [];
+      // String imgPath = ele.get('images');
+      // var urlRef = await FirebaseStorage.instance
+      //     .ref()
+      //     .child("Book")
+      //     .child(imgPath)
+      //     .listAll();
+      // for (var imgItem in urlRef.items) {
+      //   String downloadURL = await imgItem.getDownloadURL();
+      //   imgUrls.add(downloadURL);
+      // }
+
+      // await FirebaseFirestore.instance
+      //     .collection('Book')
+      //     .doc(ele.id)
+      //     .update({'listURL': imgUrls});
+
+      productDatas.add(ProductDataModel.fromShapshot(
+        ele, /*imgUrls*/
+      ));
     }
 
     final adQuery =

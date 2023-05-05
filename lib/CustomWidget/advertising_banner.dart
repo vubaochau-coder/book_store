@@ -1,8 +1,10 @@
 import 'package:book_store/models/advertising_model.dart';
 import 'package:book_store/theme.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BannerQuangCao extends StatefulWidget {
   const BannerQuangCao({super.key, required this.datas});
@@ -23,9 +25,16 @@ class _BannerQuangCaoState extends State<BannerQuangCao> {
         CarouselSlider.builder(
           itemCount: widget.datas.length,
           itemBuilder: (context, index, realIndex) {
-            return Image.network(
-              widget.datas[index].imgURL,
+            return CachedNetworkImage(
+              imageUrl: widget.datas[index].imgURL,
               fit: BoxFit.cover,
+              placeholder: (context, url) {
+                return Shimmer.fromColors(
+                  baseColor: Colors.grey,
+                  highlightColor: Colors.white,
+                  child: const SizedBox(),
+                );
+              },
             );
           },
           options: CarouselOptions(
@@ -50,8 +59,8 @@ class _BannerQuangCaoState extends State<BannerQuangCao> {
             decorator: DotsDecorator(
               activeColor: themeColor,
               color: const Color.fromRGBO(224, 224, 224, 1),
-              size: const Size.square(8.0),
-              activeSize: const Size(24, 8),
+              size: const Size.square(6.0),
+              activeSize: const Size(24, 6),
               spacing: const EdgeInsets.all(4),
               activeShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(6),

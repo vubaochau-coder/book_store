@@ -14,9 +14,29 @@ class CustomListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      splashColor: themeColor.withAlpha(100),
       onTap: onPressed,
-      child: SizedBox(
-        height: 52,
+      child: Container(
+        //height: 52,
+        margin: const EdgeInsets.only(top: 3),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(6),
+          gradient: LinearGradient(
+            colors: [
+              themeColor,
+              Colors.white,
+            ],
+            stops: const [0.01, 0.01],
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 1,
+              offset: Offset(0, 1),
+            ),
+          ],
+        ),
         child: ListTile(
           horizontalTitleGap: 0,
           leading: Icon(
@@ -26,15 +46,15 @@ class CustomListTile extends StatelessWidget {
           ),
           title: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 15,
-              color: Colors.grey[700],
+              color: Colors.black,
             ),
           ),
-          trailing: Icon(
+          trailing: const Icon(
             Icons.arrow_forward_ios,
-            color: Colors.grey[700],
+            color: Colors.black,
             size: 14,
           ),
           dense: true,

@@ -1,7 +1,9 @@
 import 'package:book_store/models/product_data_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProductItem extends StatelessWidget {
   final ProductDataModel data;
@@ -26,10 +28,24 @@ class ProductItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         child: Column(
           children: [
-            Image.network(
-              data.imageURL[0],
+            CachedNetworkImage(
+              imageUrl: data.imageURL[0],
               height: 140,
               fit: BoxFit.contain,
+              placeholder: (context, url) {
+                return Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[200]!,
+                  child: Container(
+                    height: 140,
+                    margin: const EdgeInsets.symmetric(horizontal: 14),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                );
+              },
             ),
             const SizedBox(
               height: 6,

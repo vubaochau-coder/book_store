@@ -1,15 +1,28 @@
+import 'package:book_store/Category/ChildCategory/bloc/child_bloc.dart';
+import 'package:book_store/Category/ChildCategory/ui/child_category_page.dart';
+import 'package:book_store/Category/ComicCategory/bloc/comic_bloc.dart';
+import 'package:book_store/Category/ComicCategory/ui/comic_category_page.dart';
+import 'package:book_store/Category/LiteratureCategory/bloc/literature_bloc.dart';
+import 'package:book_store/Category/LiteratureCategory/ui/literature_category_page.dart';
+import 'package:book_store/Category/OtherCategory/bloc/other_bloc.dart';
+import 'package:book_store/Category/OtherCategory/ui/other_category_page.dart';
+import 'package:book_store/Category/SGKCategory/bloc/sgk_bloc.dart';
+import 'package:book_store/Category/SGKCategory/ui/sgk_category_page.dart';
+import 'package:book_store/Category/ScienceCategory/bloc/science_bloc.dart';
+import 'package:book_store/Category/ScienceCategory/ui/science_category_page.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChoBanPage extends StatefulWidget {
+class CategoryPage extends StatefulWidget {
   final int index;
-  const ChoBanPage({super.key, required this.index});
+  const CategoryPage({super.key, required this.index});
 
   @override
-  State<ChoBanPage> createState() => _ChoBanPageState();
+  State<CategoryPage> createState() => _CategoryPageState();
 }
 
-class _ChoBanPageState extends State<ChoBanPage>
+class _CategoryPageState extends State<CategoryPage>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
 
@@ -21,6 +34,15 @@ class _ChoBanPageState extends State<ChoBanPage>
       vsync: this,
       initialIndex: widget.index,
     );
+
+    BlocProvider.of<SgkBloc>(context).add(const SgkLoadEvent(options: 0));
+    BlocProvider.of<LiteratureBloc>(context)
+        .add(const LiteratureLoadEvent(options: 0));
+    BlocProvider.of<ComicBloc>(context).add(const ComicLoadEvent(options: 0));
+    BlocProvider.of<ChildBloc>(context).add(const ChildLoadEvent(options: 0));
+    BlocProvider.of<ScienceBloc>(context)
+        .add(const ScicenceLoadEvent(options: 0));
+    BlocProvider.of<OtherBloc>(context).add(const OtherLoadEvent(options: 0));
   }
 
   @override
@@ -28,7 +50,69 @@ class _ChoBanPageState extends State<ChoBanPage>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themeColor,
-        title: const Text('Danh mục sản phẩm'),
+        title: SizedBox(
+          height: 36,
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              color: Colors.white,
+            ),
+            padding: const EdgeInsets.only(
+              left: 8,
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.search,
+                  color: themeColor,
+                ),
+                const Text(
+                  'Tìm kiếm sản phẩm',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  width: 58,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 2,
+                    horizontal: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xffe65728),
+                        Color(0xffffe341),
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      backgroundColor: Colors.transparent,
+                      padding: EdgeInsets.zero,
+                    ),
+                    child: const Text(
+                      'Tìm',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         centerTitle: true,
         elevation: 0,
       ),
@@ -36,7 +120,7 @@ class _ChoBanPageState extends State<ChoBanPage>
         children: [
           Container(
             decoration: BoxDecoration(
-              color: themeColor,
+              color: Colors.transparent,
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
@@ -48,26 +132,32 @@ class _ChoBanPageState extends State<ChoBanPage>
             ),
             child: SafeArea(
               child: Container(
-                color: Colors.grey[200],
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(6),
+                    bottomRight: Radius.circular(6),
+                  ),
+                ),
                 child: TabBar(
                   controller: tabController,
                   isScrollable: true,
                   unselectedLabelColor: Colors.grey[400],
-                  labelColor: Colors.white,
+                  labelColor: themeColor,
                   indicator: BoxDecoration(
-                    color: themeColor,
+                    color: themeColor.withAlpha(30),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                      color: themeColor,
+                      width: 2,
+                    ),
                   ),
-                  // onTap: (value) {
-                  //   setState(() {
-                  //     selectedIndex = value;
-                  //   });
-                  // },
                   padding: EdgeInsets.zero,
                   indicatorPadding: EdgeInsets.zero,
                   labelPadding: EdgeInsets.zero,
                   tabs: [
                     myTab('images/Category/textbook.png', "S. Giáo khoa"),
-                    myTab('images/Category/book.png', 'Tiểu thuyết'),
+                    myTab('images/Category/book.png', 'Văn học'),
                     myTab('images/Category/comic.png', "Truyện tranh"),
                     myTab('images/Category/bookchild.png', "Trẻ em"),
                     myTab('images/Category/science.png', 'Khoa học'),
@@ -75,6 +165,19 @@ class _ChoBanPageState extends State<ChoBanPage>
                   ],
                 ),
               ),
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              children: const [
+                SGKCategoryPage(),
+                LiteratureCategoryPage(),
+                ComicCategoryPage(),
+                ChildCategoryPage(),
+                ScienceCategoryPage(),
+                OtherCategoryPage(),
+              ],
             ),
           ),
         ],
@@ -86,20 +189,13 @@ class _ChoBanPageState extends State<ChoBanPage>
     return Container(
       width: 98,
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: const BoxDecoration(
-        border: Border(
-          left: BorderSide(
-            color: Colors.grey,
-            width: 1,
-          ),
-        ),
-      ),
       child: Tab(
-        height: 60,
+        height: 54,
+        iconMargin: const EdgeInsets.only(bottom: 4),
         icon: Image.asset(
           img,
-          height: 32,
-          fit: BoxFit.contain,
+          height: 26,
+          fit: BoxFit.cover,
         ),
         text: text,
       ),

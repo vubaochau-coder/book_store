@@ -16,13 +16,14 @@ class OrderStatusButton extends StatelessWidget {
         children: [
           FaIcon(
             icon,
-            color: themeColor,
+            color: themeColor.withAlpha(250),
             size: 28,
           ),
           Text(
             text,
             style: const TextStyle(
               fontSize: 12,
+              fontWeight: FontWeight.w400,
             ),
           )
         ],

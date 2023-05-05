@@ -1,4 +1,3 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 
 Color themeColor = const Color(0xffe65728);
@@ -12,6 +11,14 @@ InputBorder textFieldBorder2 = OutlineInputBorder(
   borderRadius: BorderRadius.circular(16),
   borderSide: BorderSide(
     color: themeColor,
+    width: 1,
+  ),
+);
+
+InputBorder textFieldBorder3 = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(12),
+  borderSide: const BorderSide(
+    color: Colors.black,
     width: 1,
   ),
 );

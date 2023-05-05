@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProductImagesSlider extends StatefulWidget {
   const ProductImagesSlider({super.key, required this.imgUrls});
@@ -25,9 +27,23 @@ class _ProductImagesSliderState extends State<ProductImagesSlider> {
           child: CarouselSlider.builder(
             itemCount: widget.imgUrls.length,
             itemBuilder: (context, index, realIndex) {
-              return Image.network(
-                widget.imgUrls[index],
+              return CachedNetworkImage(
+                imageUrl: widget.imgUrls[index],
                 fit: BoxFit.fitHeight,
+                placeholder: (context, url) {
+                  return Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[200]!,
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      margin: const EdgeInsets.symmetric(horizontal: 0),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                },
               );
             },
             options: CarouselOptions(

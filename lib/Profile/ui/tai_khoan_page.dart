@@ -1,6 +1,7 @@
 import 'package:book_store/CustomWidget/custom_list_tile.dart';
 import 'package:book_store/Authentication%20Service/auth_service.dart';
 import 'package:book_store/CustomWidget/order_status_button.dart';
+import 'package:book_store/Profile/ui/change_info_page.dart';
 import 'package:book_store/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class TaiKhoanPage extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: Colors.grey[100],
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -97,6 +98,12 @@ class TaiKhoanPage extends StatelessWidget {
                                 ),
                                 const Spacer(),
                                 GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return const ChangeInfoPage();
+                                    }));
+                                  },
                                   child: FaIcon(
                                     size: 14,
                                     FontAwesomeIcons.penToSquare,
@@ -117,7 +124,7 @@ class TaiKhoanPage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-              elevation: 5,
+              elevation: 4,
               margin: const EdgeInsets.only(
                 top: 28,
               ),
@@ -186,72 +193,74 @@ class TaiKhoanPage extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 28,
-                  ),
-                  const Text(
-                    'Tài khoản của tôi',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 17,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  CustomListTile(
-                    title: 'Đã thích',
-                    leading: FontAwesomeIcons.heart,
-                    onPressed: () {},
-                  ),
-                  CustomListTile(
-                    title: 'Địa chỉ giao hàng',
-                    leading: Icons.edit_location_alt,
-                    onPressed: () {},
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  const Text(
-                    'Tổng quát',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 17,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  CustomListTile(
-                    title: 'Thay đổi mật khẩu',
-                    leading: Icons.vpn_key,
-                    onPressed: () {},
-                  ),
-                  CustomListTile(
-                    title: 'Trợ giúp',
-                    leading: Icons.help_outline,
-                    onPressed: () {},
-                  ),
-                  CustomListTile(
-                    title: 'Đăng xuất',
-                    leading: Icons.logout,
-                    onPressed: () {
-                      AuthService().signOut();
-                    },
-                  ),
-                ],
+            const SizedBox(
+              height: 28,
+            ),
+            const Text(
+              'Tài khoản của tôi',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 17,
               ),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            CustomListTile(
+              title: 'Đã thích',
+              leading: FontAwesomeIcons.heart,
+              onPressed: () {},
+            ),
+            CustomListTile(
+              title: 'Địa chỉ giao hàng',
+              leading: Icons.edit_location_alt,
+              onPressed: () {},
+            ),
+            const SizedBox(
+              height: 18,
+            ),
+            const Text(
+              'Tổng quát',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 17,
+              ),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            CustomListTile(
+              title: 'Thay đổi mật khẩu',
+              leading: Icons.vpn_key,
+              onPressed: () {},
+            ),
+            CustomListTile(
+              title: 'Trợ giúp',
+              leading: Icons.help_outline,
+              onPressed: () {},
+            ),
+            CustomListTile(
+              title: 'Đăng xuất',
+              leading: Icons.logout,
+              onPressed: () {
+                AuthService().signOut();
+              },
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Divider myDivider() {
+    return Divider(
+      color: themeColor,
+      endIndent: 12,
+      indent: 12,
+      height: 0,
+      thickness: 1,
     );
   }
 

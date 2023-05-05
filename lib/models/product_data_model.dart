@@ -29,8 +29,9 @@ class ProductDataModel {
       required this.imageURL});
 
   factory ProductDataModel.fromShapshot(
-      DocumentSnapshot<Map<String, dynamic>> documentSnapshot,
-      List<String> url) {
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot,
+    // List<String> url
+  ) {
     final data = documentSnapshot.data()!;
 
     return ProductDataModel(
@@ -45,7 +46,7 @@ class ProductDataModel {
       discount: double.parse(data['discount'].toString()),
       star: double.parse(data['star'].toString()),
       totalSold: int.parse(data['totalSold'].toString()),
-      imageURL: url,
+      imageURL: List.from(data['listURL']),
     );
   }
 }
