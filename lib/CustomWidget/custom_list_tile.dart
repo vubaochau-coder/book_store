@@ -17,8 +17,7 @@ class CustomListTile extends StatelessWidget {
       splashColor: themeColor.withAlpha(100),
       onTap: onPressed,
       child: Container(
-        //height: 52,
-        margin: const EdgeInsets.only(top: 3),
+        margin: const EdgeInsets.only(top: 4),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(6),

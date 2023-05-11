@@ -9,7 +9,8 @@ import 'package:book_store/Category/SGKCategory/bloc/sgk_bloc.dart';
 import 'package:book_store/Category/ScienceCategory/bloc/science_bloc.dart';
 import 'package:book_store/Home/bloc/home_bloc.dart';
 import 'package:book_store/ProductDetail/bloc/product_bloc.dart';
-import 'package:book_store/Profile/ui/tai_khoan_page.dart';
+import 'package:book_store/Profile/bloc/user_bloc.dart';
+import 'package:book_store/Profile/ui/profile_page.dart';
 import 'package:book_store/Notification/tin_nhan_page.dart';
 import 'package:book_store/Home/ui/home_page.dart';
 import 'package:book_store/Authentication%20Service/auth_service.dart';
@@ -40,14 +41,15 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => HomeBloc()..add(HomeLoadingEvent())),
         BlocProvider(create: (context) => ProductBloc()),
-        BlocProvider(create: (context) => CartBloc()..add(CartLoadingEvent())),
-        BlocProvider(create: (context) => MainBloc()..add(MainLoadingEvent())),
+        BlocProvider(create: (context) => CartBloc()),
+        BlocProvider(create: (context) => MainBloc()),
         BlocProvider(create: (context) => SgkBloc()),
         BlocProvider(create: (context) => LiteratureBloc()),
         BlocProvider(create: (context) => ComicBloc()),
         BlocProvider(create: (context) => ChildBloc()),
         BlocProvider(create: (context) => ScienceBloc()),
         BlocProvider(create: (context) => OtherBloc()),
+        BlocProvider(create: (context) => UserBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -75,11 +77,13 @@ class _RootPageState extends State<RootPage> {
     HomePage(),
     TinNhanPage(),
     GioHangPage(),
-    TaiKhoanPage(),
+    ProfilePage(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MainBloc, MainState>(
+      //bloc: BlocProvider.of<MainBloc>(context)..add(MainLoadingEvent()),
       builder: (context, state) {
         if (state is MainLoadingSuccessfulState) {
           return Scaffold(

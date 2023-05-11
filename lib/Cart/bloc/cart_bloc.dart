@@ -22,9 +22,35 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   FutureOr<void> cartLoadingEvent(
-      CartLoadingEvent event, Emitter<CartState> emit) {
+      CartLoadingEvent event, Emitter<CartState> emit) async {
+    // if (state is! CartLoadingSuccessfulState) {
+
+    // }
     emit(CartLoadingState());
+
     String userID = FirebaseAuth.instance.currentUser!.uid;
+    // List<CartItemModel> cartDatas = [];
+
+    // final cartQuery = await FirebaseFirestore.instance
+    //     .collection('User')
+    //     .doc(userID)
+    //     .collection('Cart')
+    //     .get();
+    // for (var ele in cartQuery.docs) {
+    //   String bookID = ele.get('productID');
+    //   final bookQuery =
+    //       await FirebaseFirestore.instance.collection('Book').doc(bookID).get();
+
+    //   String bookTitle = bookQuery.get('title');
+    //   double bookPrice = double.parse(bookQuery.get('price').toString());
+    //   double bookDiscount = double.parse(bookQuery.get('discount').toString());
+    //   String url = List.from(bookQuery.get('listURL'))[0];
+
+    //   cartDatas.add(CartItemModel.fromSnapshot(ele,
+    //       (bookPrice - bookPrice * bookDiscount), bookPrice, url, bookTitle));
+    // }
+
+    // emit(CartLoadingSuccessfulState(cartItems: cartDatas));
 
     FirebaseFirestore.instance
         .collection('User')

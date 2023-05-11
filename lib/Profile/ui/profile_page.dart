@@ -1,17 +1,37 @@
 import 'package:book_store/CustomWidget/custom_list_tile.dart';
 import 'package:book_store/Authentication%20Service/auth_service.dart';
 import 'package:book_store/CustomWidget/order_status_button.dart';
+import 'package:book_store/Profile/bloc/user_bloc.dart';
 import 'package:book_store/Profile/ui/change_info_page.dart';
+import 'package:book_store/Profile/ui/proflie_loading_page.dart';
 import 'package:book_store/theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class TaiKhoanPage extends StatelessWidget {
-  const TaiKhoanPage({super.key});
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        if (state is UserLoadingSuccessfulState) {
+          return userSuccessState(context, state);
+        } else if (state is UserLoadingState) {
+          return const ProfileLoadingPage();
+        } else {
+          return const Center(
+            child: Text('Something went wrong'),
+          );
+        }
+      },
+    );
+  }
+
+  Widget userSuccessState(
+      BuildContext context, UserLoadingSuccessfulState state) {
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -42,19 +62,20 @@ class TaiKhoanPage extends StatelessWidget {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: getPhotoUrl() != ""
-                            ? Image.network(
-                                getPhotoUrl(),
-                                fit: BoxFit.contain,
-                                width: 66,
-                                height: 66,
-                              )
-                            : Image.asset(
-                                'images/user.png',
-                                fit: BoxFit.contain,
-                                width: 66,
-                                height: 66,
-                              ),
+                        child: CachedNetworkImage(
+                          imageUrl: state.userModel.imgUrl,
+                          fit: BoxFit.contain,
+                          width: 66,
+                          height: 66,
+                          errorWidget: (context, url, error) {
+                            return Image.asset(
+                              'images/user.png',
+                              fit: BoxFit.contain,
+                              width: 66,
+                              height: 66,
+                            );
+                          },
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -72,7 +93,7 @@ class TaiKhoanPage extends StatelessWidget {
                               height: 14,
                             ),
                             Text(
-                              getNameUser(),
+                              state.userModel.name,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 17,
@@ -85,9 +106,6 @@ class TaiKhoanPage extends StatelessWidget {
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                const SizedBox(
-                                  width: 2,
-                                ),
                                 const Text(
                                   'Chỉnh sửa tài khoản',
                                   style: TextStyle(
@@ -252,31 +270,5 @@ class TaiKhoanPage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Divider myDivider() {
-    return Divider(
-      color: themeColor,
-      endIndent: 12,
-      indent: 12,
-      height: 0,
-      thickness: 1,
-    );
-  }
-
-  String getNameUser() {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.displayName!;
-    }
-    return "Username";
-  }
-
-  String getPhotoUrl() {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.photoURL!;
-    }
-    return "";
   }
 }

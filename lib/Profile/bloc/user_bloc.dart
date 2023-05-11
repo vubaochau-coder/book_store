@@ -9,7 +9,7 @@ part 'user_event.dart';
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  UserBloc() : super(UserInitial()) {
+  UserBloc() : super(UserLoadingState()) {
     on<UserLoadingEvent>(userLoadingEvent);
   }
 
@@ -25,15 +25,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       String name = user.displayName!;
       String photoURL = user.photoURL!;
 
-      final addressQuery = await FirebaseFirestore.instance
-          .collection("User")
-          .doc(uid)
-          .collection("Address")
-          .get();
-      for (var ele in addressQuery.docs) {
-        userAddress.add(ele.data()['address']);
+      final addressQuery =
+          await FirebaseFirestore.instance.collection("User").doc(uid).get();
+      if (addressQuery.exists) {
+        if (addressQuery.data() != null) {
+          if (addressQuery.data()!['address'] != null) {
+            userAddress = List.from(addressQuery.get('address'));
+          }
+        }
       }
-
       UserModel model = UserModel(
           id: uid, name: name, imgUrl: photoURL, address: userAddress);
 

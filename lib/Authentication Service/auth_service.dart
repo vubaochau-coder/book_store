@@ -1,7 +1,11 @@
+import 'package:book_store/Cart/bloc/cart_bloc.dart';
 import 'package:book_store/Login_Register/auth_page.dart';
+import 'package:book_store/Profile/bloc/user_bloc.dart';
+import 'package:book_store/bloc/main_bloc.dart';
 import 'package:book_store/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -11,6 +15,9 @@ class AuthService {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasData) {
+          BlocProvider.of<CartBloc>(context).add(CartLoadingEvent());
+          BlocProvider.of<MainBloc>(context).add(MainLoadingEvent());
+          BlocProvider.of<UserBloc>(context).add(UserLoadingEvent());
           return const RootPage();
         } else {
           return const AuthenticationPage();
