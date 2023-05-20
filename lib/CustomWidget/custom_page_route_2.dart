@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class PageRouteSlideTransition extends PageRouteBuilder {
+class PageRouteSlideTransition2 extends PageRouteBuilder {
   final Widget child;
 
-  PageRouteSlideTransition({
+  PageRouteSlideTransition2({
     required this.child,
   }) : super(pageBuilder: (context, animation, secondaryAnimation) => child);
 
@@ -12,7 +12,7 @@ class PageRouteSlideTransition extends PageRouteBuilder {
       Animation<double> secondaryAnimation, Widget child) {
     return SlideTransition(
       position: Tween<Offset>(
-        begin: const Offset(1, 0),
+        begin: const Offset(-1, 0),
         end: Offset.zero,
       ).animate(animation),
       child: child,

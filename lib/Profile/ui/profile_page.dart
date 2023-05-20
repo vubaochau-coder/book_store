@@ -1,5 +1,7 @@
+import 'package:book_store/AddressSetting/ui/address_setting.dart';
 import 'package:book_store/CustomWidget/custom_list_tile.dart';
 import 'package:book_store/Authentication%20Service/auth_service.dart';
+import 'package:book_store/CustomWidget/custom_page_route.dart';
 import 'package:book_store/CustomWidget/order_status_button.dart';
 import 'package:book_store/Profile/bloc/user_bloc.dart';
 import 'package:book_store/Profile/ui/change_info_page.dart';
@@ -233,7 +235,13 @@ class ProfilePage extends StatelessWidget {
             CustomListTile(
               title: 'Địa chỉ giao hàng',
               leading: Icons.edit_location_alt,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  PageRouteSlideTransition(
+                    child: const AddressSettingPage(),
+                  ),
+                );
+              },
             ),
             const SizedBox(
               height: 18,

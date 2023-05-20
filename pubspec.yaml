@@ -56,6 +56,7 @@ dependencies:
   jumping_dot: ^0.0.6
   cached_network_image: ^3.2.3
   shimmer: ^2.0.0
+  loading_animation_widget: ^1.2.0+4
   dropdown_button2: 
   intl_phone_number_input: 
   fluttertoast: 

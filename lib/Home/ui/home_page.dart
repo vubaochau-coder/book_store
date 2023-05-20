@@ -79,7 +79,11 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // Navigator.of(context).push(PageRouteSlideTransition(
+                      //     child: OrderBillPage(
+                      //         idTransaction: 'PyKvmucHV00Aw68w4fAj')));
+                    },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
                       backgroundColor: Colors.transparent,

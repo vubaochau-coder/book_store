@@ -1,7 +1,10 @@
 import 'package:book_store/Cart/bloc/cart_bloc.dart';
+import 'package:book_store/Checkout/ui/checkout_page.dart';
+import 'package:book_store/CustomWidget/custom_page_route.dart';
 import 'package:book_store/ProductDetail/bloc/product_bloc.dart';
 import 'package:book_store/ProductDetail/ui/product_images.dart';
 import 'package:book_store/ProductDetail/ui/star_point.dart';
+import 'package:book_store/models/cart_item_model.dart';
 import 'package:book_store/models/product_data_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
@@ -385,7 +388,22 @@ class ProductDetailPage extends StatelessWidget {
                       child: SizedBox(
                         height: 48,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(PageRouteSlideTransition(
+                                child: CheckoutPage(listProduct: [
+                              CartItemModel(
+                                id: '',
+                                bookID: productData.id,
+                                count: 1,
+                                price: productData.price -
+                                    productData.price * productData.discount,
+                                imgUrl: productData.imageURL[0],
+                                title: productData.title,
+                                isSelected: true,
+                                priceBeforeDiscount: productData.price,
+                              ),
+                            ], checkoutFromCart: false)));
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: themeColor,
                             shape: const RoundedRectangleBorder(

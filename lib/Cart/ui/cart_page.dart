@@ -1,7 +1,7 @@
 import 'package:book_store/Cart/bloc/cart_bloc.dart';
 import 'package:book_store/Cart/ui/cart_loading_page.dart';
-import 'package:book_store/Cart/ui/checkout_page.dart';
-import 'package:book_store/CustomWidget/cart_item.dart';
+import 'package:book_store/Checkout/ui/checkout_page.dart';
+import 'package:book_store/Cart/ui/cart_item.dart';
 import 'package:book_store/CustomWidget/custom_page_route.dart';
 import 'package:book_store/models/cart_item_model.dart';
 import 'package:book_store/theme.dart';
@@ -167,9 +167,10 @@ class GioHangPage extends StatelessWidget {
                   onPressed: () {
                     if (!isNoItemSelected(listCart)) {
                       Navigator.of(context).push(
-                        CustomPageRoute(
+                        PageRouteSlideTransition(
                           child: CheckoutPage(
                             listProduct: selectedList(listCart),
+                            checkoutFromCart: true,
                           ),
                         ),
                       );

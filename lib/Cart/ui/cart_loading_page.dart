@@ -1,4 +1,4 @@
-import 'package:book_store/CustomWidget/cart_item_loading.dart';
+import 'package:book_store/Cart/ui/cart_item_loading.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';

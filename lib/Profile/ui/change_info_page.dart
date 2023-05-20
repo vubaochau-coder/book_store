@@ -126,6 +126,7 @@ class ChangeInfoPage extends StatelessWidget {
                   height: 8,
                 ),
                 InternationalPhoneNumberInput(
+                  countries: const ['VN'],
                   onInputChanged: (PhoneNumber phoneNumber) {},
                   formatInput: true,
                   textFieldController: phoneController,

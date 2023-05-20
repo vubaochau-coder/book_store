@@ -22,3 +22,15 @@ InputBorder textFieldBorder3 = OutlineInputBorder(
     width: 1,
   ),
 );
+
+TextStyle text1 = const TextStyle(
+  color: Colors.black87,
+  fontSize: 14,
+  fontWeight: FontWeight.w400,
+);
+
+TextStyle text2 = const TextStyle(
+  color: Colors.black,
+  fontSize: 15,
+  fontWeight: FontWeight.w500,
+);

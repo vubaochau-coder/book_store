@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:book_store/AddressSetting/bloc/address_bloc.dart';
 import 'package:book_store/Cart/bloc/cart_bloc.dart';
 import 'package:book_store/Cart/ui/cart_page.dart';
 import 'package:book_store/Category/ChildCategory/bloc/child_bloc.dart';
@@ -7,7 +8,9 @@ import 'package:book_store/Category/LiteratureCategory/bloc/literature_bloc.dart
 import 'package:book_store/Category/OtherCategory/bloc/other_bloc.dart';
 import 'package:book_store/Category/SGKCategory/bloc/sgk_bloc.dart';
 import 'package:book_store/Category/ScienceCategory/bloc/science_bloc.dart';
+import 'package:book_store/Checkout/bloc/checkout_bloc.dart';
 import 'package:book_store/Home/bloc/home_bloc.dart';
+import 'package:book_store/OrderBill/bloc/bill_bloc.dart';
 import 'package:book_store/ProductDetail/bloc/product_bloc.dart';
 import 'package:book_store/Profile/bloc/user_bloc.dart';
 import 'package:book_store/Profile/ui/profile_page.dart';
@@ -39,7 +42,9 @@ class MyApp extends StatelessWidget {
     ]);
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => HomeBloc()..add(HomeLoadingEvent())),
+        BlocProvider(
+          create: (context) => HomeBloc()..add(HomeLoadingEvent()),
+        ),
         BlocProvider(create: (context) => ProductBloc()),
         BlocProvider(create: (context) => CartBloc()),
         BlocProvider(create: (context) => MainBloc()),
@@ -50,6 +55,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ScienceBloc()),
         BlocProvider(create: (context) => OtherBloc()),
         BlocProvider(create: (context) => UserBloc()),
+        BlocProvider(create: (context) => CheckoutBloc()),
+        BlocProvider(create: (context) => AddressBloc()),
+        BlocProvider(create: (context) => BillBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

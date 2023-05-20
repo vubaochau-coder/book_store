@@ -57,6 +57,8 @@ class CartItemModel extends Equatable {
     return {
       'productID': bookID,
       'count': count,
+      'price': price,
+      'priceBeforeDiscount': priceBeforeDiscount,
     };
   }
 }
