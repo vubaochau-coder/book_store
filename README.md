@@ -14,3 +14,19 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+Đồ Án 1
+Người thực hiện: Vũ Bảo Châu - 20521128
+    Khoa công nghệ phần mềm - UIT
+Thời gian thực hiện: 4 tháng
+
+***Note: Giao diện được tham khảo và lấy cảm hứng từ ứng dụng Fahasa và Shoppe
+
+State management:
+    + BloC
+
+Design pattern được áp dụng:
+    + Template method
+
+Backend:
+    + Firebase

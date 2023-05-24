@@ -7,6 +7,8 @@ class TransportModel extends Equatable {
   final String description;
   final double price;
   final bool isSelected;
+  final int min;
+  final int max;
 
   const TransportModel({
     required this.id,
@@ -14,6 +16,8 @@ class TransportModel extends Equatable {
     required this.description,
     required this.price,
     required this.isSelected,
+    required this.min,
+    required this.max,
   });
 
   factory TransportModel.fromSnapshot(
@@ -23,6 +27,8 @@ class TransportModel extends Equatable {
       name: snapshot.data()!['name'],
       description: snapshot.data()!['description'],
       price: double.parse(snapshot.data()!['price'].toString()),
+      min: int.parse(snapshot.data()!['min'].toString()),
+      max: int.parse(snapshot.data()!['max'].toString()),
       isSelected: isSelected,
     );
   }

@@ -32,6 +32,9 @@ class LoadingAddress extends StatelessWidget {
                     ),
                     const Text(
                       'Địa chỉ giao hàng',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                   ],
                 ),

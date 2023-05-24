@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
 class Converter {
-  static DateFormat dateFormat = DateFormat('dd/MM/yyyy');
+  static DateFormat dateFormat = DateFormat('dd/MM/yyyy h:mma');
 
   static String convertNumberToMoney(double number) {
     return NumberFormat.simpleCurrency()

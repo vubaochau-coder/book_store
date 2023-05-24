@@ -11,8 +11,21 @@ class UserLoadingState extends UserState {}
 
 class UserLoadingSuccessfulState extends UserState {
   final UserModel userModel;
+  final int zero;
+  final int one;
+  final int two;
+  final int three;
 
-  const UserLoadingSuccessfulState({required this.userModel});
+  const UserLoadingSuccessfulState({
+    required this.zero,
+    required this.one,
+    required this.two,
+    required this.three,
+    required this.userModel,
+  });
+
+  @override
+  List<Object> get props => [zero, one, two, three, userModel];
 }
 
 class UserLoadingFailedState extends UserState {

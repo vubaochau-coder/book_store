@@ -168,9 +168,10 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       } on FirebaseException catch (e) {
         emit(
           CheckoutLoadingSuccessfulState(
-              userAddress: currentState.userAddress,
-              transports: currentState.transports,
-              showLoadingDialog: false),
+            userAddress: currentState.userAddress,
+            transports: currentState.transports,
+            showLoadingDialog: false,
+          ),
         );
         Fluttertoast.showToast(msg: "Error: ${e.message}");
       }

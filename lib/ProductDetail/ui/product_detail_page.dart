@@ -352,8 +352,11 @@ class ProductDetailPage extends StatelessWidget {
                         height: 48,
                         child: ElevatedButton(
                           onPressed: () {
-                            BlocProvider.of<CartBloc>(context)
-                                .add(CartAddItemEvent(itemID: productData.id));
+                            BlocProvider.of<CartBloc>(context).add(
+                              CartAddItemEvent(
+                                itemID: productData.id,
+                              ),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,

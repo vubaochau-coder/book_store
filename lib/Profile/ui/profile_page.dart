@@ -6,6 +6,7 @@ import 'package:book_store/CustomWidget/order_status_button.dart';
 import 'package:book_store/Profile/bloc/user_bloc.dart';
 import 'package:book_store/Profile/ui/change_info_page.dart';
 import 'package:book_store/Profile/ui/proflie_loading_page.dart';
+import 'package:book_store/Transaction/ui/transaction_page.dart';
 import 'package:book_store/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -177,33 +178,47 @@ class ProfilePage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            child: const OrderStatusButton(
-                              text: 'Chờ xác thực',
+                            onTap: () {
+                              navigateToTransactionPage(0, context);
+                            },
+                            child: OrderStatusButton(
+                              text: 'Chờ xác nhận',
                               icon: FontAwesomeIcons.envelopeOpenText,
+                              badgeCount: state.zero,
                             ),
                           ),
                         ),
                         Expanded(
                           child: GestureDetector(
-                            child: const OrderStatusButton(
+                            onTap: () {
+                              navigateToTransactionPage(1, context);
+                            },
+                            child: OrderStatusButton(
                               text: 'Chờ lấy hàng',
                               icon: FontAwesomeIcons.box,
+                              badgeCount: state.one,
                             ),
                           ),
                         ),
                         Expanded(
                           child: GestureDetector(
-                            child: const OrderStatusButton(
+                            onTap: () {
+                              navigateToTransactionPage(2, context);
+                            },
+                            child: OrderStatusButton(
                               text: 'Đang giao',
                               icon: FontAwesomeIcons.truckFast,
+                              badgeCount: state.two,
                             ),
                           ),
                         ),
                         Expanded(
                           child: GestureDetector(
-                            child: const OrderStatusButton(
+                            onTap: () {},
+                            child: OrderStatusButton(
                               text: 'Chưa đánh giá',
                               icon: FontAwesomeIcons.star,
+                              badgeCount: state.three,
                             ),
                           ),
                         ),
@@ -231,6 +246,19 @@ class ProfilePage extends StatelessWidget {
               title: 'Đã thích',
               leading: FontAwesomeIcons.heart,
               onPressed: () {},
+            ),
+            CustomListTile(
+              title: 'Lịch sử mua hàng',
+              leading: FontAwesomeIcons.peopleCarryBox,
+              onPressed: () {
+                Navigator.of(context).push(
+                  PageRouteSlideTransition(
+                    child: const TransactionPage(
+                      currentIndex: 3,
+                    ),
+                  ),
+                );
+              },
             ),
             CustomListTile(
               title: 'Địa chỉ giao hàng',
@@ -276,6 +304,14 @@ class ProfilePage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void navigateToTransactionPage(int index, BuildContext context) {
+    Navigator.of(context).push(
+      PageRouteSlideTransition(
+        child: TransactionPage(currentIndex: index),
       ),
     );
   }

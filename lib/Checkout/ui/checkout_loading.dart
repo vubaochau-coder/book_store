@@ -34,19 +34,46 @@ class CheckoutLoading extends StatelessWidget {
                     decoration: const BoxDecoration(
                       color: Colors.white,
                     ),
-                    child: ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: listProduct.length,
-                      itemBuilder: (context, index) {
-                        return CheckoutItem(data: listProduct[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider(
-                          height: 8,
-                          thickness: 2,
-                        );
-                      },
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            const SizedBox(width: 8),
+                            Icon(
+                              Icons.shopping_bag_outlined,
+                              color: themeColor,
+                              size: 20,
+                            ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            const Text(
+                              'Sản phẩm',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Divider(
+                          height: 12,
+                          thickness: 1,
+                        ),
+                        ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: listProduct.length,
+                          itemBuilder: (context, index) {
+                            return CheckoutItem(data: listProduct[index]);
+                          },
+                          separatorBuilder: (context, index) {
+                            return const Divider(
+                              height: 8,
+                              thickness: 1,
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
                   Container(

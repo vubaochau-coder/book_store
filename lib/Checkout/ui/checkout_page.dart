@@ -117,7 +117,12 @@ class CheckoutPage extends StatelessWidget {
                                         const SizedBox(
                                           width: 4,
                                         ),
-                                        const Text('Địa chỉ giao hàng'),
+                                        const Text(
+                                          'Địa chỉ giao hàng',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     const SizedBox(
@@ -158,19 +163,46 @@ class CheckoutPage extends StatelessWidget {
                         decoration: const BoxDecoration(
                           color: Colors.white,
                         ),
-                        child: ListView.separated(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: listProduct.length,
-                          itemBuilder: (context, index) {
-                            return CheckoutItem(data: listProduct[index]);
-                          },
-                          separatorBuilder: (context, index) {
-                            return const Divider(
-                              height: 8,
-                              thickness: 2,
-                            );
-                          },
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const SizedBox(width: 8),
+                                Icon(
+                                  Icons.shopping_bag_outlined,
+                                  color: themeColor,
+                                  size: 20,
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                const Text(
+                                  'Sản phẩm',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(
+                              height: 12,
+                              thickness: 1,
+                            ),
+                            ListView.separated(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: listProduct.length,
+                              itemBuilder: (context, index) {
+                                return CheckoutItem(data: listProduct[index]);
+                              },
+                              separatorBuilder: (context, index) {
+                                return const Divider(
+                                  height: 8,
+                                  thickness: 1,
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
                       Container(
@@ -265,7 +297,8 @@ class CheckoutPage extends StatelessWidget {
                               height: 4,
                             ),
                             Text(
-                              getTransportMethod(listTrans)!.description,
+                              getTransportDescription(
+                                  getTransportMethod(listTrans)!),
                               style: const TextStyle(
                                 color: Colors.grey,
                               ),
@@ -600,28 +633,29 @@ class CheckoutPage extends StatelessWidget {
                           onPressed: () {
                             BlocProvider.of<CheckoutBloc>(context).add(
                               CheckoutOrderEvent(
-                                  transaction: TransactionModel(
-                                      id: '',
-                                      dateCreated:
-                                          Converter.convertDateToString(
-                                              DateTime.now()),
-                                      dateCompleted: Converter
-                                          .convertDateToString(getDateCompleted(
-                                              getTransportMethod(listTrans))),
-                                      address: address.address,
-                                      transport:
-                                          getTransportMethod(listTrans)!.name,
-                                      note: noteController.text.trim(),
-                                      totalPrice:
-                                          calculateTotalPrice(list, listTrans),
-                                      productPrice:
-                                          calculateTotalProductPrice(list) -
-                                              calculateTotalDiscount(list),
-                                      transportPrice:
-                                          getTransportMethod(listTrans)!.price,
-                                      products: list,
-                                      status: 0),
-                                  fromCart: true),
+                                transaction: TransactionModel(
+                                    id: '',
+                                    dateCreated: Converter.convertDateToString(
+                                        DateTime.now()),
+                                    dateCompleted:
+                                        Converter.convertDateToString(
+                                            getDateCompleted(
+                                                getTransportMethod(listTrans))),
+                                    address: getDefaultAddress(address),
+                                    transport:
+                                        getTransportMethod(listTrans)!.name,
+                                    note: noteController.text.trim(),
+                                    totalPrice:
+                                        calculateTotalPrice(list, listTrans),
+                                    productPrice:
+                                        calculateTotalProductPrice(list) -
+                                            calculateTotalDiscount(list),
+                                    transportPrice:
+                                        getTransportMethod(listTrans)!.price,
+                                    products: list,
+                                    status: 0),
+                                fromCart: checkoutFromCart,
+                              ),
                             );
                           },
                           style: ElevatedButton.styleFrom(
@@ -654,20 +688,8 @@ class CheckoutPage extends StatelessWidget {
 
   DateTime getDateCompleted(TransportModel? transportModel) {
     final dateNow = DateTime.now();
-    switch (transportModel!.name) {
-      case 'Nhanh':
-        final dayFromNow = dateNow.add(const Duration(days: 5));
-        return dayFromNow;
-      case 'Hỏa tốc':
-        final dayFromNow = dateNow.add(const Duration(days: 2));
-        return dayFromNow;
-      case 'Cơ bản':
-        final dayFromNow = dateNow.add(const Duration(days: 7));
-        return dayFromNow;
-      default:
-        final dayFromNow = dateNow.add(const Duration(days: 5));
-        return dayFromNow;
-    }
+    final dayFromNow = dateNow.add(Duration(days: transportModel!.max));
+    return dayFromNow;
   }
 
   double calculateTotalProductPrice(List<CartItemModel> list) {
@@ -686,6 +708,10 @@ class CheckoutPage extends StatelessWidget {
       }
     }
     return result;
+  }
+
+  String getTransportDescription(TransportModel transport) {
+    return 'Nhận hàng sau ${transport.min}-${transport.max} ngày';
   }
 
   double calculateTotalPrice(

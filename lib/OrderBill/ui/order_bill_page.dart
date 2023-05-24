@@ -226,9 +226,9 @@ class OrderBillPage extends StatelessWidget {
                     width: double.infinity,
                     height: 48,
                     margin:
-                        const EdgeInsets.only(left: 8, right: 8, bottom: 32),
+                        const EdgeInsets.only(left: 8, right: 8, bottom: 12),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(4),
                     ),
                     child: ElevatedButton(
                       onPressed: () {
@@ -240,7 +240,7 @@ class OrderBillPage extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: themeColor,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(4),
                         ),
                       ),
                       child: Row(

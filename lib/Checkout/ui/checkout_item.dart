@@ -43,6 +43,7 @@ class CheckoutItem extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(right: 8),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     data.title,

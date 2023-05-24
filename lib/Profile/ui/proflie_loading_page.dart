@@ -147,26 +147,30 @@ class ProfileLoadingPage extends StatelessWidget {
                       children: const [
                         Expanded(
                           child: OrderStatusButton(
-                            text: 'Chờ xác thực',
+                            text: 'Chờ xác nhận',
                             icon: FontAwesomeIcons.envelopeOpenText,
+                            badgeCount: 0,
                           ),
                         ),
                         Expanded(
                           child: OrderStatusButton(
                             text: 'Chờ lấy hàng',
                             icon: FontAwesomeIcons.box,
+                            badgeCount: 0,
                           ),
                         ),
                         Expanded(
                           child: OrderStatusButton(
                             text: 'Đang giao',
                             icon: FontAwesomeIcons.truckFast,
+                            badgeCount: 0,
                           ),
                         ),
                         Expanded(
                           child: OrderStatusButton(
                             text: 'Chưa đánh giá',
                             icon: FontAwesomeIcons.star,
+                            badgeCount: 0,
                           ),
                         ),
                       ],
@@ -192,6 +196,11 @@ class ProfileLoadingPage extends StatelessWidget {
             CustomListTile(
               title: 'Đã thích',
               leading: FontAwesomeIcons.heart,
+              onPressed: () {},
+            ),
+            CustomListTile(
+              title: 'Lịch sử mua hàng',
+              leading: FontAwesomeIcons.peopleCarryBox,
               onPressed: () {},
             ),
             CustomListTile(

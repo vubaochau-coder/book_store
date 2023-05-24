@@ -17,6 +17,11 @@ import 'package:book_store/Profile/ui/profile_page.dart';
 import 'package:book_store/Notification/tin_nhan_page.dart';
 import 'package:book_store/Home/ui/home_page.dart';
 import 'package:book_store/Authentication%20Service/auth_service.dart';
+import 'package:book_store/Transaction/AwaitPickup/bloc/await_pickup_bloc.dart';
+import 'package:book_store/Transaction/Cancelled/bloc/cancelled_bloc.dart';
+import 'package:book_store/Transaction/Delivered/bloc/delivered_bloc.dart';
+import 'package:book_store/Transaction/Delivering/bloc/delivering_bloc.dart';
+import 'package:book_store/Transaction/Unconfirmed/bloc/unconfirmed_bloc.dart';
 import 'package:book_store/bloc/main_bloc.dart';
 import 'package:book_store/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -58,6 +63,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => CheckoutBloc()),
         BlocProvider(create: (context) => AddressBloc()),
         BlocProvider(create: (context) => BillBloc()),
+        BlocProvider(create: (context) => AwaitPickupBloc()),
+        BlocProvider(create: (context) => UnconfirmedBloc()),
+        BlocProvider(create: (context) => DeliveringBloc()),
+        BlocProvider(create: (context) => DeliveredBloc()),
+        BlocProvider(create: (context) => CancelledBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

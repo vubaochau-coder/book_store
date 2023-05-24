@@ -1,0 +1,57 @@
+Date : 2023-05-24 20:23:28
+Directory : d:\Flutter Application\book_store\lib
+Total : 18 files,  1002 codes, 0 comments, 22 blanks, all 1024 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |         18 |      1,002 |          0 |         22 |      1,024 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                               | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                  |         18 |      1,002 |          0 |         22 |      1,024 |
+| Checkout                                                                                           |          5 |         65 |          0 |          0 |         65 |
+| Checkout\bloc                                                                                      |          1 |          1 |          0 |          0 |          1 |
+| Checkout\ui                                                                                        |          4 |         64 |          0 |          0 |         64 |
+| Transaction                                                                                        |         13 |        937 |          0 |         22 |        959 |
+| Transaction\AwaitPickup                                                                            |          1 |         11 |          0 |          0 |         11 |
+| Transaction\AwaitPickup\ui                                                                         |          1 |         11 |          0 |          0 |         11 |
+| Transaction\Cancelled                                                                              |          1 |         11 |          0 |          0 |         11 |
+| Transaction\Cancelled\ui                                                                           |          1 |         11 |          0 |          0 |         11 |
+| Transaction\Delivered                                                                              |          1 |         11 |          0 |          0 |         11 |
+| Transaction\Delivered\ui                                                                           |          1 |         11 |          0 |          0 |         11 |
+| Transaction\Delivering                                                                             |          1 |         11 |          0 |          0 |         11 |
+| Transaction\Delivering\ui                                                                          |          1 |         11 |          0 |          0 |         11 |
+| Transaction\Unconfirmed                                                                            |          1 |         21 |          0 |          0 |         21 |
+| Transaction\Unconfirmed\ui                                                                         |          1 |         21 |          0 |          0 |         21 |
+| Transaction\ui                                                                                     |          8 |        872 |          0 |         22 |        894 |
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                           | language | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\Flutter Application\book_store\lib\Checkout\bloc\checkout_bloc.dart                             | Dart     |          1 |          0 |          0 |          1 |
+| d:\Flutter Application\book_store\lib\Checkout\ui\address_loading.dart                             | Dart     |          3 |          0 |          0 |          3 |
+| d:\Flutter Application\book_store\lib\Checkout\ui\checkout_item.dart                               | Dart     |          1 |          0 |          0 |          1 |
+| d:\Flutter Application\book_store\lib\Checkout\ui\checkout_loading.dart                            | Dart     |         27 |          0 |          0 |         27 |
+| d:\Flutter Application\book_store\lib\Checkout\ui\checkout_page.dart                               | Dart     |         33 |          0 |          0 |         33 |
+| d:\Flutter Application\book_store\lib\Transaction\AwaitPickup\ui\await_pickup_page.dart            | Dart     |         11 |          0 |          0 |         11 |
+| d:\Flutter Application\book_store\lib\Transaction\Cancelled\ui\cancelled_transaction_page.dart     | Dart     |         11 |          0 |          0 |         11 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivered\ui\delivered_transaction_page.dart     | Dart     |         11 |          0 |          0 |         11 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivering\ui\delivering_transaction_page.dart   | Dart     |         11 |          0 |          0 |         11 |
+| d:\Flutter Application\book_store\lib\Transaction\Unconfirmed\ui\unconfirmed_transaction_page.dart | Dart     |         21 |          0 |          0 |         21 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\abstract_transaction_detail_page.dart         | Dart     |        511 |          0 |          6 |        517 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\abstract_transaction_item.dart                | Dart     |         22 |          0 |          0 |         22 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\confirm_cancelled_dialog.dart                 | Dart     |        110 |          0 |          3 |        113 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\transaction_detail_cancel_page.dart           | Dart     |         33 |          0 |          4 |         37 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\transaction_detail_receive_page.dart          | Dart     |         36 |          0 |          3 |         39 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\transaction_detail_reorder_page.dart          | Dart     |         36 |          0 |          3 |         39 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\transaction_page.dart                         | Dart     |          1 |          0 |          0 |          1 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\transaction_product.dart                      | Dart     |        123 |          0 |          3 |        126 |
+| Total                                                                                              |          |      1,002 |          0 |         22 |      1,024 |
++----------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

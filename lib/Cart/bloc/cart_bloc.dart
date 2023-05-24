@@ -183,7 +183,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                 .add({
               'productID': event.itemID,
               'count': 1,
-              'temp': ['1', '2', '3']
             });
           }
         })

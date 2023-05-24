@@ -131,7 +131,7 @@ class _TransportListPageState extends State<TransportListPage> {
                                   ],
                                 ),
                                 Text(
-                                  tempList[index].description,
+                                  'Nhận hàng sau ${tempList[index].min}-${tempList[index].max} ngày',
                                   style: TextStyle(
                                     color: Colors.grey[400],
                                     fontWeight: FontWeight.w300,
@@ -206,6 +206,8 @@ class _TransportListPageState extends State<TransportListPage> {
           name: widget.transports[i].name,
           description: widget.transports[i].description,
           price: widget.transports[i].price,
+          min: widget.transports[i].min,
+          max: widget.transports[i].max,
           isSelected: false,
         );
         result.add(temp);
@@ -215,6 +217,8 @@ class _TransportListPageState extends State<TransportListPage> {
           name: widget.transports[i].name,
           description: widget.transports[i].description,
           price: widget.transports[i].price,
+          min: widget.transports[i].min,
+          max: widget.transports[i].max,
           isSelected: true,
         );
         result.add(temp);
