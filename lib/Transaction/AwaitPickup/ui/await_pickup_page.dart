@@ -1,5 +1,6 @@
 import 'package:book_store/CustomWidget/custom_page_route.dart';
 import 'package:book_store/Transaction/AwaitPickup/bloc/await_pickup_bloc.dart';
+import 'package:book_store/Transaction/ui/confirm_cancelled_dialog.dart';
 import 'package:book_store/Transaction/ui/empty_page.dart';
 import 'package:book_store/Transaction/AwaitPickup/ui/await_transaction_item.dart';
 import 'package:book_store/Transaction/ui/transaction_detail_cancel_page.dart';
@@ -24,14 +25,32 @@ class AwaitPickupTransactionPage extends StatelessWidget {
               return AwaitPickupTransactionItem(
                 transactionData: state.transactions[index],
                 onTap: () {
-                  // Navigator.of(context).push(
-                  //   PageRouteSlideTransition(
-                  //     child: CanCancelledTransactionDetailPage(
-                  //       transactionData: state.transactions[index],
-                  //       onCancelled: () {},
-                  //     ),
-                  //   ),
-                  // );
+                  Navigator.of(context).push(
+                    PageRouteSlideTransition(
+                      child: CanCancelledTransactionDetailPage(
+                        transactionData: state.transactions[index],
+                        onCancelled: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CancelledConfirmDialog(
+                                onCancelTap: () {
+                                  Navigator.pop(context);
+                                  Navigator.of(context).pop();
+                                  BlocProvider.of<AwaitPickupBloc>(context).add(
+                                    AwaitPickupCancelEvent(
+                                      transactionID:
+                                          state.transactions[index].id,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  );
                 },
               );
             },

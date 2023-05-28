@@ -119,8 +119,24 @@ class DeliveringBloc extends Bloc<DeliveringEvent, DeliveringState> {
     await docRef.update({
       'dateCompleted': Converter.convertDateToString(DateTime.now()),
       'status': 3,
-    }).then((value) {
-      add(DeliveringLoadingEvent());
+    }).then((value) async {
+      final productsQuery = await FirebaseFirestore.instance
+          .collection("User")
+          .doc(uid)
+          .collection('Transaction')
+          .doc(event.transactionID)
+          .collection('Products')
+          .get();
+      for (var item in productsQuery.docs) {
+        String productID = item.get('productID');
+        final bookRef =
+            FirebaseFirestore.instance.collection('Book').doc(productID);
+        final totalSold = await bookRef.get();
+        int temp = int.parse(totalSold.get('totalSold').toString());
+        temp += int.parse(item.get('count').toString());
+        await bookRef.update({'totalSold': temp});
+      }
+      // add(DeliveringLoadingEvent());
     });
   }
 }

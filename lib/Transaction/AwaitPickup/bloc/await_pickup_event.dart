@@ -15,4 +15,10 @@ class AwaitPickupUpdateEvent extends AwaitPickupEvent {
   const AwaitPickupUpdateEvent({required this.transactions});
 }
 
-class AwaitPicupUpdateEmptyEvent extends AwaitPickupEvent {}
+class AwaitPickupUpdateEmptyEvent extends AwaitPickupEvent {}
+
+class AwaitPickupCancelEvent extends AwaitPickupEvent {
+  final String transactionID;
+
+  const AwaitPickupCancelEvent({required this.transactionID});
+}

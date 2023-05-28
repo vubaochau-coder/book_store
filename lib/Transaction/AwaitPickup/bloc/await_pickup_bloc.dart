@@ -6,6 +6,7 @@ import 'package:book_store/models/transaction_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 part 'await_pickup_event.dart';
 part 'await_pickup_state.dart';
@@ -14,7 +15,8 @@ class AwaitPickupBloc extends Bloc<AwaitPickupEvent, AwaitPickupState> {
   AwaitPickupBloc() : super(AwaitPickupLoadingState()) {
     on<AwaitPickupLoadingEvent>(awaitPickupLoadingEvent);
     on<AwaitPickupUpdateEvent>(awaitPickupUpdateEvent);
-    on<AwaitPicupUpdateEmptyEvent>(awaitPicupUpdateEmptyEvent);
+    on<AwaitPickupUpdateEmptyEvent>(awaitPicupUpdateEmptyEvent);
+    on<AwaitPickupCancelEvent>(awaitPickupCancelEvent);
   }
 
   FutureOr<void> awaitPickupLoadingEvent(
@@ -77,7 +79,7 @@ class AwaitPickupBloc extends Bloc<AwaitPickupEvent, AwaitPickupState> {
 
         add(AwaitPickupUpdateEvent(transactions: list));
       } else {
-        add(AwaitPicupUpdateEmptyEvent());
+        add(AwaitPickupUpdateEmptyEvent());
       }
     });
   }
@@ -98,7 +100,24 @@ class AwaitPickupBloc extends Bloc<AwaitPickupEvent, AwaitPickupState> {
   }
 
   FutureOr<void> awaitPicupUpdateEmptyEvent(
-      AwaitPicupUpdateEmptyEvent event, Emitter<AwaitPickupState> emit) {
+      AwaitPickupUpdateEmptyEvent event, Emitter<AwaitPickupState> emit) {
     emit(AwaitPickupEmptyState());
+  }
+
+  FutureOr<void> awaitPickupCancelEvent(
+      AwaitPickupCancelEvent event, Emitter<AwaitPickupState> emit) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    final docRef = FirebaseFirestore.instance
+        .collection('User')
+        .doc(uid)
+        .collection('Transaction')
+        .doc(event.transactionID);
+
+    await docRef.update({
+      'status': -1,
+    }).then((value) {
+      Fluttertoast.showToast(msg: 'Hủy đơn hàng thành công');
+    });
   }
 }

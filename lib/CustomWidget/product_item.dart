@@ -90,17 +90,36 @@ class ProductItem extends StatelessWidget {
             ),
             Row(
               children: [
-                Icon(
-                  Icons.star_rounded,
-                  color: Colors.amber[400],
-                  size: 16,
-                ),
                 Text(
-                  data.star.toString(),
-                  style: const TextStyle(
-                    fontSize: 12,
+                  'đ',
+                  style: TextStyle(
+                    color: Colors.black,
+                    decoration: TextDecoration.combine([
+                      TextDecoration.underline,
+                      TextDecoration.lineThrough,
+                    ]),
+                    fontSize: 11,
                   ),
                 ),
+                Text(
+                  Converter.convertNumberToMoney(data.price),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    decoration: TextDecoration.lineThrough,
+                  ),
+                ),
+                // Icon(
+                //   Icons.star_rounded,
+                //   color: Colors.amber[400],
+                //   size: 16,
+                // ),
+                // Text(
+                //   data.star.toString(),
+                //   style: const TextStyle(
+                //     fontSize: 12,
+                //   ),
+                // ),
                 const Spacer(),
                 Text(
                   'Đã bán ${data.totalSold}',

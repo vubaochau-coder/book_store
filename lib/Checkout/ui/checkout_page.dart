@@ -191,9 +191,9 @@ class CheckoutPage extends StatelessWidget {
                             ListView.separated(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: listProduct.length,
+                              itemCount: list.length,
                               itemBuilder: (context, index) {
-                                return CheckoutItem(data: listProduct[index]);
+                                return CheckoutItem(data: list[index]);
                               },
                               separatorBuilder: (context, index) {
                                 return const Divider(
@@ -254,8 +254,9 @@ class CheckoutPage extends StatelessWidget {
                                         BlocProvider.of<CheckoutBloc>(context)
                                             .add(
                                           CheckoutUpdateEvent(
-                                              newAddress: address,
-                                              transports: p0),
+                                            newAddress: address,
+                                            transports: p0,
+                                          ),
                                         );
                                         Navigator.of(context).pop();
                                       },
@@ -440,7 +441,7 @@ class CheckoutPage extends StatelessWidget {
                                 ),
                                 Text(
                                   Converter.convertNumberToMoney(
-                                    calculateTotalProductPrice(listProduct),
+                                    calculateTotalProductPrice(list),
                                   ),
                                 ),
                               ],

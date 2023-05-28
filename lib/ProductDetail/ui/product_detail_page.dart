@@ -393,19 +393,22 @@ class ProductDetailPage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.of(context).push(PageRouteSlideTransition(
-                                child: CheckoutPage(listProduct: [
-                              CartItemModel(
-                                id: '',
-                                bookID: productData.id,
-                                count: 1,
-                                price: productData.price -
-                                    productData.price * productData.discount,
-                                imgUrl: productData.imageURL[0],
-                                title: productData.title,
-                                isSelected: true,
-                                priceBeforeDiscount: productData.price,
-                              ),
-                            ], checkoutFromCart: false)));
+                                child: CheckoutPage(
+                              listProduct: [
+                                CartItemModel(
+                                  id: '',
+                                  bookID: productData.id,
+                                  count: 1,
+                                  price: productData.price -
+                                      productData.price * productData.discount,
+                                  imgUrl: productData.imageURL[0],
+                                  title: productData.title,
+                                  isSelected: true,
+                                  priceBeforeDiscount: productData.price,
+                                ),
+                              ],
+                              checkoutFromCart: false,
+                            )));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: themeColor,

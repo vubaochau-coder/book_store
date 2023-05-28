@@ -27,7 +27,9 @@ class CheckoutLoadingSuccessfulState extends CheckoutState {
 class CheckoutEmptyAddressState extends CheckoutState {
   final List<TransportModel> transports;
 
-  const CheckoutEmptyAddressState({required this.transports});
+  const CheckoutEmptyAddressState({
+    required this.transports,
+  });
 }
 
 class CheckoutOrderSuccessfulState extends CheckoutState {

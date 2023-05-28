@@ -1,3 +1,4 @@
+import 'package:book_store/Checkout/ui/checkout_page.dart';
 import 'package:book_store/CustomWidget/custom_page_route.dart';
 import 'package:book_store/Transaction/Delivered/bloc/delivered_bloc.dart';
 import 'package:book_store/Transaction/Delivered/ui/delivered_item.dart';
@@ -28,12 +29,24 @@ class DeliveredTransactionPage extends StatelessWidget {
                     PageRouteSlideTransition(
                       child: ReOrderTransactionDetailPage(
                         transactionData: state.transactions[index],
-                        onReOrder: () {},
+                        onReOrder: () {
+                          Navigator.of(context).push(PageRouteSlideTransition(
+                              child: CheckoutPage(
+                            listProduct: state.transactions[index].products,
+                            checkoutFromCart: false,
+                          )));
+                        },
                       ),
                     ),
                   );
                 },
-                onReOrder: () {},
+                onReOrder: () {
+                  Navigator.of(context).push(PageRouteSlideTransition(
+                      child: CheckoutPage(
+                    listProduct: state.transactions[index].products,
+                    checkoutFromCart: false,
+                  )));
+                },
               );
             },
             itemCount: state.transactions.length,

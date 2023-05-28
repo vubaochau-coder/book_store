@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:book_store/models/address_model.dart';
 import 'package:book_store/models/transaction_model.dart';
@@ -30,8 +29,8 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         .collection('User')
         .doc(uid)
         .snapshots()
-        .listen((event) async {
-      if (event.exists) {
+        .listen((firebaseEvent) async {
+      if (firebaseEvent.exists) {
         AddressModel userAddress;
         List<TransportModel> transports = [];
 
@@ -69,6 +68,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
             newAddress: userAddress, transports: transports));
       } else {
         List<TransportModel> transports = [];
+
         final transportQuery =
             await FirebaseFirestore.instance.collection('Transport').get();
         for (int i = 0; i < transportQuery.size; i++) {
@@ -127,9 +127,10 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       final currentState = state as CheckoutLoadingSuccessfulState;
       emit(
         CheckoutLoadingSuccessfulState(
-            userAddress: currentState.userAddress,
-            transports: currentState.transports,
-            showLoadingDialog: true),
+          userAddress: currentState.userAddress,
+          transports: currentState.transports,
+          showLoadingDialog: true,
+        ),
       );
 
       String uid = FirebaseAuth.instance.currentUser!.uid;
