@@ -10,7 +10,7 @@ abstract class LiteratureState extends Equatable {
 class LiteratureLoadingState extends LiteratureState {}
 
 class LiteratureLoadingSuccessfulState extends LiteratureState {
-  final List<ProductDataModel> listLiterature;
+  final List<ShortProductDataModel> listLiterature;
   final int sortType;
 
   const LiteratureLoadingSuccessfulState({

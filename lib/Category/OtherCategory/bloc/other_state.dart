@@ -10,7 +10,7 @@ abstract class OtherState extends Equatable {
 class OtherLoadingState extends OtherState {}
 
 class OtherLoadingSuccessfulState extends OtherState {
-  final List<ProductDataModel> listOther;
+  final List<ShortProductDataModel> listOther;
   final int sortType;
 
   const OtherLoadingSuccessfulState({

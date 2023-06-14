@@ -10,7 +10,7 @@ class CartItemLoading extends StatelessWidget {
     return Container(
       height: 126,
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+      margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: Colors.white,

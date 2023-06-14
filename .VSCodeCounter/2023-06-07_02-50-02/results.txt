@@ -1,0 +1,255 @@
+Date : 2023-06-07 02:50:02
+Directory : d:\Flutter Application\book_store\lib
+Total : 158 files,  14688 codes, 46 comments, 1062 blanks, all 15796 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |        158 |     14,688 |         46 |      1,062 |     15,796 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                               | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                  |        158 |     14,688 |         46 |      1,062 |     15,796 |
+| . (Files)                                                                                          |          3 |        356 |         12 |         23 |        391 |
+| AddressSetting                                                                                     |          6 |        612 |          8 |         59 |        679 |
+| AddressSetting\bloc                                                                                |          3 |        157 |          8 |         43 |        208 |
+| AddressSetting\ui                                                                                  |          3 |        455 |          0 |         16 |        471 |
+| Authentication Service                                                                             |          1 |         60 |          1 |          9 |         70 |
+| Cart                                                                                               |          7 |      1,058 |          1 |         65 |      1,124 |
+| Cart\bloc                                                                                          |          3 |        255 |          0 |         46 |        301 |
+| Cart\ui                                                                                            |          4 |        803 |          1 |         19 |        823 |
+| Category                                                                                           |         26 |      1,236 |          2 |        147 |      1,385 |
+| Category (Files)                                                                                   |          2 |        178 |          0 |         11 |        189 |
+| Category\ChildCategory                                                                             |          4 |        176 |          0 |         23 |        199 |
+| Category\ChildCategory\bloc                                                                        |          3 |         76 |          0 |         18 |         94 |
+| Category\ChildCategory\ui                                                                          |          1 |        100 |          0 |          5 |        105 |
+| Category\ComicCategory                                                                             |          4 |        176 |          0 |         23 |        199 |
+| Category\ComicCategory\bloc                                                                        |          3 |         76 |          0 |         18 |         94 |
+| Category\ComicCategory\ui                                                                          |          1 |        100 |          0 |          5 |        105 |
+| Category\LiteratureCategory                                                                        |          4 |        177 |          2 |         24 |        203 |
+| Category\LiteratureCategory\bloc                                                                   |          3 |         76 |          2 |         19 |         97 |
+| Category\LiteratureCategory\ui                                                                     |          1 |        101 |          0 |          5 |        106 |
+| Category\OtherCategory                                                                             |          4 |        176 |          0 |         22 |        198 |
+| Category\OtherCategory\bloc                                                                        |          3 |         76 |          0 |         17 |         93 |
+| Category\OtherCategory\ui                                                                          |          1 |        100 |          0 |          5 |        105 |
+| Category\SGKCategory                                                                               |          4 |        176 |          0 |         21 |        197 |
+| Category\SGKCategory\bloc                                                                          |          3 |         76 |          0 |         17 |         93 |
+| Category\SGKCategory\ui                                                                            |          1 |        100 |          0 |          4 |        104 |
+| Category\ScienceCategory                                                                           |          4 |        177 |          0 |         23 |        200 |
+| Category\ScienceCategory\bloc                                                                      |          3 |         76 |          0 |         18 |         94 |
+| Category\ScienceCategory\ui                                                                        |          1 |        101 |          0 |          5 |        106 |
+| Checkout                                                                                           |          9 |      2,123 |          2 |        109 |      2,234 |
+| Checkout\bloc                                                                                      |          3 |        411 |          2 |         70 |        483 |
+| Checkout\ui                                                                                        |          6 |      1,712 |          0 |         39 |      1,751 |
+| CustomWidget                                                                                       |          9 |        596 |          0 |         31 |        627 |
+| DemoData                                                                                           |          1 |      1,006 |          8 |          5 |      1,019 |
+| Favorite                                                                                           |          5 |        350 |          0 |         40 |        390 |
+| Favorite\bloc                                                                                      |          3 |        113 |          0 |         34 |        147 |
+| Favorite\ui                                                                                        |          2 |        237 |          0 |          6 |        243 |
+| Home                                                                                               |          6 |        330 |          0 |         30 |        360 |
+| Home\bloc                                                                                          |          3 |         60 |          0 |         19 |         79 |
+| Home\ui                                                                                            |          3 |        270 |          0 |         11 |        281 |
+| Login_Register                                                                                     |          4 |        978 |          8 |         35 |      1,021 |
+| Notification                                                                                       |          1 |         10 |          0 |          3 |         13 |
+| OrderBill                                                                                          |          5 |        625 |          0 |         26 |        651 |
+| OrderBill\bloc                                                                                     |          3 |         52 |          0 |         20 |         72 |
+| OrderBill\ui                                                                                       |          2 |        573 |          0 |          6 |        579 |
+| ProductDetail                                                                                      |          7 |        774 |          0 |         43 |        817 |
+| ProductDetail\bloc                                                                                 |          3 |        112 |          0 |         28 |        140 |
+| ProductDetail\ui                                                                                   |          4 |        662 |          0 |         15 |        677 |
+| Profile                                                                                            |          7 |        988 |          3 |         45 |      1,036 |
+| Profile\bloc                                                                                       |          3 |        134 |          3 |         31 |        168 |
+| Profile\ui                                                                                         |          4 |        854 |          0 |         14 |        868 |
+| SearchPage                                                                                         |          7 |        392 |          0 |         54 |        446 |
+| SearchPage\bloc                                                                                    |          3 |        134 |          0 |         39 |        173 |
+| SearchPage\ui                                                                                      |          4 |        258 |          0 |         15 |        273 |
+| Transaction                                                                                        |         36 |      2,648 |          1 |        255 |      2,904 |
+| Transaction\AwaitPickup                                                                            |          5 |        242 |          0 |         44 |        286 |
+| Transaction\AwaitPickup\bloc                                                                       |          3 |        134 |          0 |         37 |        171 |
+| Transaction\AwaitPickup\ui                                                                         |          2 |        108 |          0 |          7 |        115 |
+| Transaction\Cancelled                                                                              |          5 |        234 |          0 |         39 |        273 |
+| Transaction\Cancelled\bloc                                                                         |          3 |        114 |          0 |         32 |        146 |
+| Transaction\Cancelled\ui                                                                           |          2 |        120 |          0 |          7 |        127 |
+| Transaction\Delivered                                                                              |          5 |        243 |          0 |         39 |        282 |
+| Transaction\Delivered\bloc                                                                         |          3 |        114 |          0 |         32 |        146 |
+| Transaction\Delivered\ui                                                                           |          2 |        129 |          0 |          7 |        136 |
+| Transaction\Delivering                                                                             |          5 |        292 |          1 |         45 |        338 |
+| Transaction\Delivering\bloc                                                                        |          3 |        151 |          1 |         38 |        190 |
+| Transaction\Delivering\ui                                                                          |          2 |        141 |          0 |          7 |        148 |
+| Transaction\Unconfirmed                                                                            |          5 |        242 |          0 |         43 |        285 |
+| Transaction\Unconfirmed\bloc                                                                       |          3 |        134 |          0 |         36 |        170 |
+| Transaction\Unconfirmed\ui                                                                         |          2 |        108 |          0 |          7 |        115 |
+| Transaction\ui                                                                                     |         11 |      1,395 |          0 |         45 |      1,440 |
+| bloc                                                                                               |          3 |         69 |          0 |         20 |         89 |
+| models                                                                                             |         13 |        448 |          0 |         55 |        503 |
+| utils                                                                                              |          2 |         29 |          0 |          8 |         37 |
++----------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                           | language | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\Flutter Application\book_store\lib\AddressSetting\bloc\address_bloc.dart                        | Dart     |        121 |          8 |         23 |        152 |
+| d:\Flutter Application\book_store\lib\AddressSetting\bloc\address_event.dart                       | Dart     |         24 |          0 |         13 |         37 |
+| d:\Flutter Application\book_store\lib\AddressSetting\bloc\address_state.dart                       | Dart     |         12 |          0 |          7 |         19 |
+| d:\Flutter Application\book_store\lib\AddressSetting\ui\add_address_page.dart                      | Dart     |        176 |          0 |          8 |        184 |
+| d:\Flutter Application\book_store\lib\AddressSetting\ui\address_loading.dart                       | Dart     |        102 |          0 |          3 |        105 |
+| d:\Flutter Application\book_store\lib\AddressSetting\ui\address_setting.dart                       | Dart     |        177 |          0 |          5 |        182 |
+| d:\Flutter Application\book_store\lib\Authentication Service\auth_service.dart                     | Dart     |         60 |          1 |          9 |         70 |
+| d:\Flutter Application\book_store\lib\Cart\bloc\cart_bloc.dart                                     | Dart     |        205 |          0 |         22 |        227 |
+| d:\Flutter Application\book_store\lib\Cart\bloc\cart_event.dart                                    | Dart     |         36 |          0 |         16 |         52 |
+| d:\Flutter Application\book_store\lib\Cart\bloc\cart_state.dart                                    | Dart     |         14 |          0 |          8 |         22 |
+| d:\Flutter Application\book_store\lib\Cart\ui\cart_item.dart                                       | Dart     |        217 |          0 |          4 |        221 |
+| d:\Flutter Application\book_store\lib\Cart\ui\cart_item_loading.dart                               | Dart     |        190 |          0 |          3 |        193 |
+| d:\Flutter Application\book_store\lib\Cart\ui\cart_loading_page.dart                               | Dart     |        117 |          0 |          3 |        120 |
+| d:\Flutter Application\book_store\lib\Cart\ui\cart_page.dart                                       | Dart     |        279 |          1 |          9 |        289 |
+| d:\Flutter Application\book_store\lib\Category\ChildCategory\bloc\child_bloc.dart                  | Dart     |         51 |          0 |          7 |         58 |
+| d:\Flutter Application\book_store\lib\Category\ChildCategory\bloc\child_event.dart                 | Dart     |         10 |          0 |          5 |         15 |
+| d:\Flutter Application\book_store\lib\Category\ChildCategory\bloc\child_state.dart                 | Dart     |         15 |          0 |          6 |         21 |
+| d:\Flutter Application\book_store\lib\Category\ChildCategory\ui\child_category_page.dart           | Dart     |        100 |          0 |          5 |        105 |
+| d:\Flutter Application\book_store\lib\Category\ComicCategory\bloc\comic_bloc.dart                  | Dart     |         51 |          0 |          7 |         58 |
+| d:\Flutter Application\book_store\lib\Category\ComicCategory\bloc\comic_event.dart                 | Dart     |         10 |          0 |          5 |         15 |
+| d:\Flutter Application\book_store\lib\Category\ComicCategory\bloc\comic_state.dart                 | Dart     |         15 |          0 |          6 |         21 |
+| d:\Flutter Application\book_store\lib\Category\ComicCategory\ui\comic_category_page.dart           | Dart     |        100 |          0 |          5 |        105 |
+| d:\Flutter Application\book_store\lib\Category\LiteratureCategory\bloc\literature_bloc.dart        | Dart     |         51 |          0 |          7 |         58 |
+| d:\Flutter Application\book_store\lib\Category\LiteratureCategory\bloc\literature_event.dart       | Dart     |         10 |          0 |          5 |         15 |
+| d:\Flutter Application\book_store\lib\Category\LiteratureCategory\bloc\literature_state.dart       | Dart     |         15 |          2 |          7 |         24 |
+| d:\Flutter Application\book_store\lib\Category\LiteratureCategory\ui\literature_category_page.dart | Dart     |        101 |          0 |          5 |        106 |
+| d:\Flutter Application\book_store\lib\Category\OtherCategory\bloc\other_bloc.dart                  | Dart     |         51 |          0 |          6 |         57 |
+| d:\Flutter Application\book_store\lib\Category\OtherCategory\bloc\other_event.dart                 | Dart     |         10 |          0 |          5 |         15 |
+| d:\Flutter Application\book_store\lib\Category\OtherCategory\bloc\other_state.dart                 | Dart     |         15 |          0 |          6 |         21 |
+| d:\Flutter Application\book_store\lib\Category\OtherCategory\ui\other_category_page.dart           | Dart     |        100 |          0 |          5 |        105 |
+| d:\Flutter Application\book_store\lib\Category\SGKCategory\bloc\sgk_bloc.dart                      | Dart     |         51 |          0 |          6 |         57 |
+| d:\Flutter Application\book_store\lib\Category\SGKCategory\bloc\sgk_event.dart                     | Dart     |         10 |          0 |          5 |         15 |
+| d:\Flutter Application\book_store\lib\Category\SGKCategory\bloc\sgk_state.dart                     | Dart     |         15 |          0 |          6 |         21 |
+| d:\Flutter Application\book_store\lib\Category\SGKCategory\ui\sgk_category_page.dart               | Dart     |        100 |          0 |          4 |        104 |
+| d:\Flutter Application\book_store\lib\Category\ScienceCategory\bloc\science_bloc.dart              | Dart     |         51 |          0 |          7 |         58 |
+| d:\Flutter Application\book_store\lib\Category\ScienceCategory\bloc\science_event.dart             | Dart     |         10 |          0 |          5 |         15 |
+| d:\Flutter Application\book_store\lib\Category\ScienceCategory\bloc\science_state.dart             | Dart     |         15 |          0 |          6 |         21 |
+| d:\Flutter Application\book_store\lib\Category\ScienceCategory\ui\science_category_page.dart       | Dart     |        101 |          0 |          5 |        106 |
+| d:\Flutter Application\book_store\lib\Category\category_loading_state.dart                         | Dart     |         40 |          0 |          3 |         43 |
+| d:\Flutter Application\book_store\lib\Category\category_page.dart                                  | Dart     |        138 |          0 |          8 |        146 |
+| d:\Flutter Application\book_store\lib\Checkout\bloc\checkout_bloc.dart                             | Dart     |        330 |          0 |         42 |        372 |
+| d:\Flutter Application\book_store\lib\Checkout\bloc\checkout_event.dart                            | Dart     |         43 |          2 |         16 |         61 |
+| d:\Flutter Application\book_store\lib\Checkout\bloc\checkout_state.dart                            | Dart     |         38 |          0 |         12 |         50 |
+| d:\Flutter Application\book_store\lib\Checkout\ui\address_loading.dart                             | Dart     |         78 |          0 |          3 |         81 |
+| d:\Flutter Application\book_store\lib\Checkout\ui\checkout_item.dart                               | Dart     |        117 |          0 |          3 |        120 |
+| d:\Flutter Application\book_store\lib\Checkout\ui\checkout_loading.dart                            | Dart     |        245 |          0 |          3 |        248 |
+| d:\Flutter Application\book_store\lib\Checkout\ui\checkout_page.dart                               | Dart     |        856 |          0 |         17 |        873 |
+| d:\Flutter Application\book_store\lib\Checkout\ui\payment_method_page.dart                         | Dart     |        184 |          0 |          7 |        191 |
+| d:\Flutter Application\book_store\lib\Checkout\ui\transport_page.dart                              | Dart     |        232 |          0 |          6 |        238 |
+| d:\Flutter Application\book_store\lib\CustomWidget\advertising_banner.dart                         | Dart     |         76 |          0 |          5 |         81 |
+| d:\Flutter Application\book_store\lib\CustomWidget\category_shimmer.dart                           | Dart     |         50 |          0 |          3 |         53 |
+| d:\Flutter Application\book_store\lib\CustomWidget\custom_list_tile.dart                           | Dart     |         53 |          0 |          3 |         56 |
+| d:\Flutter Application\book_store\lib\CustomWidget\custom_page_route.dart                          | Dart     |         18 |          0 |          4 |         22 |
+| d:\Flutter Application\book_store\lib\CustomWidget\custom_page_route_2.dart                        | Dart     |         18 |          0 |          4 |         22 |
+| d:\Flutter Application\book_store\lib\CustomWidget\order_status_button.dart                        | Dart     |         50 |          0 |          3 |         53 |
+| d:\Flutter Application\book_store\lib\CustomWidget\product_item.dart                               | Dart     |        150 |          0 |          3 |        153 |
+| d:\Flutter Application\book_store\lib\CustomWidget\product_shimmer_item.dart                       | Dart     |        105 |          0 |          3 |        108 |
+| d:\Flutter Application\book_store\lib\CustomWidget\search_bar.dart                                 | Dart     |         76 |          0 |          3 |         79 |
+| d:\Flutter Application\book_store\lib\DemoData\product_demo_data.dart                              | Dart     |      1,006 |          8 |          5 |      1,019 |
+| d:\Flutter Application\book_store\lib\Favorite\bloc\favorite_bloc.dart                             | Dart     |         83 |          0 |         18 |        101 |
+| d:\Flutter Application\book_store\lib\Favorite\bloc\favorite_event.dart                            | Dart     |         16 |          0 |          9 |         25 |
+| d:\Flutter Application\book_store\lib\Favorite\bloc\favorite_state.dart                            | Dart     |         14 |          0 |          7 |         21 |
+| d:\Flutter Application\book_store\lib\Favorite\ui\favorite_item.dart                               | Dart     |        160 |          0 |          3 |        163 |
+| d:\Flutter Application\book_store\lib\Favorite\ui\favorite_page.dart                               | Dart     |         77 |          0 |          3 |         80 |
+| d:\Flutter Application\book_store\lib\Home\bloc\home_bloc.dart                                     | Dart     |         36 |          0 |          8 |         44 |
+| d:\Flutter Application\book_store\lib\Home\bloc\home_event.dart                                    | Dart     |          7 |          0 |          4 |         11 |
+| d:\Flutter Application\book_store\lib\Home\bloc\home_state.dart                                    | Dart     |         17 |          0 |          7 |         24 |
+| d:\Flutter Application\book_store\lib\Home\ui\category.dart                                        | Dart     |         55 |          0 |          3 |         58 |
+| d:\Flutter Application\book_store\lib\Home\ui\home_page.dart                                       | Dart     |        138 |          0 |          5 |        143 |
+| d:\Flutter Application\book_store\lib\Home\ui\home_page_loading.dart                               | Dart     |         77 |          0 |          3 |         80 |
+| d:\Flutter Application\book_store\lib\Login_Register\auth_page.dart                                | Dart     |        109 |          0 |          7 |        116 |
+| d:\Flutter Application\book_store\lib\Login_Register\default_login.dart                            | Dart     |        326 |          4 |          9 |        339 |
+| d:\Flutter Application\book_store\lib\Login_Register\default_register.dart                         | Dart     |        368 |          4 |         13 |        385 |
+| d:\Flutter Application\book_store\lib\Login_Register\forgot_page.dart                              | Dart     |        175 |          0 |          6 |        181 |
+| d:\Flutter Application\book_store\lib\Notification\tin_nhan_page.dart                              | Dart     |         10 |          0 |          3 |         13 |
+| d:\Flutter Application\book_store\lib\OrderBill\bloc\bill_bloc.dart                                | Dart     |         31 |          0 |          9 |         40 |
+| d:\Flutter Application\book_store\lib\OrderBill\bloc\bill_event.dart                               | Dart     |         10 |          0 |          5 |         15 |
+| d:\Flutter Application\book_store\lib\OrderBill\bloc\bill_state.dart                               | Dart     |         11 |          0 |          6 |         17 |
+| d:\Flutter Application\book_store\lib\OrderBill\ui\order_bill_loading.dart                         | Dart     |        292 |          0 |          3 |        295 |
+| d:\Flutter Application\book_store\lib\OrderBill\ui\order_bill_page.dart                            | Dart     |        281 |          0 |          3 |        284 |
+| d:\Flutter Application\book_store\lib\ProductDetail\bloc\product_bloc.dart                         | Dart     |         79 |          0 |         14 |         93 |
+| d:\Flutter Application\book_store\lib\ProductDetail\bloc\product_event.dart                        | Dart     |         14 |          0 |          7 |         21 |
+| d:\Flutter Application\book_store\lib\ProductDetail\bloc\product_state.dart                        | Dart     |         19 |          0 |          7 |         26 |
+| d:\Flutter Application\book_store\lib\ProductDetail\ui\product_detail_loading.dart                 | Dart     |         88 |          0 |          3 |         91 |
+| d:\Flutter Application\book_store\lib\ProductDetail\ui\product_detail_page.dart                    | Dart     |        459 |          0 |          4 |        463 |
+| d:\Flutter Application\book_store\lib\ProductDetail\ui\product_images.dart                         | Dart     |         77 |          0 |          5 |         82 |
+| d:\Flutter Application\book_store\lib\ProductDetail\ui\star_point.dart                             | Dart     |         38 |          0 |          3 |         41 |
+| d:\Flutter Application\book_store\lib\Profile\bloc\user_bloc.dart                                  | Dart     |         79 |          3 |         14 |         96 |
+| d:\Flutter Application\book_store\lib\Profile\bloc\user_event.dart                                 | Dart     |         28 |          0 |          8 |         36 |
+| d:\Flutter Application\book_store\lib\Profile\bloc\user_state.dart                                 | Dart     |         27 |          0 |          9 |         36 |
+| d:\Flutter Application\book_store\lib\Profile\ui\change_info_page.dart                             | Dart     |        265 |          0 |          3 |        268 |
+| d:\Flutter Application\book_store\lib\Profile\ui\profile_page.dart                                 | Dart     |        328 |          0 |          5 |        333 |
+| d:\Flutter Application\book_store\lib\Profile\ui\proflie_loading_page.dart                         | Dart     |        243 |          0 |          3 |        246 |
+| d:\Flutter Application\book_store\lib\Profile\ui\support_page.dart                                 | Dart     |         18 |          0 |          3 |         21 |
+| d:\Flutter Application\book_store\lib\SearchPage\bloc\search_bloc.dart                             | Dart     |         96 |          0 |         19 |        115 |
+| d:\Flutter Application\book_store\lib\SearchPage\bloc\search_event.dart                            | Dart     |         21 |          0 |         11 |         32 |
+| d:\Flutter Application\book_store\lib\SearchPage\bloc\search_state.dart                            | Dart     |         17 |          0 |          9 |         26 |
+| d:\Flutter Application\book_store\lib\SearchPage\ui\search_loading_page.dart                       | Dart     |         54 |          0 |          3 |         57 |
+| d:\Flutter Application\book_store\lib\SearchPage\ui\search_page.dart                               | Dart     |        107 |          0 |          5 |        112 |
+| d:\Flutter Application\book_store\lib\SearchPage\ui\search_result_page.dart                        | Dart     |         65 |          0 |          4 |         69 |
+| d:\Flutter Application\book_store\lib\SearchPage\ui\search_suggestion_item.dart                    | Dart     |         32 |          0 |          3 |         35 |
+| d:\Flutter Application\book_store\lib\Transaction\AwaitPickup\bloc\await_pickup_bloc.dart          | Dart     |        104 |          0 |         20 |        124 |
+| d:\Flutter Application\book_store\lib\Transaction\AwaitPickup\bloc\await_pickup_event.dart         | Dart     |         16 |          0 |          9 |         25 |
+| d:\Flutter Application\book_store\lib\Transaction\AwaitPickup\bloc\await_pickup_state.dart         | Dart     |         14 |          0 |          8 |         22 |
+| d:\Flutter Application\book_store\lib\Transaction\AwaitPickup\ui\await_pickup_page.dart            | Dart     |         65 |          0 |          3 |         68 |
+| d:\Flutter Application\book_store\lib\Transaction\AwaitPickup\ui\await_transaction_item.dart       | Dart     |         43 |          0 |          4 |         47 |
+| d:\Flutter Application\book_store\lib\Transaction\Cancelled\bloc\cancelled_bloc.dart               | Dart     |         88 |          0 |         17 |        105 |
+| d:\Flutter Application\book_store\lib\Transaction\Cancelled\bloc\cancelled_event.dart              | Dart     |         12 |          0 |          7 |         19 |
+| d:\Flutter Application\book_store\lib\Transaction\Cancelled\bloc\cancelled_state.dart              | Dart     |         14 |          0 |          8 |         22 |
+| d:\Flutter Application\book_store\lib\Transaction\Cancelled\ui\cancelled_item.dart                 | Dart     |         60 |          0 |          4 |         64 |
+| d:\Flutter Application\book_store\lib\Transaction\Cancelled\ui\cancelled_transaction_page.dart     | Dart     |         60 |          0 |          3 |         63 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivered\bloc\delivered_bloc.dart               | Dart     |         88 |          0 |         17 |        105 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivered\bloc\delivered_event.dart              | Dart     |         12 |          0 |          7 |         19 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivered\bloc\delivered_state.dart              | Dart     |         14 |          0 |          8 |         22 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivered\ui\delivered_item.dart                 | Dart     |         69 |          0 |          4 |         73 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivered\ui\delivered_transaction_page.dart     | Dart     |         60 |          0 |          3 |         63 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivering\bloc\delivering_bloc.dart             | Dart     |        121 |          1 |         21 |        143 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivering\bloc\delivering_event.dart            | Dart     |         16 |          0 |          9 |         25 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivering\bloc\delivering_state.dart            | Dart     |         14 |          0 |          8 |         22 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivering\ui\delivering_item.dart               | Dart     |         59 |          0 |          4 |         63 |
+| d:\Flutter Application\book_store\lib\Transaction\Delivering\ui\delivering_transaction_page.dart   | Dart     |         82 |          0 |          3 |         85 |
+| d:\Flutter Application\book_store\lib\Transaction\Unconfirmed\bloc\unconfirmed_bloc.dart           | Dart     |        104 |          0 |         19 |        123 |
+| d:\Flutter Application\book_store\lib\Transaction\Unconfirmed\bloc\unconfirmed_event.dart          | Dart     |         16 |          0 |          9 |         25 |
+| d:\Flutter Application\book_store\lib\Transaction\Unconfirmed\bloc\unconfirmed_state.dart          | Dart     |         14 |          0 |          8 |         22 |
+| d:\Flutter Application\book_store\lib\Transaction\Unconfirmed\ui\unconfirmed_transaction_item.dart | Dart     |         43 |          0 |          4 |         47 |
+| d:\Flutter Application\book_store\lib\Transaction\Unconfirmed\ui\unconfirmed_transaction_page.dart | Dart     |         65 |          0 |          3 |         68 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\abstract_transaction_detail_page.dart         | Dart     |        553 |          0 |          6 |        559 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\abstract_transaction_item.dart                | Dart     |        234 |          0 |          5 |        239 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\confirm_cancelled_dialog.dart                 | Dart     |        108 |          0 |          3 |        111 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\confirm_received_dialog.dart                  | Dart     |        108 |          0 |          3 |        111 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\empty_page.dart                               | Dart     |         34 |          0 |          3 |         37 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\transaction_detail_cancel_page.dart           | Dart     |         38 |          0 |          4 |         42 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\transaction_detail_receive_page.dart          | Dart     |         36 |          0 |          3 |         39 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\transaction_detail_reorder_page.dart          | Dart     |         36 |          0 |          3 |         39 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\transaction_loading.dart                      | Dart     |         15 |          0 |          3 |         18 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\transaction_page.dart                         | Dart     |        110 |          0 |          9 |        119 |
+| d:\Flutter Application\book_store\lib\Transaction\ui\transaction_product.dart                      | Dart     |        123 |          0 |          3 |        126 |
+| d:\Flutter Application\book_store\lib\bloc\main_bloc.dart                                          | Dart     |         39 |          0 |          6 |         45 |
+| d:\Flutter Application\book_store\lib\bloc\main_event.dart                                         | Dart     |         15 |          0 |          7 |         22 |
+| d:\Flutter Application\book_store\lib\bloc\main_state.dart                                         | Dart     |         15 |          0 |          7 |         22 |
+| d:\Flutter Application\book_store\lib\firebase_options.dart                                        | Dart     |         66 |         12 |          6 |         84 |
+| d:\Flutter Application\book_store\lib\main.dart                                                    | Dart     |        257 |          0 |         10 |        267 |
+| d:\Flutter Application\book_store\lib\models\address_model.dart                                    | Dart     |         36 |          0 |          6 |         42 |
+| d:\Flutter Application\book_store\lib\models\advertising_model.dart                                | Dart     |         20 |          0 |          4 |         24 |
+| d:\Flutter Application\book_store\lib\models\cart_item_model.dart                                  | Dart     |         59 |          0 |          6 |         65 |
+| d:\Flutter Application\book_store\lib\models\category_model.dart                                   | Dart     |         46 |          0 |          5 |         51 |
+| d:\Flutter Application\book_store\lib\models\create_order_response.dart                            | Dart     |         28 |          0 |          3 |         31 |
+| d:\Flutter Application\book_store\lib\models\favorite_model.dart                                   | Dart     |         14 |          0 |          2 |         16 |
+| d:\Flutter Application\book_store\lib\models\payment_method_model.dart                             | Dart     |         26 |          0 |          3 |         29 |
+| d:\Flutter Application\book_store\lib\models\product_data_model.dart                               | Dart     |         47 |          0 |          5 |         52 |
+| d:\Flutter Application\book_store\lib\models\search_suggestion_model.dart                          | Dart     |         26 |          0 |          5 |         31 |
+| d:\Flutter Application\book_store\lib\models\sort_protduct_data_model.dart                         | Dart     |         32 |          0 |          4 |         36 |
+| d:\Flutter Application\book_store\lib\models\transaction_model.dart                                | Dart     |         68 |          0 |          5 |         73 |
+| d:\Flutter Application\book_store\lib\models\transport_model.dart                                  | Dart     |         34 |          0 |          5 |         39 |
+| d:\Flutter Application\book_store\lib\models\user_model.dart                                       | Dart     |         12 |          0 |          2 |         14 |
+| d:\Flutter Application\book_store\lib\theme.dart                                                   | Dart     |         33 |          0 |          7 |         40 |
+| d:\Flutter Application\book_store\lib\utils\convert.dart                                           | Dart     |         20 |          0 |          6 |         26 |
+| d:\Flutter Application\book_store\lib\utils\zalopay_app_config.dart                                | Dart     |          9 |          0 |          2 |         11 |
+| Total                                                                                              |          |     14,688 |         46 |      1,062 |     15,796 |
++----------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

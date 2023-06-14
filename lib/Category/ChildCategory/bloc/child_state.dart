@@ -10,7 +10,7 @@ abstract class ChildState extends Equatable {
 class ChildLoadingState extends ChildState {}
 
 class ChildLoadingSuccessfulState extends ChildState {
-  final List<ProductDataModel> listChild;
+  final List<ShortProductDataModel> listChild;
   final int sortType;
 
   const ChildLoadingSuccessfulState({

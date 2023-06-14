@@ -3,9 +3,13 @@ import 'package:book_store/CustomWidget/custom_list_tile.dart';
 import 'package:book_store/Authentication%20Service/auth_service.dart';
 import 'package:book_store/CustomWidget/custom_page_route.dart';
 import 'package:book_store/CustomWidget/order_status_button.dart';
+import 'package:book_store/Favorite/ui/favorite_page.dart';
+import 'package:book_store/UserFeedback/ui/feedback_page.dart';
+import 'package:book_store/Profile/bloc/feedback_count_bloc.dart';
 import 'package:book_store/Profile/bloc/user_bloc.dart';
 import 'package:book_store/Profile/ui/change_info_page.dart';
 import 'package:book_store/Profile/ui/proflie_loading_page.dart';
+import 'package:book_store/Profile/ui/support_page.dart';
 import 'package:book_store/Transaction/ui/transaction_page.dart';
 import 'package:book_store/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -18,29 +22,12 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
-      builder: (context, state) {
-        if (state is UserLoadingSuccessfulState) {
-          return userSuccessState(context, state);
-        } else if (state is UserLoadingState) {
-          return const ProfileLoadingPage();
-        } else {
-          return const Center(
-            child: Text('Something went wrong'),
-          );
-        }
-      },
-    );
-  }
-
-  Widget userSuccessState(
-      BuildContext context, UserLoadingSuccessfulState state) {
     return Container(
       height: double.infinity,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: background,
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -49,97 +36,110 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(
               height: 26,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: SafeArea(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: themeColor,
-                          width: 2,
-                        ),
-                        shape: BoxShape.circle,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: CachedNetworkImage(
-                          imageUrl: state.userModel.imgUrl,
-                          fit: BoxFit.contain,
-                          width: 66,
-                          height: 66,
-                          errorWidget: (context, url, error) {
-                            return Image.asset(
-                              'images/user.png',
-                              fit: BoxFit.contain,
-                              width: 66,
-                              height: 66,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 4,
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        height: 62,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 14,
+            BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                if (state is UserLoadingSuccessfulState) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: SafeArea(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: themeColor,
+                                width: 2,
+                              ),
+                              shape: BoxShape.circle,
                             ),
-                            Text(
-                              state.userModel.name,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w500,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: CachedNetworkImage(
+                                imageUrl: state.userModel.imgUrl,
+                                fit: BoxFit.contain,
+                                width: 66,
+                                height: 66,
+                                errorWidget: (context, url, error) {
+                                  return Image.asset(
+                                    'images/user.png',
+                                    fit: BoxFit.contain,
+                                    width: 66,
+                                    height: 66,
+                                  );
+                                },
                               ),
                             ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                const Text(
-                                  'Chỉnh sửa tài khoản',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w300,
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          Expanded(
+                            child: SizedBox(
+                              height: 62,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 14,
                                   ),
-                                ),
-                                const Spacer(),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context) {
-                                      return const ChangeInfoPage();
-                                    }));
-                                  },
-                                  child: FaIcon(
-                                    size: 14,
-                                    FontAwesomeIcons.penToSquare,
-                                    color: themeColor,
+                                  Text(
+                                    state.userModel.name,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
-                                )
-                              ],
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      const Text(
+                                        'Chỉnh sửa tài khoản',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return const ChangeInfoPage();
+                                          }));
+                                        },
+                                        child: FaIcon(
+                                          size: 14,
+                                          FontAwesomeIcons.penToSquare,
+                                          color: themeColor,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
+                  );
+                } else if (state is UserLoadingState) {
+                  return const ProfileLoadingPage();
+                } else {
+                  return const Center(
+                    child: Text('Something went wrong'),
+                  );
+                }
+              },
             ),
             Card(
               shape: RoundedRectangleBorder(
@@ -176,52 +176,130 @@ class ProfilePage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              navigateToTransactionPage(0, context);
-                            },
-                            child: OrderStatusButton(
-                              text: 'Chờ xác nhận',
-                              icon: FontAwesomeIcons.envelopeOpenText,
-                              badgeCount: state.zero,
-                            ),
-                          ),
+                        BlocBuilder<UserBloc, UserState>(
+                          builder: (context, state) {
+                            if (state is UserLoadingSuccessfulState) {
+                              return Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    navigateToTransactionPage(0, context);
+                                  },
+                                  child: OrderStatusButton(
+                                    text: 'Chờ xác nhận',
+                                    icon: FontAwesomeIcons.envelopeOpenText,
+                                    badgeCount: state.zero,
+                                  ),
+                                ),
+                              );
+                            } else if (state is UserLoadingState) {
+                              return const Expanded(
+                                child: OrderStatusButton(
+                                  text: 'Chờ xác nhận',
+                                  icon: FontAwesomeIcons.envelopeOpenText,
+                                  badgeCount: 0,
+                                ),
+                              );
+                            } else {
+                              return const Center(
+                                child: Text('Something went wrong'),
+                              );
+                            }
+                          },
                         ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              navigateToTransactionPage(1, context);
-                            },
-                            child: OrderStatusButton(
-                              text: 'Chờ lấy hàng',
-                              icon: FontAwesomeIcons.box,
-                              badgeCount: state.one,
-                            ),
-                          ),
+                        BlocBuilder<UserBloc, UserState>(
+                          builder: (context, state) {
+                            if (state is UserLoadingSuccessfulState) {
+                              return Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    navigateToTransactionPage(1, context);
+                                  },
+                                  child: OrderStatusButton(
+                                    text: 'Chờ lấy hàng',
+                                    icon: FontAwesomeIcons.box,
+                                    badgeCount: state.one,
+                                  ),
+                                ),
+                              );
+                            } else if (state is UserLoadingState) {
+                              return const Expanded(
+                                child: OrderStatusButton(
+                                  text: 'Chờ lấy hàng',
+                                  icon: FontAwesomeIcons.box,
+                                  badgeCount: 0,
+                                ),
+                              );
+                            } else {
+                              return const Center(
+                                child: Text('Something went wrong'),
+                              );
+                            }
+                          },
                         ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              navigateToTransactionPage(2, context);
-                            },
-                            child: OrderStatusButton(
-                              text: 'Đang giao',
-                              icon: FontAwesomeIcons.truckFast,
-                              badgeCount: state.two,
-                            ),
-                          ),
+                        BlocBuilder<UserBloc, UserState>(
+                          builder: (context, state) {
+                            if (state is UserLoadingSuccessfulState) {
+                              return Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    navigateToTransactionPage(2, context);
+                                  },
+                                  child: OrderStatusButton(
+                                    text: 'Đang giao',
+                                    icon: FontAwesomeIcons.truckFast,
+                                    badgeCount: state.two,
+                                  ),
+                                ),
+                              );
+                            } else if (state is UserLoadingState) {
+                              return const Expanded(
+                                child: OrderStatusButton(
+                                  text: 'Đang giao',
+                                  icon: FontAwesomeIcons.truckFast,
+                                  badgeCount: 0,
+                                ),
+                              );
+                            } else {
+                              return const Center(
+                                child: Text('Something went wrong'),
+                              );
+                            }
+                          },
                         ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: OrderStatusButton(
-                              text: 'Chưa đánh giá',
-                              icon: FontAwesomeIcons.star,
-                              badgeCount: state.three,
-                            ),
-                          ),
-                        ),
+                        BlocBuilder<FeedbackCountBloc, FeedbackCountState>(
+                          builder: (context, state) {
+                            if (state is FeedbackCountLoadedState) {
+                              return Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      PageRouteSlideTransition(
+                                        child: const FeedbackPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: OrderStatusButton(
+                                    text: 'Chưa đánh giá',
+                                    icon: FontAwesomeIcons.star,
+                                    badgeCount: state.totalFeedback,
+                                  ),
+                                ),
+                              );
+                            } else if (state is FeedbackCountLoadingState) {
+                              return const Expanded(
+                                child: OrderStatusButton(
+                                  text: 'Chưa đánh giá',
+                                  icon: FontAwesomeIcons.star,
+                                  badgeCount: 0,
+                                ),
+                              );
+                            } else {
+                              return const Center(
+                                child: Text('Something went wrong'),
+                              );
+                            }
+                          },
+                        )
                       ],
                     ),
                   ],
@@ -245,7 +323,13 @@ class ProfilePage extends StatelessWidget {
             CustomListTile(
               title: 'Đã thích',
               leading: FontAwesomeIcons.heart,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  PageRouteSlideTransition(
+                    child: const FavoritePage(),
+                  ),
+                );
+              },
             ),
             CustomListTile(
               title: 'Lịch sử mua hàng',
@@ -293,7 +377,13 @@ class ProfilePage extends StatelessWidget {
             CustomListTile(
               title: 'Trợ giúp',
               leading: Icons.help_outline,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  PageRouteSlideTransition(
+                    child: const SupportPage(),
+                  ),
+                );
+              },
             ),
             CustomListTile(
               title: 'Đăng xuất',

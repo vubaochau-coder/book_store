@@ -118,7 +118,8 @@ class OrderBillPage extends StatelessWidget {
                                 style: text1,
                               ),
                               Text(
-                                state.info.dateCreated,
+                                Converter.convertDateToString(
+                                    state.info.dateCreated),
                                 style: text2.copyWith(
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -136,7 +137,8 @@ class OrderBillPage extends StatelessWidget {
                                 style: text1,
                               ),
                               Text(
-                                state.info.dateCompleted,
+                                Converter.convertDateToStringWithoutTime(
+                                    state.info.dateCompleted),
                                 style: text2.copyWith(
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -209,9 +211,13 @@ class OrderBillPage extends StatelessWidget {
                                 style: text1,
                               ),
                               Text(
-                                'Chưa thanh toán',
+                                state.info.paid
+                                    ? 'Đã thanh toán'
+                                    : 'Chưa thanh toán',
                                 style: text2.copyWith(
-                                  color: Colors.red,
+                                  color: state.info.paid
+                                      ? Colors.green
+                                      : Colors.red,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -243,9 +249,9 @@ class OrderBillPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(
                             Icons.home_outlined,
                             color: Colors.white,

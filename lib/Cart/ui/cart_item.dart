@@ -1,3 +1,5 @@
+import 'package:book_store/CustomWidget/custom_page_route.dart';
+import 'package:book_store/ProductDetail/ui/product_detail_page.dart';
 import 'package:book_store/models/cart_item_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
@@ -31,7 +33,7 @@ class _CartItemState extends State<CartItem> {
     return Container(
       height: 126,
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-      margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: Colors.white,
@@ -54,21 +56,30 @@ class _CartItemState extends State<CartItem> {
           ),
           Expanded(
             flex: 6,
-            child: CachedNetworkImage(
-              imageUrl: widget.cartData.imgUrl,
-              fit: BoxFit.contain,
-              placeholder: (context, url) {
-                return Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[200]!,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  PageRouteSlideTransition(
+                    child: ProductDetailPage(productID: widget.cartData.bookID),
                   ),
                 );
               },
+              child: CachedNetworkImage(
+                imageUrl: widget.cartData.imgUrl,
+                fit: BoxFit.contain,
+                placeholder: (context, url) {
+                  return Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[200]!,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
           Expanded(
@@ -76,17 +87,29 @@ class _CartItemState extends State<CartItem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.cartData.title,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.5,
-                    color: Colors.black,
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageRouteSlideTransition(
+                          child: ProductDetailPage(
+                              productID: widget.cartData.bookID),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      widget.cartData.title,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14.5,
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(height: 8),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [

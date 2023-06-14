@@ -10,7 +10,7 @@ abstract class ComicState extends Equatable {
 class ComicLoadingState extends ComicState {}
 
 class ComicLoadingSuccessfulState extends ComicState {
-  final List<ProductDataModel> listComic;
+  final List<ShortProductDataModel> listComic;
   final int sortType;
 
   const ComicLoadingSuccessfulState({

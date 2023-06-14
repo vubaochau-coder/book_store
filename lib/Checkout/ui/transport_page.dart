@@ -110,7 +110,9 @@ class _TransportListPageState extends State<TransportListPage> {
                                     Text(
                                       'đ',
                                       style: TextStyle(
-                                        color: themeColor,
+                                        color: tempList[index].isSelected
+                                            ? themeColor
+                                            : Colors.grey,
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
                                         decoration: TextDecoration.underline,
@@ -122,7 +124,9 @@ class _TransportListPageState extends State<TransportListPage> {
                                         Converter.convertNumberToMoney(
                                             tempList[index].price),
                                         style: TextStyle(
-                                          color: themeColor,
+                                          color: tempList[index].isSelected
+                                              ? themeColor
+                                              : Colors.grey,
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -133,8 +137,12 @@ class _TransportListPageState extends State<TransportListPage> {
                                 Text(
                                   'Nhận hàng sau ${tempList[index].min}-${tempList[index].max} ngày',
                                   style: TextStyle(
-                                    color: Colors.grey[400],
-                                    fontWeight: FontWeight.w300,
+                                    color: tempList[index].isSelected
+                                        ? Colors.grey
+                                        : Colors.grey[400],
+                                    fontWeight: tempList[index].isSelected
+                                        ? FontWeight.w400
+                                        : FontWeight.w300,
                                   ),
                                 ),
                               ],

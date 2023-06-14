@@ -1,5 +1,6 @@
 import 'package:book_store/Cart/bloc/cart_bloc.dart';
 import 'package:book_store/Login_Register/auth_page.dart';
+import 'package:book_store/Profile/bloc/feedback_count_bloc.dart';
 import 'package:book_store/Profile/bloc/user_bloc.dart';
 import 'package:book_store/bloc/main_bloc.dart';
 import 'package:book_store/main.dart';
@@ -18,6 +19,8 @@ class AuthService {
           BlocProvider.of<CartBloc>(context).add(CartLoadingEvent());
           BlocProvider.of<MainBloc>(context).add(MainLoadingEvent());
           BlocProvider.of<UserBloc>(context).add(UserLoadingEvent());
+          BlocProvider.of<FeedbackCountBloc>(context)
+              .add(FeedbackCountLoadingEvent());
           return const RootPage();
         } else {
           return const AuthenticationPage();

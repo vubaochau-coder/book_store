@@ -73,9 +73,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           countThree: transactionThree.size,
           model: model,
         ));
-        // emit(
-        //   UserLoadingSuccessfulState(userModel: model),
-        // );
       });
     } on Exception catch (e) {
       emit(UserLoadingFailedState(error: e.toString()));

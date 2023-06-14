@@ -186,8 +186,8 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
               const SizedBox(
                 height: 16,
               ),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   Expanded(
                     child: Divider(
                       color: Colors.black54,

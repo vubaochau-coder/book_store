@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,7 +20,7 @@ class OrderStatusButton extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Badge(
+          badge.Badge(
             showBadge: badgeCount > 0,
             badgeContent: Text(
               badgeCount.toString(),
@@ -29,7 +29,7 @@ class OrderStatusButton extends StatelessWidget {
                 fontSize: 12,
               ),
             ),
-            badgeStyle: const BadgeStyle(
+            badgeStyle: const badge.BadgeStyle(
               padding: EdgeInsets.all(4),
             ),
             child: FaIcon(

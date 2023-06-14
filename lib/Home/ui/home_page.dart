@@ -1,13 +1,14 @@
 import 'package:book_store/Category/category_page.dart';
 import 'package:book_store/CustomWidget/advertising_banner.dart';
+import 'package:book_store/CustomWidget/custom_page_route.dart';
 import 'package:book_store/CustomWidget/product_item.dart';
+import 'package:book_store/CustomWidget/search_bar.dart';
 import 'package:book_store/Home/bloc/home_bloc.dart';
 import 'package:book_store/Home/ui/category.dart';
 import 'package:book_store/Home/ui/home_page_loading.dart';
-import 'package:book_store/ProductDetail/ui/product_detail_page.dart';
 import 'package:book_store/models/advertising_model.dart';
 import 'package:book_store/models/category_model.dart';
-import 'package:book_store/models/product_data_model.dart';
+import 'package:book_store/models/short_protduct_data_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: background,
       appBar: AppBar(
         titleSpacing: 10,
         backgroundColor: themeColor,
@@ -36,73 +37,7 @@ class _HomePageState extends State<HomePage> {
             fit: BoxFit.contain,
           ),
         ),
-        title: SizedBox(
-          height: 36,
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: Colors.white,
-            ),
-            padding: const EdgeInsets.only(
-              left: 8,
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.search,
-                  color: themeColor,
-                ),
-                const Text(
-                  'Tuổi trẻ đáng giá bao nhiêu',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                const Spacer(),
-                Container(
-                  width: 58,
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 2,
-                    horizontal: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xffe65728),
-                        Color(0xffffe341),
-                      ],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Navigator.of(context).push(PageRouteSlideTransition(
-                      //     child: OrderBillPage(
-                      //         idTransaction: 'PyKvmucHV00Aw68w4fAj')));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: Colors.transparent,
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: const Text(
-                      'Tìm',
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        title: const MyCustomSearchBar(),
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
@@ -119,7 +54,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget homePageSuccess(
-      List<ProductDataModel> data, List<AdvertisingDataModel> adData) {
+      List<ShortProductDataModel> data, List<AdvertisingDataModel> adData) {
     return RefreshIndicator(
       onRefresh: () async {
         BlocProvider.of<HomeBloc>(context).add(HomeLoadingEvent());
@@ -149,11 +84,16 @@ class _HomePageState extends State<HomePage> {
                   itemCount: Category.categories.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () => Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return CategoryPage(index: index);
-                      })),
+                    return InkWell(
+                      splashColor: splashColor,
+                      onTap: () => Future.delayed(
+                        Duration(milliseconds: delay),
+                        () => Navigator.of(context).push(
+                          PageRouteSlideTransition(
+                            child: CategoryPage(index: index),
+                          ),
+                        ),
+                      ),
                       child: CategorieItem(
                         categoryData: Category.categories[index],
                       ),
@@ -188,21 +128,8 @@ class _HomePageState extends State<HomePage> {
                 childAspectRatio: 0.75,
               ),
               itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return ProductDetailPage(
-                            productData: data[index],
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  child: ProductItem(
-                    data: data[index],
-                  ),
+                return ProductItem(
+                  data: data[index],
                 );
               },
               itemCount: data.length,

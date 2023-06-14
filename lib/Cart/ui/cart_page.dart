@@ -16,6 +16,7 @@ class GioHangPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: background,
       appBar: AppBar(
         backgroundColor: themeColor,
         elevation: 0,
@@ -184,8 +185,8 @@ class GioHangPage extends StatelessWidget {
                     ),
                     backgroundColor: themeColor,
                   ),
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Text(
                         'Thanh toán',
                         style: TextStyle(
@@ -258,9 +259,9 @@ class GioHangPage extends StatelessWidget {
         color: const Color(0xff323232),
       ),
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-      child: Column(
+      child: const Column(
         mainAxisSize: MainAxisSize.min,
-        children: const [
+        children: [
           Icon(
             Icons.error_outline,
             color: Colors.white,

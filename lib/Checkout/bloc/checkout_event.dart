@@ -9,14 +9,26 @@ abstract class CheckoutEvent extends Equatable {
 
 class CheckoutLoadingEvent extends CheckoutEvent {}
 
-class CheckoutUpdateEvent extends CheckoutEvent {
+class CheckoutUpdateAddressEvent extends CheckoutEvent {
   final AddressModel newAddress;
-  final List<TransportModel> transports;
+  // final List<TransportModel> transports;
 
-  const CheckoutUpdateEvent({
+  const CheckoutUpdateAddressEvent({
     required this.newAddress,
-    required this.transports,
+    // required this.transports,
   });
+}
+
+class CheckoutUpdateTransportEvent extends CheckoutEvent {
+  final List<TransportModel> transport;
+
+  const CheckoutUpdateTransportEvent({required this.transport});
+}
+
+class CheckoutUpdatePaymentMethodEvent extends CheckoutEvent {
+  final List<PaymentMethodModel> payment;
+
+  const CheckoutUpdatePaymentMethodEvent({required this.payment});
 }
 
 class CheckoutUpdateEmptyAddressEvent extends CheckoutEvent {
@@ -27,11 +39,21 @@ class CheckoutUpdateEmptyAddressEvent extends CheckoutEvent {
   });
 }
 
-class CheckoutOrderEvent extends CheckoutEvent {
+class CheckoutSimpleOrderEvent extends CheckoutEvent {
   final TransactionModel transaction;
   final bool fromCart;
 
-  const CheckoutOrderEvent({
+  const CheckoutSimpleOrderEvent({
+    required this.transaction,
+    required this.fromCart,
+  });
+}
+
+class CheckoutZaloPayOrderEvent extends CheckoutEvent {
+  final TransactionModel transaction;
+  final bool fromCart;
+
+  const CheckoutZaloPayOrderEvent({
     required this.transaction,
     required this.fromCart,
   });

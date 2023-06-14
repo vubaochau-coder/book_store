@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 Color themeColor = const Color(0xffe65728);
+Color splashColor = themeColor.withAlpha(100);
+Color background = const Color.fromRGBO(245, 245, 245, 1);
+int delay = 150;
 
 InputBorder textFieldBorder = OutlineInputBorder(
   borderRadius: BorderRadius.circular(16),

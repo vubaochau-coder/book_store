@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:book_store/models/product_data_model.dart';
+import 'package:book_store/models/short_protduct_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
@@ -16,7 +16,7 @@ class ComicBloc extends Bloc<ComicEvent, ComicState> {
   FutureOr<void> comicLoadEvent(
       ComicLoadEvent event, Emitter<ComicState> emit) async {
     emit(ComicLoadingState());
-    List<ProductDataModel> productDatas = [];
+    List<ShortProductDataModel> productDatas = [];
 
     switch (event.options) {
       case 0:
@@ -26,7 +26,7 @@ class ComicBloc extends Bloc<ComicEvent, ComicState> {
             .orderBy('totalSold', descending: true)
             .get();
         for (var ele in allProductQuery.docs) {
-          productDatas.add(ProductDataModel.fromShapshot(ele));
+          productDatas.add(ShortProductDataModel.fromSnapshot(ele));
         }
         break;
       case 1:
@@ -36,7 +36,7 @@ class ComicBloc extends Bloc<ComicEvent, ComicState> {
             .orderBy('price', descending: true)
             .get();
         for (var ele in allProductQuery.docs) {
-          productDatas.add(ProductDataModel.fromShapshot(ele));
+          productDatas.add(ShortProductDataModel.fromSnapshot(ele));
         }
         break;
       case 2:
@@ -46,7 +46,7 @@ class ComicBloc extends Bloc<ComicEvent, ComicState> {
             .orderBy('price', descending: false)
             .get();
         for (var ele in allProductQuery.docs) {
-          productDatas.add(ProductDataModel.fromShapshot(ele));
+          productDatas.add(ShortProductDataModel.fromSnapshot(ele));
         }
         break;
     }

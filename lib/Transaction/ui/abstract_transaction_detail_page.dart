@@ -92,8 +92,8 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Icon(
                               Icons.delivery_dining_outlined,
                               size: 20,
@@ -156,8 +156,8 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
                           ],
                         ),
                         const Divider(height: 24),
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Icon(
                               Icons.pin_drop_outlined,
                               size: 20,
@@ -265,42 +265,79 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
                         const SizedBox(
                           height: 8,
                         ),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              const TextSpan(
-                                text: 'Vui lòng thanh toán ',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 14,
+                        transactionData.paid
+                            ? RichText(
+                                text: TextSpan(
+                                  children: [
+                                    const TextSpan(
+                                      text: 'Đơn hàng đã thanh toán ',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: 'đ',
+                                      style: TextStyle(
+                                        color: themeColor,
+                                        decoration: TextDecoration.underline,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: Converter.convertNumberToMoney(
+                                          transactionData.totalPrice),
+                                      style: TextStyle(
+                                        color: themeColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const TextSpan(
+                                      text: ' qua ZaloPay',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : RichText(
+                                text: TextSpan(
+                                  children: [
+                                    const TextSpan(
+                                      text: 'Vui lòng thanh toán ',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: 'đ',
+                                      style: TextStyle(
+                                        color: themeColor,
+                                        decoration: TextDecoration.underline,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: Converter.convertNumberToMoney(
+                                          transactionData.totalPrice),
+                                      style: TextStyle(
+                                        color: themeColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const TextSpan(
+                                      text: ' khi nhận hàng',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              TextSpan(
-                                text: 'đ',
-                                style: TextStyle(
-                                  color: themeColor,
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              TextSpan(
-                                text: Converter.convertNumberToMoney(
-                                    transactionData.totalPrice),
-                                style: TextStyle(
-                                  color: themeColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const TextSpan(
-                                text: ' khi nhận hàng',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -313,8 +350,8 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        Row(
-                          children: const [
+                        const Row(
+                          children: [
                             Icon(
                               Icons.monetization_on_outlined,
                               size: 20,
@@ -335,18 +372,18 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
                           height: 4,
                         ),
                         Row(
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.monetization_on_outlined,
                               size: 20,
                               color: Colors.transparent,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 4,
                             ),
                             Text(
-                              'Thanh toán khi nhận hàng',
-                              style: TextStyle(
+                              transactionData.paymentMethod,
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                                 color: Colors.grey,
@@ -393,7 +430,8 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
                               style: text1,
                             ),
                             Text(
-                              transactionData.dateCreated,
+                              Converter.convertDateToString(
+                                  transactionData.dateCreated),
                               style: text2.copyWith(
                                 color: Colors.black87,
                                 fontWeight: FontWeight.w400,
@@ -414,7 +452,11 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
                               style: text1,
                             ),
                             Text(
-                              transactionData.dateCompleted,
+                              transactionData.status < 3
+                                  ? Converter.convertDateToStringWithoutTime(
+                                      transactionData.dateCompleted)
+                                  : Converter.convertDateToString(
+                                      transactionData.dateCompleted),
                               style: text2.copyWith(
                                 color: Colors.black87,
                                 fontWeight: FontWeight.w400,

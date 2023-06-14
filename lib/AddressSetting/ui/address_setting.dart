@@ -1,7 +1,6 @@
 import 'package:book_store/AddressSetting/bloc/address_bloc.dart';
 import 'package:book_store/AddressSetting/ui/address_loading.dart';
 import 'package:book_store/AddressSetting/ui/add_address_page.dart';
-import 'package:book_store/Checkout/bloc/checkout_bloc.dart';
 import 'package:book_store/CustomWidget/custom_page_route.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,7 @@ class AddressSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: background,
       appBar: AppBar(
         title: const Text('Chọn địa chỉ nhận hàng'),
         backgroundColor: themeColor,
@@ -44,8 +44,7 @@ class AddressSettingPage extends StatelessWidget {
                               AddressSelectedEvent(
                                   id: state.listAddress[index].id),
                             );
-                            BlocProvider.of<CheckoutBloc>(context)
-                                .add(CheckoutLoadingEvent());
+
                             Navigator.of(context).pop();
                           },
                         ),

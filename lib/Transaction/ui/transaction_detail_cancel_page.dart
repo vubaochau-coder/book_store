@@ -19,7 +19,7 @@ class CanCancelledTransactionDetailPage extends AbstractTransactionDetailPage {
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
       color: Colors.white,
       child: ElevatedButton(
-        onPressed: onCancelled,
+        onPressed: transactionData.paid ? null : onCancelled,
         style: ElevatedButton.styleFrom(
           backgroundColor: themeColor,
           elevation: 0,
@@ -27,9 +27,11 @@ class CanCancelledTransactionDetailPage extends AbstractTransactionDetailPage {
             borderRadius: BorderRadius.circular(4),
           ),
         ),
-        child: const Text(
-          'Hủy đơn hàng',
-          style: TextStyle(
+        child: Text(
+          transactionData.paid
+              ? 'Không thể hủy đơn đã thanh toán'
+              : 'Hủy đơn hàng',
+          style: const TextStyle(
             color: Colors.white,
           ),
         ),

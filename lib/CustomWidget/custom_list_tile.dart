@@ -13,50 +13,41 @@ class CustomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: themeColor.withAlpha(100),
-      onTap: onPressed,
-      child: Container(
-        margin: const EdgeInsets.only(top: 4),
-        decoration: BoxDecoration(
-          color: Colors.white,
+    return Container(
+      margin: const EdgeInsets.only(top: 4),
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(6),
+        elevation: 2,
+        child: InkWell(
+          splashColor: splashColor,
           borderRadius: BorderRadius.circular(6),
-          gradient: LinearGradient(
-            colors: [
-              themeColor,
-              Colors.white,
-            ],
-            stops: const [0.01, 0.01],
+          onTap: () => Future.delayed(
+            Duration(milliseconds: delay),
+            onPressed,
           ),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 1,
-              offset: Offset(0, 1),
+          child: ListTile(
+            horizontalTitleGap: 0,
+            leading: Icon(
+              leading,
+              color: themeColor,
+              size: 20,
             ),
-          ],
-        ),
-        child: ListTile(
-          horizontalTitleGap: 0,
-          leading: Icon(
-            leading,
-            color: themeColor,
-            size: 20,
-          ),
-          title: Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 15,
+            title: Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 15,
+                color: Colors.black,
+              ),
+            ),
+            trailing: const Icon(
+              Icons.arrow_forward_ios,
               color: Colors.black,
+              size: 14,
             ),
+            dense: true,
           ),
-          trailing: const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.black,
-            size: 14,
-          ),
-          dense: true,
         ),
       ),
     );

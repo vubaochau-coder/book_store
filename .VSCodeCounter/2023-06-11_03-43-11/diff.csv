@@ -1,0 +1,24 @@
+"filename", "language", "Dart", "comment", "blank", "total"
+"d:\Flutter Application\book_store\lib\Authentication Service\auth_service.dart", "Dart", 3, 0, 0, 3
+"d:\Flutter Application\book_store\lib\Checkout\bloc\checkout_bloc.dart", "Dart", 2, 0, 0, 2
+"d:\Flutter Application\book_store\lib\CustomWidget\search_bar.dart", "Dart", 2, 0, 0, 2
+"d:\Flutter Application\book_store\lib\Profile\bloc\feedback_count_bloc.dart", "Dart", 32, 0, 9, 41
+"d:\Flutter Application\book_store\lib\Profile\bloc\feedback_count_event.dart", "Dart", 11, 0, 6, 17
+"d:\Flutter Application\book_store\lib\Profile\bloc\feedback_count_state.dart", "Dart", 13, 0, 7, 20
+"d:\Flutter Application\book_store\lib\Profile\bloc\user_bloc.dart", "Dart", 0, -3, 0, -3
+"d:\Flutter Application\book_store\lib\Profile\ui\profile_page.dart", "Dart", 70, 0, -1, 69
+"d:\Flutter Application\book_store\lib\Profile\ui\proflie_loading_page.dart", "Dart", -147, 0, 0, -147
+"d:\Flutter Application\book_store\lib\Profile\ui\support_page.dart", "Dart", 3, 0, 0, 3
+"d:\Flutter Application\book_store\lib\SearchPage\bloc\search_bloc.dart", "Dart", 10, 0, 3, 13
+"d:\Flutter Application\book_store\lib\SearchPage\bloc\search_event.dart", "Dart", 0, 0, -3, -3
+"d:\Flutter Application\book_store\lib\SearchPage\bloc\search_state.dart", "Dart", 2, 0, 1, 3
+"d:\Flutter Application\book_store\lib\SearchPage\ui\search_loading_page.dart", "Dart", 3, 0, 0, 3
+"d:\Flutter Application\book_store\lib\SearchPage\ui\search_page.dart", "Dart", 23, 0, 2, 25
+"d:\Flutter Application\book_store\lib\SearchPage\ui\search_result_page.dart", "Dart", 131, 0, 5, 136
+"d:\Flutter Application\book_store\lib\SearchPage\ui\search_suggestion_item.dart", "Dart", 2, 0, 0, 2
+"d:\Flutter Application\book_store\lib\main.dart", "Dart", 2, 0, 0, 2
+"d:\Flutter Application\book_store\lib\models\search_data_model.dart", "Dart", 5, 0, 2, 7
+"d:\Flutter Application\book_store\lib\models\search_list_singleton.dart", "Dart", 20, 0, 8, 28
+"d:\Flutter Application\book_store\lib\models\short_protduct_data_model.dart", "Dart", 32, 0, 4, 36
+"d:\Flutter Application\book_store\lib\models\sort_protduct_data_model.dart", "Dart", -32, 0, -4, -36
+"Total", "-", 187, -3, 39, 223

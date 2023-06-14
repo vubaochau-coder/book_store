@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TransactionModel {
   final String id;
-  final String dateCreated;
-  final String dateCompleted;
+  final DateTime dateCreated;
+  final DateTime dateCompleted;
   final String address;
   final String transport;
   final String note;
@@ -13,6 +13,8 @@ class TransactionModel {
   final double transportPrice;
   final List<CartItemModel> products;
   final int status;
+  final bool paid;
+  final String paymentMethod;
 
   TransactionModel({
     required this.id,
@@ -26,22 +28,28 @@ class TransactionModel {
     required this.transportPrice,
     required this.products,
     required this.status,
+    required this.paid,
+    required this.paymentMethod,
   });
 
   factory TransactionModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
       List<CartItemModel> products) {
+    Timestamp create = snapshot.get('dateCreated');
+    Timestamp completed = snapshot.get('dateCompleted');
     return TransactionModel(
       id: snapshot.id,
       address: snapshot.get('address'),
-      dateCompleted: snapshot.get('dateCompleted'),
-      dateCreated: snapshot.get('dateCreated'),
+      dateCompleted: completed.toDate(),
+      dateCreated: create.toDate(),
       note: snapshot.get('note'),
       productPrice: snapshot.get('productPrice'),
       status: int.parse(snapshot.get('status').toString()),
       totalPrice: double.parse(snapshot.get('totalPrice').toString()),
       transportPrice: double.parse(snapshot.get('transportPrice').toString()),
       transport: snapshot.get('transport'),
+      paid: snapshot.get('paid'),
+      paymentMethod: snapshot.get('paymentMethod'),
       products: products,
     );
   }
@@ -57,6 +65,8 @@ class TransactionModel {
       'productPrice': productPrice,
       'transportPrice': transportPrice,
       'status': status,
+      'paid': paid,
+      'paymentMethod': paymentMethod,
     };
   }
 }

@@ -90,8 +90,8 @@ class CartLoadingPage extends StatelessWidget {
                     ),
                     backgroundColor: themeColor,
                   ),
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Text(
                         'Thanh toán',
                         style: TextStyle(

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:book_store/models/cart_item_model.dart';
 import 'package:book_store/models/transaction_model.dart';
-import 'package:book_store/utils/convert.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -117,7 +116,7 @@ class DeliveringBloc extends Bloc<DeliveringEvent, DeliveringState> {
         .doc(event.transactionID);
 
     await docRef.update({
-      'dateCompleted': Converter.convertDateToString(DateTime.now()),
+      'dateCompleted': DateTime.now(),
       'status': 3,
     }).then((value) async {
       final productsQuery = await FirebaseFirestore.instance
@@ -127,16 +126,30 @@ class DeliveringBloc extends Bloc<DeliveringEvent, DeliveringState> {
           .doc(event.transactionID)
           .collection('Products')
           .get();
+
       for (var item in productsQuery.docs) {
         String productID = item.get('productID');
+
+        //Update totalSold of book
         final bookRef =
             FirebaseFirestore.instance.collection('Book').doc(productID);
-        final totalSold = await bookRef.get();
-        int temp = int.parse(totalSold.get('totalSold').toString());
+        final book = await bookRef.get();
+        int temp = int.parse(book.get('totalSold').toString());
         temp += int.parse(item.get('count').toString());
         await bookRef.update({'totalSold': temp});
+
+        //Add product to Feedback collection
+        final feedbackCollection = FirebaseFirestore.instance
+            .collection('User')
+            .doc(uid)
+            .collection('Feedback');
+        await feedbackCollection.add({
+          'productID': productID,
+          'price': item.get('price'),
+          'bookTitle': book.get('title'),
+          'imgURL': List.from(book.get('listURL'))[0],
+        });
       }
-      // add(DeliveringLoadingEvent());
     });
   }
 }

@@ -1,3 +1,4 @@
+import 'package:book_store/models/cart_item_model.dart';
 import 'package:book_store/models/transaction_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
@@ -181,7 +182,7 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        '${transactionData.products.length} sản phẩm',
+                        '${productCount(transactionData.products)} sản phẩm',
                         style: const TextStyle(
                           color: Colors.grey,
                         ),
@@ -226,4 +227,12 @@ abstract class AbstractTransactionItem extends StatelessWidget {
 
   Widget buildStatus();
   Widget buildAction();
+
+  int productCount(List<CartItemModel> products) {
+    int result = 0;
+    for (var item in products) {
+      result += item.count;
+    }
+    return result;
+  }
 }

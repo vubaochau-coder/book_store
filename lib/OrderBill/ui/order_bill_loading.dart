@@ -265,9 +265,9 @@ class OrderBillLoading extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.home_outlined,
                       color: Colors.white,

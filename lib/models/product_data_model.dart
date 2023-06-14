@@ -14,24 +14,23 @@ class ProductDataModel {
   final int totalSold;
   final List<String> imageURL;
 
-  ProductDataModel(
-      {required this.id,
-      required this.title,
-      required this.description,
-      required this.type,
-      required this.author,
-      required this.publisher,
-      required this.publishingYear,
-      required this.price,
-      required this.discount,
-      required this.star,
-      required this.totalSold,
-      required this.imageURL});
+  ProductDataModel({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.type,
+    required this.author,
+    required this.publisher,
+    required this.publishingYear,
+    required this.price,
+    required this.discount,
+    required this.star,
+    required this.totalSold,
+    required this.imageURL,
+  });
 
-  factory ProductDataModel.fromShapshot(
-    DocumentSnapshot<Map<String, dynamic>> documentSnapshot,
-    // List<String> url
-  ) {
+  factory ProductDataModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
     final data = documentSnapshot.data()!;
 
     return ProductDataModel(

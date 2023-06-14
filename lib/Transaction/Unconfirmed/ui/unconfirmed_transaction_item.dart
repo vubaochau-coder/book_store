@@ -37,9 +37,9 @@ class UnconfirmedTransactionItem extends AbstractTransactionItem {
   @override
   Widget buildStatus() {
     return Text(
-      'Chưa thanh toán',
+      transactionData.paid ? 'Đã thanh toán' : 'Chưa thanh toán',
       style: TextStyle(
-        color: themeColor,
+        color: transactionData.paid ? Colors.green : themeColor,
       ),
     );
   }

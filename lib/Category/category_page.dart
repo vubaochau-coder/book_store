@@ -10,6 +10,7 @@ import 'package:book_store/Category/SGKCategory/bloc/sgk_bloc.dart';
 import 'package:book_store/Category/SGKCategory/ui/sgk_category_page.dart';
 import 'package:book_store/Category/ScienceCategory/bloc/science_bloc.dart';
 import 'package:book_store/Category/ScienceCategory/ui/science_category_page.dart';
+import 'package:book_store/CustomWidget/search_bar.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,70 +50,10 @@ class _CategoryPageState extends State<CategoryPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 10,
+        leadingWidth: 62,
         backgroundColor: themeColor,
-        title: SizedBox(
-          height: 36,
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              color: Colors.white,
-            ),
-            padding: const EdgeInsets.only(
-              left: 8,
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.search,
-                  color: themeColor,
-                ),
-                const Text(
-                  'Tìm kiếm sản phẩm',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                const Spacer(),
-                Container(
-                  width: 58,
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 2,
-                    horizontal: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xffe65728),
-                        Color(0xffffe341),
-                      ],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: Colors.transparent,
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: const Text(
-                      'Tìm',
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        title: const MyCustomSearchBar(),
         centerTitle: true,
         elevation: 0,
       ),

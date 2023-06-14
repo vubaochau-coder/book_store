@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:book_store/models/product_data_model.dart';
+import 'package:book_store/models/short_protduct_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
@@ -16,7 +16,7 @@ class SgkBloc extends Bloc<SgkEvent, SgkState> {
   FutureOr<void> sgkLoadingEvent(
       SgkLoadEvent event, Emitter<SgkState> emit) async {
     emit(SgkLoadingState());
-    List<ProductDataModel> productDatas = [];
+    List<ShortProductDataModel> productDatas = [];
     switch (event.options) {
       case 0:
         final allProductQuery = await FirebaseFirestore.instance
@@ -25,7 +25,7 @@ class SgkBloc extends Bloc<SgkEvent, SgkState> {
             .orderBy('totalSold', descending: true)
             .get();
         for (var ele in allProductQuery.docs) {
-          productDatas.add(ProductDataModel.fromShapshot(ele));
+          productDatas.add(ShortProductDataModel.fromSnapshot(ele));
         }
         break;
       case 1:
@@ -35,7 +35,7 @@ class SgkBloc extends Bloc<SgkEvent, SgkState> {
             .orderBy('price', descending: true)
             .get();
         for (var ele in allProductQuery.docs) {
-          productDatas.add(ProductDataModel.fromShapshot(ele));
+          productDatas.add(ShortProductDataModel.fromSnapshot(ele));
         }
         break;
       case 2:
@@ -45,7 +45,7 @@ class SgkBloc extends Bloc<SgkEvent, SgkState> {
             .orderBy('price', descending: false)
             .get();
         for (var ele in allProductQuery.docs) {
-          productDatas.add(ProductDataModel.fromShapshot(ele));
+          productDatas.add(ShortProductDataModel.fromSnapshot(ele));
         }
         break;
     }

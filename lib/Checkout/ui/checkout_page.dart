@@ -2,22 +2,29 @@ import 'package:book_store/Checkout/bloc/checkout_bloc.dart';
 import 'package:book_store/AddressSetting/ui/address_setting.dart';
 import 'package:book_store/Checkout/ui/checkout_item.dart';
 import 'package:book_store/Checkout/ui/checkout_loading.dart';
+import 'package:book_store/Checkout/ui/payment_method_page.dart';
 import 'package:book_store/Checkout/ui/transport_page.dart';
 import 'package:book_store/CustomWidget/custom_page_route.dart';
 import 'package:book_store/OrderBill/ui/order_bill_page.dart';
 import 'package:book_store/models/address_model.dart';
 import 'package:book_store/models/cart_item_model.dart';
+import 'package:book_store/models/payment_method_model.dart';
 import 'package:book_store/models/transaction_model.dart';
 import 'package:book_store/models/transport_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class CheckoutPage extends StatelessWidget {
   final List<CartItemModel> listProduct;
   final bool checkoutFromCart;
+
+  static const MethodChannel platform =
+      MethodChannel('flutter.native/channelPayOrder');
+
   const CheckoutPage(
       {super.key, required this.listProduct, required this.checkoutFromCart});
 
@@ -41,8 +48,14 @@ class CheckoutPage extends StatelessWidget {
         if (state is CheckoutLoadingState) {
           return CheckoutLoading(listProduct: listProduct);
         } else if (state is CheckoutLoadingSuccessfulState) {
-          return checkoutSuccess(context, listProduct, state.userAddress,
-              state.transports, noteController, state.showLoadingDialog);
+          return checkoutSuccess(
+              context,
+              listProduct,
+              state.userAddress,
+              state.transports,
+              state.payments,
+              noteController,
+              state.showLoadingDialog);
         } else if (state is CheckoutEmptyAddressState) {
           return checkoutSuccess(
               context,
@@ -50,6 +63,7 @@ class CheckoutPage extends StatelessWidget {
               const AddressModel(
                   id: '', name: '', phone: '', address: '', isDefault: false),
               state.transports,
+              state.payments,
               noteController,
               false);
         } else {
@@ -64,6 +78,7 @@ class CheckoutPage extends StatelessWidget {
     List<CartItemModel> list,
     AddressModel address,
     List<TransportModel> listTrans,
+    List<PaymentMethodModel> listPayment,
     TextEditingController noteController,
     bool showLoadingDialog,
   ) {
@@ -253,9 +268,8 @@ class CheckoutPage extends StatelessWidget {
                                       onFinished: (p0) {
                                         BlocProvider.of<CheckoutBloc>(context)
                                             .add(
-                                          CheckoutUpdateEvent(
-                                            newAddress: address,
-                                            transports: p0,
+                                          CheckoutUpdateTransportEvent(
+                                            transport: p0,
                                           ),
                                         );
                                         Navigator.of(context).pop();
@@ -270,7 +284,7 @@ class CheckoutPage extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      getTransportMethod(listTrans)!.name,
+                                      getTransportMethod(listTrans).name,
                                       style: const TextStyle(
                                         fontSize: 16,
                                       ),
@@ -284,7 +298,7 @@ class CheckoutPage extends StatelessWidget {
                                   ),
                                   Text(
                                     Converter.convertNumberToMoney(
-                                        getTransportMethod(listTrans)!.price),
+                                        getTransportMethod(listTrans).price),
                                   ),
                                   const Icon(
                                     Icons.arrow_forward_ios_rounded,
@@ -299,7 +313,7 @@ class CheckoutPage extends StatelessWidget {
                             ),
                             Text(
                               getTransportDescription(
-                                  getTransportMethod(listTrans)!),
+                                  getTransportMethod(listTrans)),
                               style: const TextStyle(
                                 color: Colors.grey,
                               ),
@@ -334,62 +348,90 @@ class CheckoutPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 8),
-                        margin: const EdgeInsets.only(top: 4),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.monetization_on_outlined,
-                                  size: 20,
-                                  color: themeColor,
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                const Text(
-                                  'Phương thức thanh toán',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            PageRouteSlideTransition(
+                              child: PaymentMethodListPage(
+                                onFinished: (p0) {
+                                  BlocProvider.of<CheckoutBloc>(context).add(
+                                    CheckoutUpdatePaymentMethodEvent(
+                                      payment: p0,
+                                    ),
+                                  );
+                                  Navigator.of(context).pop();
+                                },
+                                transports: listPayment,
+                              ),
                             ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.monetization_on_outlined,
-                                  size: 20,
-                                  color: Colors.transparent,
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  'Thanh toán khi nhận hàng',
-                                  style: TextStyle(
-                                    fontSize: 16,
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 8),
+                          margin: const EdgeInsets.only(top: 4),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.monetization_on_outlined,
+                                    size: 20,
                                     color: themeColor,
                                   ),
-                                ),
-                                const Spacer(),
-                                Icon(
-                                  Icons.arrow_forward_ios_rounded,
-                                  color: themeColor,
-                                  size: 16,
-                                ),
-                              ],
-                            ),
-                          ],
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  const Text(
+                                    'Phương thức thanh toán',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.monetization_on_outlined,
+                                    size: 20,
+                                    color: Colors.transparent,
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    getPaymentMethod(listPayment).name,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: themeColor,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  getPaymentMethod(listPayment).id == 'zalo'
+                                      ? Image.asset(
+                                          getPaymentMethod(listPayment).image,
+                                          height: 20,
+                                        )
+                                      : const SizedBox(),
+                                  const Spacer(),
+                                  Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    color: themeColor,
+                                    size: 16,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Container(
@@ -632,19 +674,43 @@ class CheckoutPage extends StatelessWidget {
                         height: 48,
                         child: ElevatedButton(
                           onPressed: () {
-                            BlocProvider.of<CheckoutBloc>(context).add(
-                              CheckoutOrderEvent(
-                                transaction: TransactionModel(
+                            if (getPaymentMethod(listPayment).id == 'zalo') {
+                              BlocProvider.of<CheckoutBloc>(context).add(
+                                CheckoutZaloPayOrderEvent(
+                                    transaction: TransactionModel(
+                                      id: '',
+                                      dateCreated: DateTime.now(),
+                                      dateCompleted: getDateCompleted(
+                                          getTransportMethod(listTrans)),
+                                      address: getDefaultAddress(address),
+                                      transport:
+                                          getTransportMethod(listTrans).name,
+                                      note: noteController.text.trim(),
+                                      totalPrice:
+                                          calculateTotalPrice(list, listTrans),
+                                      productPrice:
+                                          calculateTotalProductPrice(list) -
+                                              calculateTotalDiscount(list),
+                                      transportPrice:
+                                          getTransportMethod(listTrans).price,
+                                      products: list,
+                                      status: 0,
+                                      paid: true,
+                                      paymentMethod: 'ZaloPay',
+                                    ),
+                                    fromCart: checkoutFromCart),
+                              );
+                            } else {
+                              BlocProvider.of<CheckoutBloc>(context).add(
+                                CheckoutSimpleOrderEvent(
+                                  transaction: TransactionModel(
                                     id: '',
-                                    dateCreated: Converter.convertDateToString(
-                                        DateTime.now()),
-                                    dateCompleted:
-                                        Converter.convertDateToString(
-                                            getDateCompleted(
-                                                getTransportMethod(listTrans))),
+                                    dateCreated: DateTime.now(),
+                                    dateCompleted: getDateCompleted(
+                                        getTransportMethod(listTrans)),
                                     address: getDefaultAddress(address),
                                     transport:
-                                        getTransportMethod(listTrans)!.name,
+                                        getTransportMethod(listTrans).name,
                                     note: noteController.text.trim(),
                                     totalPrice:
                                         calculateTotalPrice(list, listTrans),
@@ -652,12 +718,16 @@ class CheckoutPage extends StatelessWidget {
                                         calculateTotalProductPrice(list) -
                                             calculateTotalDiscount(list),
                                     transportPrice:
-                                        getTransportMethod(listTrans)!.price,
+                                        getTransportMethod(listTrans).price,
                                     products: list,
-                                    status: 0),
-                                fromCart: checkoutFromCart,
-                              ),
-                            );
+                                    status: 0,
+                                    paid: false,
+                                    paymentMethod: 'Thanh toán khi nhận hàng',
+                                  ),
+                                  fromCart: checkoutFromCart,
+                                ),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: themeColor,
@@ -738,13 +808,22 @@ class CheckoutPage extends StatelessWidget {
     return result;
   }
 
-  TransportModel? getTransportMethod(List<TransportModel> transports) {
+  TransportModel getTransportMethod(List<TransportModel> transports) {
     for (var ele in transports) {
       if (ele.isSelected) {
         return ele;
       }
     }
-    return null;
+    return transports[0];
+  }
+
+  PaymentMethodModel getPaymentMethod(List<PaymentMethodModel> payments) {
+    for (var ele in payments) {
+      if (ele.isSelected) {
+        return ele;
+      }
+    }
+    return payments[0];
   }
 
   String getDefaultAddress(AddressModel address) {

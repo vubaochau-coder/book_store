@@ -1,7 +1,6 @@
 import 'package:book_store/Category/SGKCategory/bloc/sgk_bloc.dart';
 import 'package:book_store/Category/category_loading_state.dart';
 import 'package:book_store/CustomWidget/product_item.dart';
-import 'package:book_store/ProductDetail/ui/product_detail_page.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -91,21 +90,8 @@ class SGKCategoryPage extends StatelessWidget {
               childAspectRatio: 0.75,
             ),
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return ProductDetailPage(
-                          productData: state.listSGK[index],
-                        );
-                      },
-                    ),
-                  );
-                },
-                child: ProductItem(
-                  data: state.listSGK[index],
-                ),
+              return ProductItem(
+                data: state.listSGK[index],
               );
             },
             itemCount: state.listSGK.length,

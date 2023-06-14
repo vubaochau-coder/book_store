@@ -10,11 +10,14 @@ abstract class HomeState extends Equatable {
 class HomeLoadingState extends HomeState {}
 
 class HomeLoadingSuccessfulState extends HomeState {
-  final List<ProductDataModel> products;
+  final List<ShortProductDataModel> products;
   final List<AdvertisingDataModel> advertisements;
 
   const HomeLoadingSuccessfulState({
     required this.products,
     required this.advertisements,
   });
+
+  @override
+  List<Object> get props => [products, advertisements];
 }

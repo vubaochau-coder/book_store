@@ -10,14 +10,11 @@ abstract class SgkState extends Equatable {
 class SgkLoadingState extends SgkState {}
 
 class SgkLoadingSuccessfulState extends SgkState {
-  final List<ProductDataModel> listSGK;
+  final List<ShortProductDataModel> listSGK;
   final int sortType;
 
   const SgkLoadingSuccessfulState({
     required this.listSGK,
     required this.sortType,
   });
-
-  // @override
-  // List<Object> get props => [listSGK, sortType];
 }

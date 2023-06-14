@@ -186,8 +186,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             });
           }
         })
-        .then(
-            (value) => Fluttertoast.showToast(msg: 'Thêm sản phẩm thành công'))
+        .then((value) => Fluttertoast.showToast(msg: 'Đã thêm vào giỏ hàng'))
         .catchError(
           (err) => Fluttertoast.showToast(
             msg: err.toString(),

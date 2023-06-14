@@ -10,7 +10,7 @@ abstract class ScienceState extends Equatable {
 class ScienceLoadingState extends ScienceState {}
 
 class ScienceLoadingSuccessfulState extends ScienceState {
-  final List<ProductDataModel> listScience;
+  final List<ShortProductDataModel> listScience;
   final int sortType;
 
   const ScienceLoadingSuccessfulState({
