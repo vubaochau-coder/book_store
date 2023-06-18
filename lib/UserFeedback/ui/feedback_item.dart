@@ -36,8 +36,8 @@ class FeedbackItem extends StatelessWidget {
               height: 72,
               placeholder: (context, url) {
                 return Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[200]!,
+                  baseColor: baseShimmer,
+                  highlightColor: highlightShimmer,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,

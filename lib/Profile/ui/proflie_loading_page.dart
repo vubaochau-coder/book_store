@@ -23,8 +23,8 @@ class ProfileLoadingPage extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[200]!,
+                baseColor: baseShimmer,
+                highlightColor: highlightShimmer,
                 child: Container(
                   width: 66,
                   height: 66,
@@ -41,35 +41,30 @@ class ProfileLoadingPage extends StatelessWidget {
             Expanded(
               child: SizedBox(
                 height: 62,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    const SizedBox(
-                      height: 14,
-                    ),
-                    Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[200]!,
-                      child: Container(
-                        width: 120,
-                        height: 19,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Row(
+                    const SizedBox(width: 6),
+                    Column(
                       mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(
-                          width: 2,
+                          height: 14,
                         ),
+                        Shimmer.fromColors(
+                          baseColor: baseShimmer,
+                          highlightColor: highlightShimmer,
+                          child: Container(
+                            width: 120,
+                            height: 19,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
                         const Text(
                           'Chỉnh sửa tài khoản',
                           style: TextStyle(
@@ -78,14 +73,19 @@ class ProfileLoadingPage extends StatelessWidget {
                             fontWeight: FontWeight.w300,
                           ),
                         ),
-                        const Spacer(),
-                        FaIcon(
-                          size: 14,
-                          FontAwesomeIcons.penToSquare,
-                          color: themeColor,
-                        )
                       ],
                     ),
+                    const Spacer(),
+                    Container(
+                      width: 38,
+                      height: 38,
+                      alignment: Alignment.center,
+                      child: FaIcon(
+                        size: 14,
+                        FontAwesomeIcons.penToSquare,
+                        color: themeColor,
+                      ),
+                    )
                   ],
                 ),
               ),

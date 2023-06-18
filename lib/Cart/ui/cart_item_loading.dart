@@ -1,3 +1,4 @@
+import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shimmer/shimmer.dart';
@@ -10,7 +11,7 @@ class CartItemLoading extends StatelessWidget {
     return Container(
       height: 126,
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-      margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+      margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: Colors.white,
@@ -34,8 +35,8 @@ class CartItemLoading extends StatelessWidget {
           Expanded(
             flex: 6,
             child: Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[200]!,
+              baseColor: baseShimmer,
+              highlightColor: highlightShimmer,
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -53,8 +54,8 @@ class CartItemLoading extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[200]!,
+                  baseColor: baseShimmer,
+                  highlightColor: highlightShimmer,
                   child: Container(
                     width: double.infinity,
                     height: 16,
@@ -65,8 +66,8 @@ class CartItemLoading extends StatelessWidget {
                   ),
                 ),
                 Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[200]!,
+                  baseColor: baseShimmer,
+                  highlightColor: highlightShimmer,
                   child: Container(
                     width: 150,
                     height: 16,
@@ -82,8 +83,8 @@ class CartItemLoading extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[200]!,
+                      baseColor: baseShimmer,
+                      highlightColor: highlightShimmer,
                       child: Container(
                         width: 80,
                         height: 16,
@@ -97,8 +98,8 @@ class CartItemLoading extends StatelessWidget {
                       width: 6,
                     ),
                     Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[200]!,
+                      baseColor: baseShimmer,
+                      highlightColor: highlightShimmer,
                       child: Container(
                         width: 60,
                         height: 16,

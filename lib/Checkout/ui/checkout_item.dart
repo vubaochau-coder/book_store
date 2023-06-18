@@ -23,8 +23,8 @@ class CheckoutItem extends StatelessWidget {
                 fit: BoxFit.contain,
                 placeholder: (context, url) {
                   return Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[200]!,
+                    baseColor: baseShimmer,
+                    highlightColor: highlightShimmer,
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,

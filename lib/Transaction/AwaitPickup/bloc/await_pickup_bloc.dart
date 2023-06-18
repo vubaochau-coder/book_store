@@ -31,18 +31,11 @@ class AwaitPickupBloc extends Bloc<AwaitPickupEvent, AwaitPickupState> {
         .collection('Transaction')
         .where('status', isEqualTo: 1)
         .snapshots()
-        .listen((event) async {
-      if (event.docs.isNotEmpty) {
+        .listen((snapshotEvent) async {
+      if (snapshotEvent.docs.isNotEmpty) {
         List<TransactionModel> list = [];
 
-        final transQuery = await FirebaseFirestore.instance
-            .collection('User')
-            .doc(uid)
-            .collection('Transaction')
-            .where('status', isEqualTo: 1)
-            .get();
-
-        for (var ele in transQuery.docs) {
+        for (var ele in snapshotEvent.docs) {
           List<CartItemModel> products = [];
           final productsQuery = await FirebaseFirestore.instance
               .collection('User')
@@ -59,18 +52,21 @@ class AwaitPickupBloc extends Bloc<AwaitPickupEvent, AwaitPickupState> {
                 .get();
 
             String bookTitle = bookQuery.get('title');
-            double bookPrice = double.parse(bookQuery.get('price').toString());
-            double bookDiscount =
-                double.parse(bookQuery.get('discount').toString());
+            double bookPrice =
+                double.parse(tempEle.get('priceBeforeDiscount').toString());
+            double bookDiscount = 1 -
+                double.parse(tempEle.get('price').toString()) /
+                    double.parse(tempEle.get('priceBeforeDiscount').toString());
             String url = List.from(bookQuery.get('listURL'))[0];
 
             products.add(
               CartItemModel.fromSnapshot(
-                  tempEle,
-                  (bookPrice - bookPrice * bookDiscount),
-                  bookPrice,
-                  url,
-                  bookTitle),
+                tempEle,
+                (bookPrice * (1 - bookDiscount)),
+                bookPrice,
+                url,
+                bookTitle,
+              ),
             );
           }
 

@@ -1,5 +1,6 @@
 import 'package:book_store/CustomWidget/category_shimmer.dart';
 import 'package:book_store/CustomWidget/product_shimmer_item.dart';
+import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -19,8 +20,8 @@ class HomePageLoading extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[200]!,
+              baseColor: baseShimmer,
+              highlightColor: highlightShimmer,
               child: Container(
                 height: 158,
                 width: double.infinity,
@@ -45,8 +46,8 @@ class HomePageLoading extends StatelessWidget {
             ),
           ),
           Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[200]!,
+            baseColor: baseShimmer,
+            highlightColor: highlightShimmer,
             child: Container(
               height: 20,
               width: 160,

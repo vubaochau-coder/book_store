@@ -1,3 +1,4 @@
+import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -20,8 +21,8 @@ class CategoryLoading extends StatelessWidget {
             ),
             elevation: 2,
             child: Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[200]!,
+              baseColor: baseShimmer,
+              highlightColor: highlightShimmer,
               child: Container(
                 width: 48,
                 height: 48,
@@ -34,8 +35,8 @@ class CategoryLoading extends StatelessWidget {
             ),
           ),
           Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[200]!,
+            baseColor: baseShimmer,
+            highlightColor: highlightShimmer,
             child: Container(
               height: 12,
               width: 48,

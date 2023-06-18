@@ -8,8 +8,10 @@ import 'package:book_store/Category/LiteratureCategory/bloc/literature_bloc.dart
 import 'package:book_store/Category/OtherCategory/bloc/other_bloc.dart';
 import 'package:book_store/Category/SGKCategory/bloc/sgk_bloc.dart';
 import 'package:book_store/Category/ScienceCategory/bloc/science_bloc.dart';
+import 'package:book_store/ChangeProfilePage/bloc/edit_profile_bloc.dart';
 import 'package:book_store/Checkout/bloc/checkout_bloc.dart';
 import 'package:book_store/Favorite/bloc/favorite_bloc.dart';
+import 'package:book_store/ProductFeedback/bloc/product_feedback_bloc.dart';
 import 'package:book_store/UserFeedback/bloc/user_feedback_bloc.dart';
 import 'package:book_store/Home/bloc/home_bloc.dart';
 import 'package:book_store/OrderBill/bloc/bill_bloc.dart';
@@ -74,6 +76,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => FavoriteBloc()),
         BlocProvider(create: (context) => FeedbackCountBloc()),
         BlocProvider(create: (context) => UserFeedbackBloc()),
+        BlocProvider(create: (context) => ProductFeedbackBloc()),
+        BlocProvider(create: (context) => EditProfileBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

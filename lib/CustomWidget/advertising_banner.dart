@@ -30,8 +30,8 @@ class _BannerQuangCaoState extends State<BannerQuangCao> {
               fit: BoxFit.cover,
               placeholder: (context, url) {
                 return Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[200]!,
+                  baseColor: baseShimmer,
+                  highlightColor: highlightShimmer,
                   child: Container(
                     width: double.infinity,
                     height: 158,

@@ -55,8 +55,8 @@ class ProductItem extends StatelessWidget {
                     fit: BoxFit.contain,
                     placeholder: (context, url) {
                       return Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[200]!,
+                        baseColor: baseShimmer,
+                        highlightColor: highlightShimmer,
                         child: Container(
                           height: 140,
                           margin: const EdgeInsets.symmetric(horizontal: 14),

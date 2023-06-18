@@ -1,3 +1,4 @@
+import 'package:book_store/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +33,8 @@ class _ProductImagesSliderState extends State<ProductImagesSlider> {
                 fit: BoxFit.fitHeight,
                 placeholder: (context, url) {
                   return Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[200]!,
+                    baseColor: baseShimmer,
+                    highlightColor: highlightShimmer,
                     child: Container(
                       width: double.infinity,
                       height: double.infinity,

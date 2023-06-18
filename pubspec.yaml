@@ -59,7 +59,6 @@ dependencies:
   shimmer: ^2.0.0
   loading_animation_widget: ^1.2.0+4
   dropdown_button2: 
-  intl_phone_number_input: 
   fluttertoast: 
   email_validator: 
   intl:
@@ -68,6 +67,7 @@ dependencies:
   sprintf:
   crypto: ^3.0.3
   flutter_rating_bar: ^4.0.1
+  image_picker: ^0.8.9
   
 
 dev_dependencies:

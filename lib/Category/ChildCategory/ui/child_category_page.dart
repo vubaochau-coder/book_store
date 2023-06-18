@@ -37,7 +37,13 @@ class ChildCategoryPage extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(top: 8, bottom: 8),
-          width: 160,
+          width: 162,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: Colors.grey,
+            ),
+          ),
           child: DropdownButtonFormField2(
             value: sortType[state.sortType],
             validator: (value) {
@@ -80,7 +86,6 @@ class ChildCategoryPage extends StatelessWidget {
                     .add(ChildLoadEvent(options: sortType.indexOf(value)));
               }
             },
-            onSaved: (newValue) {},
           ),
         ),
         Expanded(

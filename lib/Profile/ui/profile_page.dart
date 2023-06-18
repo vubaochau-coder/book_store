@@ -7,7 +7,7 @@ import 'package:book_store/Favorite/ui/favorite_page.dart';
 import 'package:book_store/UserFeedback/ui/feedback_page.dart';
 import 'package:book_store/Profile/bloc/feedback_count_bloc.dart';
 import 'package:book_store/Profile/bloc/user_bloc.dart';
-import 'package:book_store/Profile/ui/change_info_page.dart';
+import 'package:book_store/ChangeProfilePage/ui/change_info_page.dart';
 import 'package:book_store/Profile/ui/proflie_loading_page.dart';
 import 'package:book_store/Profile/ui/support_page.dart';
 import 'package:book_store/Transaction/ui/transaction_page.dart';
@@ -15,6 +15,7 @@ import 'package:book_store/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -57,7 +58,7 @@ class ProfilePage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(100),
                               child: CachedNetworkImage(
                                 imageUrl: state.userModel.imgUrl,
-                                fit: BoxFit.contain,
+                                fit: BoxFit.cover,
                                 width: 66,
                                 height: 66,
                                 errorWidget: (context, url, error) {
@@ -77,28 +78,27 @@ class ProfilePage extends StatelessWidget {
                           Expanded(
                             child: SizedBox(
                               height: 62,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Row(
                                 children: [
-                                  const SizedBox(
-                                    height: 14,
-                                  ),
-                                  Text(
-                                    state.userModel.name,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Row(
+                                  const SizedBox(width: 6),
+                                  Column(
                                     mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
+                                      const SizedBox(
+                                        height: 14,
+                                      ),
+                                      Text(
+                                        state.userModel.name,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 6),
                                       const Text(
                                         'Chỉnh sửa tài khoản',
                                         style: TextStyle(
@@ -107,23 +107,28 @@ class ProfilePage extends StatelessWidget {
                                           fontWeight: FontWeight.w300,
                                         ),
                                       ),
-                                      const Spacer(),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return const ChangeInfoPage();
-                                          }));
-                                        },
-                                        child: FaIcon(
-                                          size: 14,
-                                          FontAwesomeIcons.penToSquare,
-                                          color: themeColor,
-                                        ),
-                                      )
                                     ],
                                   ),
+                                  const Spacer(),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        PageRouteSlideTransition(
+                                          child: const ChangeInfoPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 38,
+                                      height: 38,
+                                      alignment: Alignment.center,
+                                      child: FaIcon(
+                                        size: 14,
+                                        FontAwesomeIcons.penToSquare,
+                                        color: themeColor,
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -372,7 +377,9 @@ class ProfilePage extends StatelessWidget {
             CustomListTile(
               title: 'Thay đổi mật khẩu',
               leading: Icons.vpn_key,
-              onPressed: () {},
+              onPressed: () {
+                Fluttertoast.showToast(msg: 'kkk');
+              },
             ),
             CustomListTile(
               title: 'Trợ giúp',

@@ -15,7 +15,8 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-Đồ Án 1
+Đồ Án Môn Học
+Ứng dụng: IBOO - Book Store
 Người thực hiện: Vũ Bảo Châu - 20521128
     Khoa công nghệ phần mềm - UIT
 Thời gian thực hiện: 4 tháng
@@ -27,6 +28,7 @@ State management:
 
 Design pattern được áp dụng:
     + Template method
+    + Singleton
 
 Backend:
     + Firebase

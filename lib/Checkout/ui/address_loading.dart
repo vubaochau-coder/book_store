@@ -53,8 +53,8 @@ class LoadingAddress extends StatelessWidget {
                     ),
                     Expanded(
                       child: Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[200]!,
+                        baseColor: baseShimmer,
+                        highlightColor: highlightShimmer,
                         child: Container(
                           color: Colors.white,
                           child: const Text(

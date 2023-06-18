@@ -120,8 +120,8 @@ class CheckoutLoading extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Shimmer.fromColors(
-                              baseColor: Colors.grey[300]!,
-                              highlightColor: Colors.grey[200]!,
+                              baseColor: baseShimmer,
+                              highlightColor: highlightShimmer,
                               child: Container(
                                 width: 88,
                                 height: 20,
@@ -132,8 +132,8 @@ class CheckoutLoading extends StatelessWidget {
                             ),
                             const Spacer(),
                             Shimmer.fromColors(
-                              baseColor: Colors.grey[300]!,
-                              highlightColor: Colors.grey[200]!,
+                              baseColor: baseShimmer,
+                              highlightColor: highlightShimmer,
                               child: Container(
                                 width: 88,
                                 height: 20,
@@ -148,8 +148,8 @@ class CheckoutLoading extends StatelessWidget {
                           height: 4,
                         ),
                         Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[200]!,
+                          baseColor: baseShimmer,
+                          highlightColor: highlightShimmer,
                           child: Container(
                             width: 176,
                             height: 20,
@@ -162,8 +162,8 @@ class CheckoutLoading extends StatelessWidget {
                     ),
                   ),
                   Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[200]!,
+                    baseColor: baseShimmer,
+                    highlightColor: highlightShimmer,
                     child: Container(
                       height: 48,
                       width: double.infinity,
@@ -200,8 +200,8 @@ class CheckoutLoading extends StatelessWidget {
                           height: 4,
                         ),
                         Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[200]!,
+                          baseColor: baseShimmer,
+                          highlightColor: highlightShimmer,
                           child: Container(
                             width: 104,
                             height: 22,

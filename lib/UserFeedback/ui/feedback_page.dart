@@ -54,7 +54,7 @@ class FeedbackPage extends StatelessWidget {
                 ),
                 body: Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
                   child: ListView.separated(
                     itemCount: state.listFeedback.length,
                     itemBuilder: (context, index) {

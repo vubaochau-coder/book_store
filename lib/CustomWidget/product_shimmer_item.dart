@@ -1,3 +1,4 @@
+import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -25,8 +26,8 @@ class ProductLoadingItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[200]!,
+              baseColor: baseShimmer,
+              highlightColor: highlightShimmer,
               child: Container(
                 height: 140,
                 width: double.infinity,
@@ -37,8 +38,8 @@ class ProductLoadingItem extends StatelessWidget {
               ),
             ),
             Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[200]!,
+              baseColor: baseShimmer,
+              highlightColor: highlightShimmer,
               child: Container(
                 height: 13,
                 width: double.infinity,
@@ -50,8 +51,8 @@ class ProductLoadingItem extends StatelessWidget {
               ),
             ),
             Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[200]!,
+              baseColor: baseShimmer,
+              highlightColor: highlightShimmer,
               child: Container(
                 height: 13,
                 width: 140,
@@ -62,8 +63,8 @@ class ProductLoadingItem extends StatelessWidget {
               ),
             ),
             Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[200]!,
+              baseColor: baseShimmer,
+              highlightColor: highlightShimmer,
               child: Container(
                 height: 20,
                 width: 100,
@@ -75,8 +76,8 @@ class ProductLoadingItem extends StatelessWidget {
               ),
             ),
             Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[200]!,
+              baseColor: baseShimmer,
+              highlightColor: highlightShimmer,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -37,8 +37,8 @@ class OrderBillLoading extends StatelessWidget {
             ),
             Center(
               child: Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[200]!,
+                baseColor: baseShimmer,
+                highlightColor: highlightShimmer,
                 child: Container(
                   height: 30,
                   width: 144,
@@ -95,8 +95,8 @@ class OrderBillLoading extends StatelessWidget {
                           style: text1,
                         ),
                         Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[200]!,
+                          baseColor: baseShimmer,
+                          highlightColor: highlightShimmer,
                           child: Container(
                             height: 18,
                             width: 144,
@@ -118,8 +118,8 @@ class OrderBillLoading extends StatelessWidget {
                           style: text1,
                         ),
                         Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[200]!,
+                          baseColor: baseShimmer,
+                          highlightColor: highlightShimmer,
                           child: Container(
                             height: 18,
                             width: 84,
@@ -141,8 +141,8 @@ class OrderBillLoading extends StatelessWidget {
                           style: text1,
                         ),
                         Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[200]!,
+                          baseColor: baseShimmer,
+                          highlightColor: highlightShimmer,
                           child: Container(
                             height: 18,
                             width: 84,
@@ -164,8 +164,8 @@ class OrderBillLoading extends StatelessWidget {
                           style: text1,
                         ),
                         Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[200]!,
+                          baseColor: baseShimmer,
+                          highlightColor: highlightShimmer,
                           child: Container(
                             height: 18,
                             width: 84,
@@ -187,8 +187,8 @@ class OrderBillLoading extends StatelessWidget {
                           style: text1,
                         ),
                         Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[200]!,
+                          baseColor: baseShimmer,
+                          highlightColor: highlightShimmer,
                           child: Container(
                             height: 18,
                             width: 84,
@@ -210,8 +210,8 @@ class OrderBillLoading extends StatelessWidget {
                           style: text1,
                         ),
                         Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[200]!,
+                          baseColor: baseShimmer,
+                          highlightColor: highlightShimmer,
                           child: Container(
                             height: 18,
                             width: 84,
@@ -233,8 +233,8 @@ class OrderBillLoading extends StatelessWidget {
                           style: text1,
                         ),
                         Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[200]!,
+                          baseColor: baseShimmer,
+                          highlightColor: highlightShimmer,
                           child: Container(
                             height: 18,
                             width: 84,

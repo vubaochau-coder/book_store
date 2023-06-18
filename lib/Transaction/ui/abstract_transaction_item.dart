@@ -76,7 +76,7 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                             imageUrl: transactionData.products[0].imgUrl,
                             placeholder: (context, url) {
                               return Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!,
+                                baseColor: baseShimmer,
                                 highlightColor: Colors.grey[200]!,
                                 child: Container(
                                   width: double.infinity,

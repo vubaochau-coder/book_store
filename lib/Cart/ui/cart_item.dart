@@ -33,7 +33,7 @@ class _CartItemState extends State<CartItem> {
     return Container(
       height: 126,
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-      margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: Colors.white,
@@ -69,8 +69,8 @@ class _CartItemState extends State<CartItem> {
                 fit: BoxFit.contain,
                 placeholder: (context, url) {
                   return Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[200]!,
+                    baseColor: baseShimmer,
+                    highlightColor: highlightShimmer,
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,

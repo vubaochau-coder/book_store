@@ -29,8 +29,8 @@ class AddressLoadingPage extends StatelessWidget {
                         child: Row(
                           children: [
                             Shimmer.fromColors(
-                              baseColor: Colors.grey[300]!,
-                              highlightColor: Colors.grey[200]!,
+                              baseColor: baseShimmer,
+                              highlightColor: highlightShimmer,
                               child: Container(
                                 height: 17,
                                 width: 88,
@@ -46,8 +46,8 @@ class AddressLoadingPage extends StatelessWidget {
                               endIndent: 2,
                             ),
                             Shimmer.fromColors(
-                              baseColor: Colors.grey[300]!,
-                              highlightColor: Colors.grey[200]!,
+                              baseColor: baseShimmer,
+                              highlightColor: highlightShimmer,
                               child: Container(
                                 height: 17,
                                 width: 112,
@@ -60,8 +60,8 @@ class AddressLoadingPage extends StatelessWidget {
                         ),
                       ),
                       Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[200]!,
+                        baseColor: baseShimmer,
+                        highlightColor: highlightShimmer,
                         child: Container(
                           height: 48,
                           width: double.infinity,

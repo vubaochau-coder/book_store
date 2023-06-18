@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 Color themeColor = const Color(0xffe65728);
 Color splashColor = themeColor.withAlpha(100);
 Color background = const Color.fromRGBO(245, 245, 245, 1);
+Color baseShimmer = const Color.fromRGBO(224, 224, 224, 1);
+Color highlightShimmer = const Color.fromRGBO(238, 238, 238, 1);
+
 int delay = 150;
 
 InputBorder textFieldBorder = OutlineInputBorder(

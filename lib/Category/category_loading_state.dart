@@ -1,4 +1,5 @@
 import 'package:book_store/CustomWidget/product_shimmer_item.dart';
+import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -11,8 +12,8 @@ class CategoryLoadingState extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[200]!,
+          baseColor: baseShimmer,
+          highlightColor: highlightShimmer,
           child: Container(
             width: 120,
             height: 28,

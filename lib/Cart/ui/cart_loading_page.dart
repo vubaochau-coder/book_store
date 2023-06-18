@@ -17,7 +17,7 @@ class CartLoadingPage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
                 elevation: 1,
                 child: Row(
                   children: [
@@ -26,8 +26,8 @@ class CartLoadingPage extends StatelessWidget {
                       onChanged: (value) {},
                     ),
                     Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[200]!,
+                      baseColor: baseShimmer,
+                      highlightColor: highlightShimmer,
                       child: Container(
                         height: 20,
                         width: 180,

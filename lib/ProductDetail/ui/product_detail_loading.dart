@@ -18,8 +18,8 @@ class ProductDetailLoadingPage extends StatelessWidget {
             color: Colors.white,
           ),
           Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[200]!,
+            baseColor: baseShimmer,
+            highlightColor: highlightShimmer,
             child: Container(
               color: Colors.white,
               height: MediaQuery.of(context).size.height / 2 -
@@ -40,8 +40,8 @@ class ProductDetailLoadingPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[200]!,
+                  baseColor: baseShimmer,
+                  highlightColor: highlightShimmer,
                   child: Container(
                     height: 18,
                     width: 264,
@@ -52,8 +52,8 @@ class ProductDetailLoadingPage extends StatelessWidget {
                   height: 8,
                 ),
                 Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[200]!,
+                  baseColor: baseShimmer,
+                  highlightColor: highlightShimmer,
                   child: Container(
                     height: 18,
                     width: 88,
@@ -64,8 +64,8 @@ class ProductDetailLoadingPage extends StatelessWidget {
                   height: 6,
                 ),
                 Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[200]!,
+                  baseColor: baseShimmer,
+                  highlightColor: highlightShimmer,
                   child: Container(
                     height: 18,
                     width: 164,

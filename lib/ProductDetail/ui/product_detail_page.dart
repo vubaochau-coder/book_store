@@ -7,9 +7,9 @@ import 'package:book_store/ProductDetail/ui/product_description.dart';
 import 'package:book_store/ProductDetail/ui/product_detail_loading.dart';
 import 'package:book_store/ProductDetail/ui/product_header.dart';
 import 'package:book_store/ProductDetail/ui/product_images.dart';
+import 'package:book_store/ProductFeedback/ui/product_feedback_page.dart';
 import 'package:book_store/models/cart_item_model.dart';
 import 'package:book_store/theme.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -131,42 +131,51 @@ class ProductDetailPage extends StatelessWidget {
                                         fontSize: 15,
                                       ),
                                     ),
-                                    RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () {},
-                                        children: [
-                                          WidgetSpan(
-                                            child: Container(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 0),
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  bottom: BorderSide(
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          PageRouteSlideTransition(
+                                            child: ProductFeedbackPage(
+                                              productID: productID,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Container(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 0),
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    bottom: BorderSide(
+                                                      color: themeColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                                child: Text(
+                                                  'Xem thêm',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
                                                     color: themeColor,
                                                   ),
                                                 ),
                                               ),
-                                              child: Text(
-                                                'Tất cả',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: themeColor,
-                                                ),
+                                            ),
+                                            WidgetSpan(
+                                              alignment:
+                                                  PlaceholderAlignment.middle,
+                                              child: Icon(
+                                                Icons.arrow_forward_ios,
+                                                color: themeColor,
+                                                size: 12,
                                               ),
                                             ),
-                                          ),
-                                          WidgetSpan(
-                                            alignment:
-                                                PlaceholderAlignment.middle,
-                                            child: Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: themeColor,
-                                              size: 12,
-                                            ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
