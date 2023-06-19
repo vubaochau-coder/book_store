@@ -57,7 +57,7 @@ class GioHangPage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                 elevation: 1,
                 child: Row(
                   children: [

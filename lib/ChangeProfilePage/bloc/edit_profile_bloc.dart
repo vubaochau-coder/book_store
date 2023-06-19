@@ -30,6 +30,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     bool isMale = true;
     String birthday = '';
 
+    print("meta:" + FirebaseAuth.instance.currentUser!.providerData.toString());
+
     final userQuery =
         await FirebaseFirestore.instance.collection('User').doc(uid).get();
 

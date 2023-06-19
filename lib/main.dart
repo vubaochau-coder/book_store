@@ -8,6 +8,7 @@ import 'package:book_store/Category/LiteratureCategory/bloc/literature_bloc.dart
 import 'package:book_store/Category/OtherCategory/bloc/other_bloc.dart';
 import 'package:book_store/Category/SGKCategory/bloc/sgk_bloc.dart';
 import 'package:book_store/Category/ScienceCategory/bloc/science_bloc.dart';
+import 'package:book_store/ChangePasswordPage/bloc/change_pass_bloc.dart';
 import 'package:book_store/ChangeProfilePage/bloc/edit_profile_bloc.dart';
 import 'package:book_store/Checkout/bloc/checkout_bloc.dart';
 import 'package:book_store/Favorite/bloc/favorite_bloc.dart';
@@ -78,6 +79,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UserFeedbackBloc()),
         BlocProvider(create: (context) => ProductFeedbackBloc()),
         BlocProvider(create: (context) => EditProfileBloc()),
+        BlocProvider(create: (context) => ChangePassBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -162,7 +164,7 @@ class _RootPageState extends State<RootPage> {
                       size: 18,
                     ),
                   ),
-                  title: const Text('Tin nhắn'),
+                  title: const Text('Thông báo'),
                 ),
                 SalomonBottomBarItem(
                   icon: badge.Badge(

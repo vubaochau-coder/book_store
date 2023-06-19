@@ -11,7 +11,7 @@ class CartItemLoading extends StatelessWidget {
     return Container(
       height: 126,
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-      margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+      margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: Colors.white,

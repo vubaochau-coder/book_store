@@ -1,4 +1,5 @@
 import 'package:book_store/AddressSetting/ui/address_setting.dart';
+import 'package:book_store/ChangePasswordPage/ui/change_pass_page.dart';
 import 'package:book_store/CustomWidget/custom_list_tile.dart';
 import 'package:book_store/Authentication%20Service/auth_service.dart';
 import 'package:book_store/CustomWidget/custom_page_route.dart';
@@ -15,7 +16,6 @@ import 'package:book_store/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -26,7 +26,7 @@ class ProfilePage extends StatelessWidget {
     return Container(
       height: double.infinity,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
         color: background,
       ),
@@ -41,7 +41,7 @@ class ProfilePage extends StatelessWidget {
               builder: (context, state) {
                 if (state is UserLoadingSuccessfulState) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: SafeArea(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -378,7 +378,11 @@ class ProfilePage extends StatelessWidget {
               title: 'Thay đổi mật khẩu',
               leading: Icons.vpn_key,
               onPressed: () {
-                Fluttertoast.showToast(msg: 'kkk');
+                Navigator.of(context).push(
+                  PageRouteSlideTransition(
+                    child: const ChangePasswordPage(),
+                  ),
+                );
               },
             ),
             CustomListTile(

@@ -269,9 +269,11 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
           await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: pass)
               .whenComplete(() {
-            setState(() {
-              isVerifying = false;
-            });
+            if (mounted) {
+              setState(() {
+                isVerifying = false;
+              });
+            }
           });
         } on FirebaseAuthException catch (error) {
           if (error.code == 'invalid-email') {

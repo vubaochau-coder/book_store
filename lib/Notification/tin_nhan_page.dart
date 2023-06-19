@@ -16,7 +16,7 @@ class TinNhanPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 2, right: 2, top: 4),
+        padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
           decoration: BoxDecoration(

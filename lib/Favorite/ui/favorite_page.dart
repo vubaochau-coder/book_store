@@ -32,7 +32,7 @@ class FavoritePage extends StatelessWidget {
             );
           } else if (state is FavoriteLoadingSuccessfulState) {
             return Padding(
-              padding: const EdgeInsets.only(top: 4, left: 2, right: 2),
+              padding: const EdgeInsets.only(top: 4, left: 4, right: 4),
               child: ListView.separated(
                 itemCount: state.listFavorite.length,
                 itemBuilder: (context, index) {
