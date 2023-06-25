@@ -15,15 +15,16 @@ class NotificationUpdateEvent extends NotificationEvent {
   const NotificationUpdateEvent({required this.newNotis});
 }
 
-class NotificationEmptyEvent extends NotificationEvent {}
+class NotificationFilterEvent extends NotificationEvent {
+  final String filterType;
+
+  const NotificationFilterEvent({required this.filterType});
+}
 
 class NotificationReadAllEvent extends NotificationEvent {}
 
 class NotificationTappedEvent extends NotificationEvent {
   final String notiID;
-  final String actionCode;
-  final bool isRead;
 
-  const NotificationTappedEvent(
-      {required this.notiID, required this.actionCode, required this.isRead});
+  const NotificationTappedEvent({required this.notiID});
 }

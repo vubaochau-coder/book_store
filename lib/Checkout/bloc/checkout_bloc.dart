@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:book_store/models/address_model.dart';
 import 'package:book_store/models/create_order_response.dart';
+import 'package:book_store/models/notification_model.dart';
 import 'package:book_store/models/payment_method_model.dart';
 import 'package:book_store/models/transaction_model.dart';
 import 'package:book_store/models/transport_model.dart';
@@ -179,6 +180,12 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
                 .add(ele.toJson());
           }
 
+          await FirebaseFirestore.instance
+              .collection('User')
+              .doc(uid)
+              .collection('Notification')
+              .add(createNotification(value.id).toJson());
+
           if (event.fromCart) {
             final cartCollection = FirebaseFirestore.instance
                 .collection('User')
@@ -245,6 +252,11 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
                     .collection('Products')
                     .add(ele.toJson());
               }
+              await FirebaseFirestore.instance
+                  .collection('User')
+                  .doc(uid)
+                  .collection('Notification')
+                  .add(createNotification(value.id).toJson());
 
               if (event.fromCart) {
                 final cartCollection = FirebaseFirestore.instance
@@ -309,6 +321,18 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     } else if (state is CheckoutEmptyAddressState) {
       Fluttertoast.showToast(msg: 'Vui lòng cung cấp địa chỉ giao hàng');
     }
+  }
+
+  NotificationModel createNotification(String checkOutID) {
+    return NotificationModel(
+      id: '',
+      title: 'Đặt hàng thành công',
+      content:
+          'Yêu cầu của đơn hàng $checkOutID đã được gửi đến cho người bán. Bạn có thể theo dõi trạng thái đơn hàng ở trong mục Đơn hàng của tôi.',
+      date: DateTime.now(),
+      isRead: false,
+      actionCode: 'order_0',
+    );
   }
 
   Future<CreateOrderResponse?> createOrder(int price) async {

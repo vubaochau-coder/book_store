@@ -24,7 +24,7 @@ class NotificationEmptyPage extends StatelessWidget {
             ),
           ),
           Text(
-            'Bạn chưa có thông báo nào',
+            'Chưa có thông báo',
             style: TextStyle(
               color: Colors.grey[600],
             ),

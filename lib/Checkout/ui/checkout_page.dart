@@ -163,9 +163,9 @@ class CheckoutPage extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.arrow_forward_ios_rounded,
-                                color: Colors.grey,
+                                color: themeColor,
                                 size: 16,
                               ),
                             ],
@@ -300,9 +300,9 @@ class CheckoutPage extends StatelessWidget {
                                     Converter.convertNumberToMoney(
                                         getTransportMethod(listTrans).price),
                                   ),
-                                  const Icon(
+                                  Icon(
                                     Icons.arrow_forward_ios_rounded,
-                                    color: Colors.grey,
+                                    color: themeColor,
                                     size: 16,
                                   ),
                                 ],

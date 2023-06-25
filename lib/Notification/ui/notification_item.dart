@@ -11,18 +11,20 @@ class NotificationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
       margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(4),
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 1,
-            color: Colors.grey,
-            offset: Offset(0, 1),
-          )
-        ],
+        boxShadow: notiData.isRead
+            ? []
+            : [
+                const BoxShadow(
+                  blurRadius: 1,
+                  color: Colors.grey,
+                  offset: Offset(0, 1),
+                )
+              ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +33,7 @@ class NotificationItem extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              notiData.isRead
+              !notiData.isRead
                   ? Container(
                       height: 8,
                       width: 8,
@@ -68,11 +70,11 @@ class NotificationItem extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           Text(
             notiData.content,
             style: TextStyle(
-              height: 1.2,
+              height: 1.4,
               color: notiData.isRead ? Colors.black54 : Colors.black,
             ),
           ),

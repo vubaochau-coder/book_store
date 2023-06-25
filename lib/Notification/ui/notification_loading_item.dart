@@ -8,7 +8,7 @@ class NotificationLoadingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
       margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
       decoration: BoxDecoration(
         color: Colors.white,

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:book_store/models/cart_item_model.dart';
+import 'package:book_store/models/notification_model.dart';
 import 'package:book_store/models/transaction_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
@@ -111,8 +112,25 @@ class UnconfirmedBloc extends Bloc<UnconfirmedEvent, UnconfirmedState> {
 
     await docRef.update({
       'status': -1,
-    }).then((value) {
+    }).then((value) async {
+      await FirebaseFirestore.instance
+          .collection('User')
+          .doc(uid)
+          .collection('Notification')
+          .add(createNotification(event.transactionID).toJson());
       Fluttertoast.showToast(msg: 'Hủy đơn hàng thành công');
     });
+  }
+
+  NotificationModel createNotification(String checkOutID) {
+    return NotificationModel(
+      id: '',
+      title: 'Đơn hàng đã bị hủy',
+      content:
+          'Đơn hàng $checkOutID của bạn đã bị hủy. Bạn có thể mua lại các sản phẩm trong đơn hàng bất kỳ lúc nào trong mục "Đơn hàng của tôi" - "Đã hủy".',
+      date: DateTime.now(),
+      isRead: false,
+      actionCode: 'order_-1',
+    );
   }
 }

@@ -9,8 +9,6 @@ abstract class NotificationState extends Equatable {
 
 class NotificationLoadingState extends NotificationState {}
 
-class NotificationEmptyState extends NotificationState {}
-
 class NotificationLoadingSuccessfulState extends NotificationState {
   final List<NotificationModel> notis;
   final String sortType;

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:book_store/models/cart_item_model.dart';
+import 'package:book_store/models/notification_model.dart';
 import 'package:book_store/models/transaction_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
@@ -115,6 +116,12 @@ class DeliveringBloc extends Bloc<DeliveringEvent, DeliveringState> {
       'dateCompleted': DateTime.now(),
       'status': 3,
     }).then((value) async {
+      await FirebaseFirestore.instance
+          .collection('User')
+          .doc(uid)
+          .collection('Notification')
+          .add(createNotification(event.transactionID).toJson());
+
       final productsQuery = await FirebaseFirestore.instance
           .collection("User")
           .doc(uid)
@@ -147,5 +154,17 @@ class DeliveringBloc extends Bloc<DeliveringEvent, DeliveringState> {
         });
       }
     });
+  }
+
+  NotificationModel createNotification(String checkOutID) {
+    return NotificationModel(
+      id: '',
+      title: 'Giao hàng thành công',
+      content:
+          'Đơn hàng $checkOutID của bạn đã được giao thành công. Hãy sớm cho chúng tôi biết cảm nhận của bạn sau khi trải nghiệm sản phẩm nhé!',
+      date: DateTime.now(),
+      isRead: false,
+      actionCode: 'order_3',
+    );
   }
 }
