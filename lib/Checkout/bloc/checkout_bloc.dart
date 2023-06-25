@@ -295,6 +295,16 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
               break;
           }
         }
+      } else {
+        emit(
+          CheckoutLoadingSuccessfulState(
+            userAddress: currentState.userAddress,
+            transports: currentState.transports,
+            payments: currentState.payments,
+            showLoadingDialog: false,
+          ),
+        );
+        Fluttertoast.showToast(msg: "Lỗi không xác định");
       }
     } else if (state is CheckoutEmptyAddressState) {
       Fluttertoast.showToast(msg: 'Vui lòng cung cấp địa chỉ giao hàng');

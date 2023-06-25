@@ -189,7 +189,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 Container(
                   width: double.infinity,
                   height: 164,
-                  margin: const EdgeInsets.symmetric(vertical: 28),
+                  margin: const EdgeInsets.symmetric(vertical: 12),
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('images/exclamation.png'),
@@ -198,13 +198,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     ),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 332,
                   child: Text(
                     'Tính năng "Đổi mật khẩu" chỉ áp dụng cho phương thức đăng nhập bằng Email và Password',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
+                      color: Colors.grey[600],
                     ),
                   ),
                 ),

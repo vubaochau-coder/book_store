@@ -46,29 +46,38 @@ class ProfilePage extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: themeColor,
-                                width: 2,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                PageRouteSlideTransition(
+                                  child: const ChangeInfoPage(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: themeColor,
+                                  width: 2,
+                                ),
+                                shape: BoxShape.circle,
                               ),
-                              shape: BoxShape.circle,
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: CachedNetworkImage(
-                                imageUrl: state.userModel.imgUrl,
-                                fit: BoxFit.cover,
-                                width: 66,
-                                height: 66,
-                                errorWidget: (context, url, error) {
-                                  return Image.asset(
-                                    'images/user.png',
-                                    fit: BoxFit.contain,
-                                    width: 66,
-                                    height: 66,
-                                  );
-                                },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: CachedNetworkImage(
+                                  imageUrl: state.userModel.imgUrl,
+                                  fit: BoxFit.cover,
+                                  width: 66,
+                                  height: 66,
+                                  errorWidget: (context, url, error) {
+                                    return Image.asset(
+                                      'images/user.png',
+                                      fit: BoxFit.contain,
+                                      width: 66,
+                                      height: 66,
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),

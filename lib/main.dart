@@ -12,6 +12,7 @@ import 'package:book_store/ChangePasswordPage/bloc/change_pass_bloc.dart';
 import 'package:book_store/ChangeProfilePage/bloc/edit_profile_bloc.dart';
 import 'package:book_store/Checkout/bloc/checkout_bloc.dart';
 import 'package:book_store/Favorite/bloc/favorite_bloc.dart';
+import 'package:book_store/Notification/bloc/notification_bloc.dart';
 import 'package:book_store/ProductFeedback/bloc/product_feedback_bloc.dart';
 import 'package:book_store/UserFeedback/bloc/user_feedback_bloc.dart';
 import 'package:book_store/Home/bloc/home_bloc.dart';
@@ -20,7 +21,7 @@ import 'package:book_store/ProductDetail/bloc/product_bloc.dart';
 import 'package:book_store/Profile/bloc/feedback_count_bloc.dart';
 import 'package:book_store/Profile/bloc/user_bloc.dart';
 import 'package:book_store/Profile/ui/profile_page.dart';
-import 'package:book_store/Notification/tin_nhan_page.dart';
+import 'package:book_store/Notification/ui/notification_page.dart';
 import 'package:book_store/Home/ui/home_page.dart';
 import 'package:book_store/Authentication%20Service/auth_service.dart';
 import 'package:book_store/SearchPage/bloc/search_bloc.dart';
@@ -29,7 +30,7 @@ import 'package:book_store/Transaction/Cancelled/bloc/cancelled_bloc.dart';
 import 'package:book_store/Transaction/Delivered/bloc/delivered_bloc.dart';
 import 'package:book_store/Transaction/Delivering/bloc/delivering_bloc.dart';
 import 'package:book_store/Transaction/Unconfirmed/bloc/unconfirmed_bloc.dart';
-import 'package:book_store/bloc/main_bloc.dart';
+import 'package:book_store/bloc/cart_count_bloc.dart';
 import 'package:book_store/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -38,9 +39,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
+import 'bloc/noti_count_bloc.dart';
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
@@ -57,7 +61,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => HomeBloc()..add(HomeLoadingEvent())),
         BlocProvider(create: (context) => ProductBloc()),
         BlocProvider(create: (context) => CartBloc()),
-        BlocProvider(create: (context) => MainBloc()),
+        BlocProvider(create: (context) => CartCountBloc()),
+        BlocProvider(create: (context) => NotiCountBloc()),
         BlocProvider(create: (context) => SgkBloc()),
         BlocProvider(create: (context) => LiteratureBloc()),
         BlocProvider(create: (context) => ComicBloc()),
@@ -80,6 +85,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ProductFeedbackBloc()),
         BlocProvider(create: (context) => EditProfileBloc()),
         BlocProvider(create: (context) => ChangePassBloc()),
+        BlocProvider(create: (context) => NotificationBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -114,43 +120,43 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MainBloc, MainState>(
-      builder: (context, state) {
-        if (state is MainLoadingSuccessfulState) {
-          return Scaffold(
-            body: PageView(
-              controller: controller,
-              children: pages,
-              onPageChanged: (value) {
-                setState(() {
-                  currentPage = value;
-                });
-              },
+    return Scaffold(
+      body: PageView(
+        controller: controller,
+        children: pages,
+        onPageChanged: (value) {
+          setState(() {
+            currentPage = value;
+          });
+        },
+      ),
+      bottomNavigationBar: SalomonBottomBar(
+        selectedItemColor: themeColor,
+        currentIndex: currentPage,
+        unselectedItemColor: Colors.grey,
+        onTap: (p0) {
+          controller.animateToPage(
+            p0,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInQuint,
+          );
+        },
+        items: [
+          SalomonBottomBarItem(
+            icon: const FaIcon(
+              FontAwesomeIcons.houseCrack,
+              size: 18,
             ),
-            bottomNavigationBar: SalomonBottomBar(
-              selectedItemColor: themeColor,
-              currentIndex: currentPage,
-              unselectedItemColor: Colors.grey,
-              onTap: (p0) {
-                controller.animateToPage(
-                  p0,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeInQuint,
-                );
-              },
-              items: [
-                SalomonBottomBarItem(
-                  icon: const FaIcon(
-                    FontAwesomeIcons.houseCrack,
-                    size: 18,
-                  ),
-                  title: const Text('Trang chủ'),
-                ),
-                SalomonBottomBarItem(
-                  icon: badge.Badge(
-                    showBadge: state.messNumber > 0 ? true : false,
+            title: const Text('Trang chủ'),
+          ),
+          SalomonBottomBarItem(
+            icon: BlocBuilder<NotiCountBloc, NotiCountState>(
+              builder: (context, state) {
+                if (state is NotiCountLoadingSuccessfulState) {
+                  return badge.Badge(
+                    showBadge: state.notiCount > 0,
                     badgeContent: Text(
-                      state.messNumber.toString(),
+                      state.notiCount.toString(),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
@@ -163,12 +169,36 @@ class _RootPageState extends State<RootPage> {
                       FontAwesomeIcons.solidMessage,
                       size: 18,
                     ),
-                  ),
-                  title: const Text('Thông báo'),
-                ),
-                SalomonBottomBarItem(
-                  icon: badge.Badge(
-                    showBadge: state.cartNumber > 0 ? true : false,
+                  );
+                } else {
+                  return const badge.Badge(
+                    showBadge: false,
+                    badgeContent: Text(
+                      '0',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                    badgeStyle: badge.BadgeStyle(
+                      padding: EdgeInsets.all(4),
+                    ),
+                    child: FaIcon(
+                      FontAwesomeIcons.solidMessage,
+                      size: 18,
+                    ),
+                  );
+                }
+              },
+            ),
+            title: const Text('Thông báo'),
+          ),
+          SalomonBottomBarItem(
+            icon: BlocBuilder<CartCountBloc, CartCountState>(
+              builder: (context, state) {
+                if (state is CartCountLoadingSuccessfulState) {
+                  return badge.Badge(
+                    showBadge: state.cartNumber > 0,
                     badgeContent: Text(
                       state.cartNumber.toString(),
                       style: const TextStyle(
@@ -183,61 +213,10 @@ class _RootPageState extends State<RootPage> {
                       FontAwesomeIcons.cartShopping,
                       size: 18,
                     ),
-                  ),
-                  title: const Text('Giỏ hàng'),
-                ),
-                SalomonBottomBarItem(
-                  icon: const FaIcon(
-                    FontAwesomeIcons.solidUser,
-                    size: 18,
-                  ),
-                  title: const Text('Tài khoản'),
-                ),
-              ],
-            ),
-          );
-        } else if (state is MainLoadingState) {
-          return Scaffold(
-            body: pages[currentPage],
-            bottomNavigationBar: SalomonBottomBar(
-              selectedItemColor: themeColor,
-              currentIndex: currentPage,
-              unselectedItemColor: Colors.grey,
-              onTap: (p0) {
-                setState(() {
-                  currentPage = p0;
-                });
-              },
-              items: [
-                SalomonBottomBarItem(
-                  icon: const FaIcon(
-                    FontAwesomeIcons.houseCrack,
-                    size: 18,
-                  ),
-                  title: const Text('Trang chủ'),
-                ),
-                SalomonBottomBarItem(
-                  icon: const badge.Badge(
-                    showBadge: true,
-                    badgeContent: Text(
-                      '0',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                    badgeStyle: badge.BadgeStyle(
-                      padding: EdgeInsets.all(4),
-                    ),
-                    child: FaIcon(
-                      FontAwesomeIcons.solidMessage,
-                      size: 18,
-                    ),
-                  ),
-                  title: const Text('Tin nhắn'),
-                ),
-                SalomonBottomBarItem(
-                  icon: const badge.Badge(
+                  );
+                } else {
+                  return const badge.Badge(
+                    showBadge: false,
                     badgeContent: Text(
                       '0',
                       style: TextStyle(
@@ -252,25 +231,21 @@ class _RootPageState extends State<RootPage> {
                       FontAwesomeIcons.cartShopping,
                       size: 18,
                     ),
-                  ),
-                  title: const Text('Giỏ hàng'),
-                ),
-                SalomonBottomBarItem(
-                  icon: const FaIcon(
-                    FontAwesomeIcons.solidUser,
-                    size: 18,
-                  ),
-                  title: const Text('Tài khoản'),
-                ),
-              ],
+                  );
+                }
+              },
             ),
-          );
-        } else {
-          return const Center(
-            child: Text('Something went wrong.'),
-          );
-        }
-      },
+            title: const Text('Giỏ hàng'),
+          ),
+          SalomonBottomBarItem(
+            icon: const FaIcon(
+              FontAwesomeIcons.solidUser,
+              size: 18,
+            ),
+            title: const Text('Tài khoản'),
+          ),
+        ],
+      ),
     );
   }
 }

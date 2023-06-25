@@ -14,13 +14,24 @@
       },
       "oauth_client": [
         {
-          "client_id": "323405570637-2hlv4ijb2gsm24nflp3dh1inds5v8s2n.apps.googleusercontent.com",
+          "client_id": "323405570637-evnsl3s042uq272hqhd0gd8am8l3au3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.book_store",
+            "certificate_hash": "58360587cbd02798e816b332e8ee395dfe3bd8bb"
+          }
+        },
+        {
+          "client_id": "323405570637-605kak8e2nacrlemrsporgtrdm7v003c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
           "current_key": "AIzaSyBwq2MXpVZ9TIq2ENtfsOoSKAzumKj3Htc"
+        },
+        {
+          "current_key": "AIzaSyAXlmapAfAqdyuerpRpOf7UV8fPmLNJtJE"
         }
       ],
       "services": {
@@ -29,6 +40,52 @@
             {
               "client_id": "323405570637-2hlv4ijb2gsm24nflp3dh1inds5v8s2n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "323405570637-eo3a3iolu0kche4iuir6tensdm3oks51.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bookStore"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323405570637:android:ee17149a9663aa693cf204",
+        "android_client_info": {
+          "package_name": "com.seuit.book_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323405570637-605kak8e2nacrlemrsporgtrdm7v003c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwq2MXpVZ9TIq2ENtfsOoSKAzumKj3Htc"
+        },
+        {
+          "current_key": "AIzaSyAXlmapAfAqdyuerpRpOf7UV8fPmLNJtJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323405570637-2hlv4ijb2gsm24nflp3dh1inds5v8s2n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "323405570637-eo3a3iolu0kche4iuir6tensdm3oks51.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bookStore"
+              }
             }
           ]
         }

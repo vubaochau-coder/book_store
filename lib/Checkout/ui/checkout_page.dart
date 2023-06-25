@@ -361,7 +361,7 @@ class CheckoutPage extends StatelessWidget {
                                   );
                                   Navigator.of(context).pop();
                                 },
-                                transports: listPayment,
+                                payments: listPayment,
                               ),
                             ),
                           );

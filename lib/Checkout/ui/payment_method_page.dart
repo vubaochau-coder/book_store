@@ -1,13 +1,14 @@
 import 'package:book_store/models/payment_method_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PaymentMethodListPage extends StatefulWidget {
-  final List<PaymentMethodModel> transports;
+  final List<PaymentMethodModel> payments;
   final void Function(List<PaymentMethodModel> list) onFinished;
   const PaymentMethodListPage(
-      {super.key, required this.transports, required this.onFinished});
+      {super.key, required this.payments, required this.onFinished});
 
   @override
   State<PaymentMethodListPage> createState() => _PaymentMethodListPageState();
@@ -20,7 +21,7 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
   void initState() {
     super.initState();
     tempList.clear();
-    tempList = List.from(widget.transports);
+    tempList = List.from(widget.payments);
   }
 
   @override
@@ -46,6 +47,9 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
+                    // if (index != 0) {
+                    //   Fluttertoast.showToast(msg: 'Chức năng đang phát triển');
+                    // }
                     setState(() {
                       tempList = updateList(index);
                     });
@@ -166,20 +170,20 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
 
   List<PaymentMethodModel> updateList(int index) {
     List<PaymentMethodModel> result = [];
-    for (int i = 0; i < widget.transports.length; i++) {
+    for (int i = 0; i < widget.payments.length; i++) {
       if (i != index) {
         PaymentMethodModel temp = PaymentMethodModel(
-          id: widget.transports[i].id,
-          name: widget.transports[i].name,
-          image: widget.transports[i].image,
+          id: widget.payments[i].id,
+          name: widget.payments[i].name,
+          image: widget.payments[i].image,
           isSelected: false,
         );
         result.add(temp);
       } else {
         PaymentMethodModel temp = PaymentMethodModel(
-          id: widget.transports[i].id,
-          name: widget.transports[i].name,
-          image: widget.transports[i].image,
+          id: widget.payments[i].id,
+          name: widget.payments[i].name,
+          image: widget.payments[i].image,
           isSelected: true,
         );
         result.add(temp);

@@ -68,6 +68,7 @@ dependencies:
   crypto: ^3.0.3
   flutter_rating_bar: ^4.0.1
   image_picker: ^0.8.9
+
   
 
 dev_dependencies:
