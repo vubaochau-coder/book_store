@@ -150,7 +150,7 @@ class TinNhanPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: select ? themeColor.withOpacity(0.2) : Colors.white,
+        color: select ? themeColor.withAlpha(50) : Colors.white,
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
           color: select ? themeColor : Colors.grey,

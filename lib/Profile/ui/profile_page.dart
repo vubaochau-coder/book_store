@@ -220,6 +220,7 @@ class ProfilePage extends StatelessWidget {
                             }
                           },
                         ),
+                        const SizedBox(width: 8),
                         BlocBuilder<UserBloc, UserState>(
                           builder: (context, state) {
                             if (state is UserLoadingSuccessfulState) {
@@ -250,6 +251,7 @@ class ProfilePage extends StatelessWidget {
                             }
                           },
                         ),
+                        const SizedBox(width: 8),
                         BlocBuilder<UserBloc, UserState>(
                           builder: (context, state) {
                             if (state is UserLoadingSuccessfulState) {
@@ -280,6 +282,7 @@ class ProfilePage extends StatelessWidget {
                             }
                           },
                         ),
+                        const SizedBox(width: 8),
                         BlocBuilder<FeedbackCountBloc, FeedbackCountState>(
                           builder: (context, state) {
                             if (state is FeedbackCountLoadedState) {

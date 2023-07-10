@@ -1,13 +1,10 @@
-import 'package:book_store/Category/category_page.dart';
 import 'package:book_store/CustomWidget/advertising_banner.dart';
-import 'package:book_store/CustomWidget/custom_page_route.dart';
 import 'package:book_store/CustomWidget/product_item.dart';
 import 'package:book_store/CustomWidget/search_bar.dart';
 import 'package:book_store/Home/bloc/home_bloc.dart';
-import 'package:book_store/Home/ui/category.dart';
+import 'package:book_store/Home/ui/category_list.dart';
 import 'package:book_store/Home/ui/home_page_loading.dart';
 import 'package:book_store/models/advertising_model.dart';
-import 'package:book_store/models/category_model.dart';
 import 'package:book_store/models/short_protduct_data_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
@@ -76,30 +73,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 0),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 0),
               child: SizedBox(
                 height: 74,
-                child: ListView.builder(
-                  itemCount: Category.categories.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      splashColor: splashColor,
-                      onTap: () => Future.delayed(
-                        Duration(milliseconds: delay),
-                        () => Navigator.of(context).push(
-                          PageRouteSlideTransition(
-                            child: CategoryPage(index: index),
-                          ),
-                        ),
-                      ),
-                      child: CategorieItem(
-                        categoryData: Category.categories[index],
-                      ),
-                    );
-                  },
-                ),
+                child: CategoryList(),
               ),
             ),
             Container(

@@ -204,8 +204,7 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     margin: const EdgeInsets.only(bottom: 4),
                     color: Colors.white,
                     child: ListView.separated(
@@ -214,12 +213,14 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
                       itemCount: transactionData.products.length,
                       itemBuilder: (context, index) {
                         return TransactionProduct(
-                            productData: transactionData.products[index]);
+                          productData: transactionData.products[index],
+                        );
                       },
                       separatorBuilder: (context, index) {
-                        return const Divider(
-                          height: 8,
-                          thickness: 1,
+                        return Container(
+                          height: 1,
+                          width: double.infinity,
+                          color: Colors.grey[400],
                         );
                       },
                     ),

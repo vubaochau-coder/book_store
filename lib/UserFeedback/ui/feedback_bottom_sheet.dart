@@ -21,8 +21,8 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 500,
-      padding: const EdgeInsets.only(left: 14, right: 14),
+      //height: 500,
+      padding: const EdgeInsets.only(left: 14, right: 14, bottom: 16),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(8),
@@ -30,6 +30,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
         ),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(
             Icons.remove,

@@ -35,11 +35,7 @@ class SearchPage extends StatelessWidget {
         } else if (state is SearchLoadingEmptyState) {
           return buildSearchPage(context, []);
         } else {
-          return const Scaffold(
-            body: Center(
-              child: Text('Something went wrong'),
-            ),
-          );
+          return const SizedBox();
         }
       },
     );

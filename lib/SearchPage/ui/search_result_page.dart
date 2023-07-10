@@ -47,7 +47,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
           actions: [
             PopupMenuButton<String>(
               icon: const Icon(Icons.filter_list),
-              constraints: const BoxConstraints.tightFor(width: 144),
+              //constraints: const BoxConstraints.tightFor(width: 144),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
@@ -100,42 +100,36 @@ class _SearchResultPageState extends State<SearchResultPage> {
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    flex: 6,
-                    child: RichText(
-                      textAlign: TextAlign.left,
-                      text: TextSpan(
-                        children: [
-                          const TextSpan(
-                            text: 'Tìm kiếm ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
+                  RichText(
+                    textAlign: TextAlign.left,
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: 'Tìm kiếm ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: Colors.black,
                           ),
-                          TextSpan(
-                            text: '"${widget.query}"',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
+                        ),
+                        TextSpan(
+                          text: '"${widget.query}"',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: Colors.black,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  const Expanded(child: SizedBox()),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      '${widget.listProducts.length} kết quả',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                      ),
+                  Text(
+                    '${widget.listProducts.length} kết quả',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
                     ),
                   ),
                 ],

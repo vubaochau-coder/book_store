@@ -7,9 +7,9 @@ class CategorieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 48,
-      margin: const EdgeInsets.symmetric(horizontal: 6),
+      //margin: const EdgeInsets.symmetric(horizontal: 6),
       child: Column(
         children: [
           Card(

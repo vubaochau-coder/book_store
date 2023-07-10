@@ -99,7 +99,7 @@ class _CartItemState extends State<CartItem> {
                     },
                     child: Text(
                       widget.cartData.title,
-                      maxLines: 3,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontWeight: FontWeight.w400,

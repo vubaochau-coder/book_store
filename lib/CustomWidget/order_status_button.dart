@@ -44,6 +44,8 @@ class OrderStatusButton extends StatelessWidget {
               fontSize: 12,
               fontWeight: FontWeight.w400,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.fade,
           )
         ],
       ),

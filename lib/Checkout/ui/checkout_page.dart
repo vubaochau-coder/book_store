@@ -220,66 +220,65 @@ class CheckoutPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 12, horizontal: 8),
-                        margin: const EdgeInsets.only(top: 4),
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 246, 255, 254),
-                          border: Border(
-                            top: BorderSide(
-                              color: Color.fromARGB(255, 198, 221, 218),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            PageRouteSlideTransition(
+                              child: TransportListPage(
+                                onFinished: (p0) {
+                                  BlocProvider.of<CheckoutBloc>(context).add(
+                                    CheckoutUpdateTransportEvent(
+                                      transport: p0,
+                                    ),
+                                  );
+                                  Navigator.of(context).pop();
+                                },
+                                transports: listTrans,
+                              ),
                             ),
-                            bottom: BorderSide(
-                              color: Color.fromARGB(255, 198, 221, 218),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 8),
+                          margin: const EdgeInsets.only(top: 4),
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 246, 255, 254),
+                            border: Border(
+                              top: BorderSide(
+                                color: Color.fromARGB(255, 198, 221, 218),
+                              ),
+                              bottom: BorderSide(
+                                color: Color.fromARGB(255, 198, 221, 218),
+                              ),
                             ),
                           ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.delivery_dining_outlined,
-                                  size: 20,
-                                  color: themeColor,
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                const Text(
-                                  'Phương thức vận chuyển',
-                                  style: TextStyle(
-                                    fontSize: 16,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.delivery_dining_outlined,
+                                    size: 20,
+                                    color: themeColor,
                                   ),
-                                ),
-                              ],
-                            ),
-                            const Divider(
-                              color: Colors.grey,
-                              height: 24,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  PageRouteSlideTransition(
-                                    child: TransportListPage(
-                                      onFinished: (p0) {
-                                        BlocProvider.of<CheckoutBloc>(context)
-                                            .add(
-                                          CheckoutUpdateTransportEvent(
-                                            transport: p0,
-                                          ),
-                                        );
-                                        Navigator.of(context).pop();
-                                      },
-                                      transports: listTrans,
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  const Text(
+                                    'Phương thức vận chuyển',
+                                    style: TextStyle(
+                                      fontSize: 16,
                                     ),
                                   ),
-                                );
-                              },
-                              child: Row(
+                                ],
+                              ),
+                              const Divider(
+                                color: Colors.grey,
+                                height: 24,
+                              ),
+                              Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
@@ -307,18 +306,18 @@ class CheckoutPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              getTransportDescription(
-                                  getTransportMethod(listTrans)),
-                              style: const TextStyle(
-                                color: Colors.grey,
+                              const SizedBox(
+                                height: 4,
                               ),
-                            ),
-                          ],
+                              Text(
+                                getTransportDescription(
+                                    getTransportMethod(listTrans)),
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Container(

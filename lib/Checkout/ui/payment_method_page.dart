@@ -1,6 +1,7 @@
 import 'package:book_store/models/payment_method_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -47,12 +48,12 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    // if (index != 0) {
-                    //   Fluttertoast.showToast(msg: 'Chức năng đang phát triển');
-                    // }
-                    setState(() {
-                      tempList = updateList(index);
-                    });
+                    if (index != 0) {
+                      Fluttertoast.showToast(msg: 'Chức năng đang phát triển');
+                    }
+                    // setState(() {
+                    //   tempList = updateList(index);
+                    // });
                   },
                   child: Container(
                     height: 64,

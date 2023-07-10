@@ -86,12 +86,12 @@ class _CategoryPageState extends State<CategoryPage>
                   unselectedLabelColor: Colors.grey[400],
                   labelColor: themeColor,
                   indicator: BoxDecoration(
-                    color: themeColor.withAlpha(30),
+                    color: themeColor.withAlpha(50),
                     borderRadius: BorderRadius.circular(6),
-                    border: Border.all(
-                      color: themeColor,
-                      width: 2,
-                    ),
+                    // border: Border.all(
+                    //   color: themeColor,
+                    //   width: 2,
+                    // ),
                   ),
                   padding: EdgeInsets.zero,
                   indicatorPadding: EdgeInsets.zero,

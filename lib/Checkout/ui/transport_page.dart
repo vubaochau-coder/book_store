@@ -119,7 +119,7 @@ class _TransportListPageState extends State<TransportListPage> {
                                       ),
                                     ),
                                     Expanded(
-                                      flex: 4,
+                                      flex: 3,
                                       child: Text(
                                         Converter.convertNumberToMoney(
                                             tempList[index].price),

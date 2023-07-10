@@ -37,8 +37,8 @@ class ScienceCategoryPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: const EdgeInsets.only(top: 8, bottom: 8),
-          width: 162,
+          margin: const EdgeInsets.only(top: 8, bottom: 8, left: 4),
+          width: 170,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
@@ -76,7 +76,7 @@ class ScienceCategoryPage extends StatelessWidget {
                         e,
                         style: const TextStyle(
                           fontSize: 15,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ))

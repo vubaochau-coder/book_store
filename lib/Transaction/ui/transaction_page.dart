@@ -110,7 +110,9 @@ class _TransactionPageState extends State<TransactionPage>
   Widget transactiontab(String title) {
     return Container(
       height: 36,
-      width: 88,
+      constraints: const BoxConstraints(
+        minWidth: 88,
+      ),
       alignment: Alignment.center,
       child: Text(title),
     );
