@@ -1,36 +1,34 @@
 import 'package:badges/badges.dart' as badge;
-import 'package:book_store/AddressSetting/bloc/address_bloc.dart';
-import 'package:book_store/Cart/bloc/cart_bloc.dart';
-import 'package:book_store/Cart/ui/cart_page.dart';
-import 'package:book_store/Category/ChildCategory/bloc/child_bloc.dart';
-import 'package:book_store/Category/ComicCategory/bloc/comic_bloc.dart';
-import 'package:book_store/Category/LiteratureCategory/bloc/literature_bloc.dart';
-import 'package:book_store/Category/OtherCategory/bloc/other_bloc.dart';
-import 'package:book_store/Category/SGKCategory/bloc/sgk_bloc.dart';
-import 'package:book_store/Category/ScienceCategory/bloc/science_bloc.dart';
-import 'package:book_store/ChangePasswordPage/bloc/change_pass_bloc.dart';
-import 'package:book_store/ChangeProfilePage/bloc/edit_profile_bloc.dart';
-import 'package:book_store/Checkout/bloc/checkout_bloc.dart';
-import 'package:book_store/Favorite/bloc/favorite_bloc.dart';
-import 'package:book_store/Notification/bloc/notification_bloc.dart';
-import 'package:book_store/ProductFeedback/bloc/product_feedback_bloc.dart';
-import 'package:book_store/UserFeedback/bloc/user_feedback_bloc.dart';
-import 'package:book_store/Home/bloc/home_bloc.dart';
-import 'package:book_store/OrderBill/bloc/bill_bloc.dart';
-import 'package:book_store/ProductDetail/bloc/product_bloc.dart';
-import 'package:book_store/Profile/bloc/feedback_count_bloc.dart';
-import 'package:book_store/Profile/bloc/user_bloc.dart';
-import 'package:book_store/Profile/ui/profile_page.dart';
-import 'package:book_store/Notification/ui/notification_page.dart';
-import 'package:book_store/Home/ui/home_page.dart';
-import 'package:book_store/Authentication%20Service/auth_service.dart';
-import 'package:book_store/SearchPage/bloc/search_bloc.dart';
-import 'package:book_store/Transaction/AwaitPickup/bloc/await_pickup_bloc.dart';
-import 'package:book_store/Transaction/Cancelled/bloc/cancelled_bloc.dart';
-import 'package:book_store/Transaction/Delivered/bloc/delivered_bloc.dart';
-import 'package:book_store/Transaction/Delivering/bloc/delivering_bloc.dart';
-import 'package:book_store/Transaction/Unconfirmed/bloc/unconfirmed_bloc.dart';
+import 'package:book_store/authentication_service/auth_service.dart';
 import 'package:book_store/bloc/cart_count_bloc.dart';
+import 'package:book_store/screens/Checkout/bloc/checkout_bloc.dart';
+import 'package:book_store/screens/address_setting/bloc/address_bloc.dart';
+import 'package:book_store/screens/cart/bloc/cart_bloc.dart';
+import 'package:book_store/screens/cart/ui/cart_page.dart';
+import 'package:book_store/screens/categories/child/bloc/child_bloc.dart';
+import 'package:book_store/screens/categories/comic/bloc/comic_bloc.dart';
+import 'package:book_store/screens/categories/literature/bloc/literature_bloc.dart';
+import 'package:book_store/screens/categories/others/bloc/other_bloc.dart';
+import 'package:book_store/screens/categories/science/bloc/science_bloc.dart';
+import 'package:book_store/screens/categories/sgk/bloc/sgk_bloc.dart';
+import 'package:book_store/screens/edit_password/bloc/edit_pass_bloc.dart';
+import 'package:book_store/screens/edit_profile/bloc/edit_profile_bloc.dart';
+import 'package:book_store/screens/home/bloc/home_bloc.dart';
+import 'package:book_store/screens/home/ui/home_page.dart';
+import 'package:book_store/screens/my_favorite/bloc/favorite_bloc.dart';
+import 'package:book_store/screens/my_feedback/bloc/my_feedback_bloc.dart';
+import 'package:book_store/screens/notification/bloc/notification_bloc.dart';
+import 'package:book_store/screens/notification/ui/notification_page.dart';
+import 'package:book_store/screens/order_bill/bloc/bill_bloc.dart';
+import 'package:book_store/screens/product_detail/bloc/product_bloc.dart';
+import 'package:book_store/screens/product_feedback/bloc/product_feedback_bloc.dart';
+import 'package:book_store/screens/profile/bloc/feedback_count_bloc.dart';
+import 'package:book_store/screens/profile/bloc/user_bloc.dart';
+import 'package:book_store/screens/profile/ui/profile_page.dart';
+import 'package:book_store/screens/transaction_status/cancelled/bloc/cancelled_bloc.dart';
+import 'package:book_store/screens/transaction_status/delivered/bloc/delivered_bloc.dart';
+import 'package:book_store/screens/transaction_status/delivering/bloc/delivering_bloc.dart';
+import 'package:book_store/screens/transaction_status/unconfirmed/bloc/unconfirmed_bloc.dart';
 import 'package:book_store/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +38,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import 'bloc/noti_count_bloc.dart';
+import 'screens/search/bloc/search_bloc.dart';
+import 'screens/transaction_status/await_pickup/bloc/await_pickup_bloc.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -81,10 +81,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => SearchBloc()),
         BlocProvider(create: (context) => FavoriteBloc()),
         BlocProvider(create: (context) => FeedbackCountBloc()),
-        BlocProvider(create: (context) => UserFeedbackBloc()),
+        BlocProvider(create: (context) => MyFeedbackBloc()),
         BlocProvider(create: (context) => ProductFeedbackBloc()),
         BlocProvider(create: (context) => EditProfileBloc()),
-        BlocProvider(create: (context) => ChangePassBloc()),
+        BlocProvider(create: (context) => EditPasswordBloc()),
         BlocProvider(create: (context) => NotificationBloc()),
       ],
       child: MaterialApp(
@@ -111,8 +111,8 @@ class _RootPageState extends State<RootPage> {
 
   List<Widget> pages = const [
     HomePage(),
-    TinNhanPage(),
-    GioHangPage(),
+    NotificationPage(),
+    CartPage(),
     ProfilePage(),
   ];
 
