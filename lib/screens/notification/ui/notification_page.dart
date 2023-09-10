@@ -1,3 +1,5 @@
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/custom_widgets/custom_page_route.dart';
 import 'package:book_store/models/notification_model.dart';
 import 'package:book_store/screens/notification/ui/empty_notification_page.dart';
@@ -7,7 +9,6 @@ import 'package:book_store/screens/transaction_status/ui/transaction_page.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../bloc/notification_bloc.dart';
 
 class NotificationPage extends StatelessWidget {
@@ -16,11 +17,14 @@ class NotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: background,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Thông báo'),
-        backgroundColor: themeColor,
-        foregroundColor: Colors.white,
+        title: Text(
+          'Thông báo',
+          style: AppTexts.appbarTitle,
+        ),
+        backgroundColor: AppColors.themeColor,
+        foregroundColor: AppColors.contentColor,
         elevation: 0,
         centerTitle: true,
       ),
@@ -73,7 +77,8 @@ class NotificationPage extends StatelessWidget {
                       onTap: () {
                         BlocProvider.of<NotificationBloc>(context).add(
                           NotificationFilterEvent(
-                              filterType: filterCode[index]),
+                            filterType: filterCode[index],
+                          ),
                         );
                       },
                       child: filterItem(filter[index], index == indexSelected),
@@ -86,8 +91,9 @@ class NotificationPage extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  BlocProvider.of<NotificationBloc>(context)
-                      .add(NotificationReadAllEvent());
+                  BlocProvider.of<NotificationBloc>(context).add(
+                    NotificationReadAllEvent(),
+                  );
                 },
                 child: Row(
                   children: [
@@ -119,7 +125,8 @@ class NotificationPage extends StatelessWidget {
                       onTap: () {
                         if (notis[index].isRead == false) {
                           BlocProvider.of<NotificationBloc>(context).add(
-                              NotificationTappedEvent(notiID: notis[index].id));
+                            NotificationTappedEvent(notiID: notis[index].id),
+                          );
                         }
                         int pageIndex = 0;
                         switch (notis[index].actionCode) {

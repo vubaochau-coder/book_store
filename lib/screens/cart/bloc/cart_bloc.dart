@@ -11,17 +11,17 @@ part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartLoadingState()) {
-    on<CartLoadingEvent>(cartLoadingEvent);
-    on<CartAllItemSelectedEvent>(cartAllItemSelectedEvent);
-    on<CartChangeItemQuantityEvent>(cartChangeItemQuantityEvent);
-    on<CartRemoveItemEvent>(cartRemoveItemEvent);
-    on<CartItemSelectedEvent>(cartItemSelectedEvent);
-    on<CartAddItemEvent>(cartAddItemEvent);
-    on<CartUpdateEvent>(cartUpdateEvent);
-    on<CartUpdateEmptyEvent>(cartUpdateEmptyEvent);
+    on<CartLoadingEvent>(_loading);
+    on<CartAllItemSelectedEvent>(_allItemSelected);
+    on<CartChangeItemQuantityEvent>(_changeItemQuantity);
+    on<CartRemoveItemEvent>(_removeItem);
+    on<CartItemSelectedEvent>(_itemSelected);
+    on<CartAddItemEvent>(_addItem);
+    on<CartUpdateEvent>(_update);
+    on<CartUpdateEmptyEvent>(_updateEmpty);
   }
 
-  FutureOr<void> cartLoadingEvent(
+  FutureOr<void> _loading(
       CartLoadingEvent event, Emitter<CartState> emit) async {
     emit(CartLoadingState());
 
@@ -62,7 +62,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     });
   }
 
-  FutureOr<void> cartAllItemSelectedEvent(
+  FutureOr<void> _allItemSelected(
       CartAllItemSelectedEvent event, Emitter<CartState> emit) {
     List<CartItemModel> temp = [];
     if (isAllItemSelected(event.listCart)) {
@@ -95,7 +95,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(CartLoadingSuccessfulState(cartItems: temp));
   }
 
-  FutureOr<void> cartChangeItemQuantityEvent(
+  FutureOr<void> _changeItemQuantity(
       CartChangeItemQuantityEvent event, Emitter<CartState> emit) {
     List<CartItemModel> temp = [];
     for (var ele in event.listCart) {
@@ -117,7 +117,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(CartLoadingSuccessfulState(cartItems: temp));
   }
 
-  FutureOr<void> cartRemoveItemEvent(
+  FutureOr<void> _removeItem(
       CartRemoveItemEvent event, Emitter<CartState> emit) async {
     final String userID = FirebaseAuth.instance.currentUser!.uid;
     final docRef = FirebaseFirestore.instance
@@ -133,7 +133,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             ));
   }
 
-  FutureOr<void> cartItemSelectedEvent(
+  FutureOr<void> _itemSelected(
       CartItemSelectedEvent event, Emitter<CartState> emit) {
     List<CartItemModel> temp = [];
     for (var ele in event.listCart) {
@@ -164,7 +164,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     return true;
   }
 
-  FutureOr<void> cartAddItemEvent(
+  FutureOr<void> _addItem(
       CartAddItemEvent event, Emitter<CartState> emit) async {
     String userID = FirebaseAuth.instance.currentUser!.uid;
     final docRef = FirebaseFirestore.instance
@@ -194,32 +194,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         );
   }
 
-  FutureOr<void> cartUpdateEvent(
-      CartUpdateEvent event, Emitter<CartState> emit) {
-    if (state is CartLoadingState) {
-      emit(CartLoadingSuccessfulState(cartItems: event.listCart));
-    } else if (state is CartLoadingSuccessfulState) {
-      final currentSate = state as CartLoadingSuccessfulState;
-
-      List<CartItemModel> temp = [];
-
-      if (currentSate.cartItems.isNotEmpty) {
-        currentSate.cartItems.clear();
-      }
-
-      temp.addAll(event.listCart);
-
-      emit(CartLoadingSuccessfulState(cartItems: temp));
-    } else if (state is CartEmptyState) {
-      List<CartItemModel> temp = [];
-
-      temp.addAll(event.listCart);
-
-      emit(CartLoadingSuccessfulState(cartItems: temp));
-    }
+  FutureOr<void> _update(CartUpdateEvent event, Emitter<CartState> emit) {
+    emit(CartLoadingSuccessfulState(cartItems: event.listCart));
   }
 
-  FutureOr<void> cartUpdateEmptyEvent(
+  FutureOr<void> _updateEmpty(
       CartUpdateEmptyEvent event, Emitter<CartState> emit) {
     emit(CartEmptyState());
   }

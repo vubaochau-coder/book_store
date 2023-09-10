@@ -71,26 +71,20 @@ class CancelledBloc extends Bloc<CancelledEvent, CancelledState> {
           list.add(TransactionModel.fromSnapshot(ele, products));
         }
 
-        add(CancelledUpdateEvent(transactions: list));
+        if (!isClosed) {
+          add(CancelledUpdateEvent(transactions: list));
+        }
       } else {
-        add(CancelledUpdateEmptyEvent());
+        if (!isClosed) {
+          add(CancelledUpdateEmptyEvent());
+        }
       }
     });
   }
 
   FutureOr<void> cancelledUpdateEvent(
       CancelledUpdateEvent event, Emitter<CancelledState> emit) {
-    if (state is CancelledEmptyState || state is CancelledLoadingState) {
-      emit(CancelledLoadingSuccessfulState(transactions: event.transactions));
-    } else {
-      final currentState = state as CancelledLoadingSuccessfulState;
-
-      if (currentState.transactions.isNotEmpty) {
-        currentState.transactions.clear();
-      }
-
-      emit(CancelledLoadingSuccessfulState(transactions: event.transactions));
-    }
+    emit(CancelledLoadingSuccessfulState(transactions: event.transactions));
   }
 
   FutureOr<void> cancelledUpdateEmptyEvent(

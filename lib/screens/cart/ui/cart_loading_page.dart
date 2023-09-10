@@ -17,27 +17,30 @@ class CartLoadingPage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                margin: const EdgeInsets.only(bottom: 4),
                 elevation: 1,
-                child: Row(
-                  children: [
-                    Checkbox(
-                      value: false,
-                      onChanged: (value) {},
-                    ),
-                    Shimmer.fromColors(
-                      baseColor: baseShimmer,
-                      highlightColor: highlightShimmer,
-                      child: Container(
-                        height: 20,
-                        width: 180,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: false,
+                        onChanged: (value) {},
                       ),
-                    )
-                  ],
+                      Shimmer.fromColors(
+                        baseColor: baseShimmer,
+                        highlightColor: highlightShimmer,
+                        child: Container(
+                          height: 20,
+                          width: 180,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Expanded(

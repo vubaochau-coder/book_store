@@ -1,4 +1,4 @@
-import 'package:book_store/custom_widgets/advertising_banner.dart';
+import 'package:book_store/screens/home/ui/advertising_banner.dart';
 import 'package:book_store/custom_widgets/product_item.dart';
 import 'package:book_store/custom_widgets/search_bar.dart';
 import 'package:book_store/models/advertising_model.dart';
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: BannerQuangCao(
+                child: AdvertisingBanner(
                   datas: adData,
                 ),
               ),

@@ -11,14 +11,14 @@ part 'notification_state.dart';
 
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
   NotificationBloc() : super(NotificationLoadingState()) {
-    on<NotificationLoadingEvent>(notificationLoading);
-    on<NotificationUpdateEvent>(notificationUpdate);
-    on<NotificationFilterEvent>(filter);
-    on<NotificationTappedEvent>(itemTapped);
-    on<NotificationReadAllEvent>(readAll);
+    on<NotificationLoadingEvent>(_loading);
+    on<NotificationUpdateEvent>(_update);
+    on<NotificationFilterEvent>(_filter);
+    on<NotificationTappedEvent>(_itemTapped);
+    on<NotificationReadAllEvent>(_readAll);
   }
 
-  FutureOr<void> notificationLoading(
+  FutureOr<void> _loading(
       NotificationLoadingEvent event, Emitter<NotificationState> emit) {
     emit(NotificationLoadingState());
 
@@ -45,13 +45,13 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     });
   }
 
-  FutureOr<void> notificationUpdate(
+  FutureOr<void> _update(
       NotificationUpdateEvent event, Emitter<NotificationState> emit) {
     emit(NotificationLoadingSuccessfulState(
         notis: event.newNotis, sortType: 'all'));
   }
 
-  FutureOr<void> filter(
+  FutureOr<void> _filter(
       NotificationFilterEvent event, Emitter<NotificationState> emit) async {
     emit(NotificationLoadingState());
 
@@ -94,7 +94,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
         notis: newNoti, sortType: event.filterType));
   }
 
-  FutureOr<void> itemTapped(
+  FutureOr<void> _itemTapped(
       NotificationTappedEvent event, Emitter<NotificationState> emit) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -106,7 +106,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     await notiDocRef.update({'isRead': true});
   }
 
-  FutureOr<void> readAll(
+  FutureOr<void> _readAll(
       NotificationReadAllEvent event, Emitter<NotificationState> emit) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 

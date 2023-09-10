@@ -278,7 +278,7 @@ class ProductDetailPage extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 16,
+                                fontSize: 15,
                               ),
                             ),
                           ),

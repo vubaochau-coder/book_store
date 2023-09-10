@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:book_store/models/address_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,18 +9,17 @@ part 'address_event.dart';
 part 'address_state.dart';
 
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
-  AddressBloc() : super(AddressLoadingState()) {
-    on<AddressLoadingEvent>(addressLoadingEvent);
-    on<AddNewAddressEvent>(addNewAddressEvent);
-    on<RemoveAddressEvent>(removeAddressEvent);
-    on<AddressUpdateEvent>(addressUpdateEvent);
-    on<AddressUpdateEmptyEvent>(addressUpdateEmptyEvent);
-    on<AddressSelectedEvent>(addressSelectedEvent);
+  AddressBloc() : super(const AddressState()) {
+    on<AddressLoadingEvent>(_onLoading);
+    on<AddNewAddressEvent>(_onAddNewAddress);
+    on<RemoveAddressEvent>(_onRemoveAddress);
+    on<AddressUpdateEvent>(_onUpdate);
+    on<AddressUpdateEmptyEvent>(_onUpdateEmpty);
+    on<AddressSelectedEvent>(_onAddressSelected);
   }
 
-  FutureOr<void> addressLoadingEvent(
-      AddressLoadingEvent event, Emitter<AddressState> emit) async {
-    emit(AddressLoadingState());
+  _onLoading(AddressLoadingEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
     String addressCode = '';
@@ -58,8 +55,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     });
   }
 
-  FutureOr<void> addNewAddressEvent(
-      AddNewAddressEvent event, Emitter<AddressState> emit) async {
+  _onAddNewAddress(AddNewAddressEvent event, Emitter emit) async {
     String userID = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance
         .collection('User')
@@ -68,7 +64,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         .add(event.newAddress.toJson())
         .then((value) {
       Fluttertoast.showToast(msg: 'Thêm địa chỉ mới thành công');
-      add(AddressLoadingEvent());
     }).catchError((err) {
       Fluttertoast.showToast(
         msg: err.toString(),
@@ -76,8 +71,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     });
   }
 
-  FutureOr<void> removeAddressEvent(
-      RemoveAddressEvent event, Emitter<AddressState> emit) async {
+  _onRemoveAddress(RemoveAddressEvent event, Emitter emit) async {
     String userID = FirebaseAuth.instance.currentUser!.uid;
     final docRef = FirebaseFirestore.instance
         .collection('User')
@@ -87,7 +81,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
 
     await docRef.delete().then((value) {
       Fluttertoast.showToast(msg: 'Xóa thành công');
-      add(AddressLoadingEvent());
     }).catchError((err) {
       Fluttertoast.showToast(
         msg: err.toString(),
@@ -95,33 +88,15 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     });
   }
 
-  FutureOr<void> addressUpdateEvent(
-      AddressUpdateEvent event, Emitter<AddressState> emit) {
-    if (state is AddressLoadingState) {
-      emit(AddressLoadingSuccessfulState(listAddress: event.listAddress));
-    } else if (state is AddressLoadingSuccessfulState) {
-      final currentState = state as AddressLoadingSuccessfulState;
-
-      if (currentState.listAddress.isNotEmpty) {
-        currentState.listAddress.clear();
-      }
-
-      List<AddressModel> temp = [];
-      temp.addAll(event.listAddress);
-
-      emit(AddressLoadingSuccessfulState(listAddress: temp));
-    } else if (state is AddressEmptyState) {
-      emit(AddressLoadingSuccessfulState(listAddress: event.listAddress));
-    }
+  _onUpdate(AddressUpdateEvent event, Emitter emit) {
+    emit(state.copyWith(isLoading: false, listAddress: event.listAddress));
   }
 
-  FutureOr<void> addressUpdateEmptyEvent(
-      AddressUpdateEmptyEvent event, Emitter<AddressState> emit) {
-    emit(AddressEmptyState());
+  _onUpdateEmpty(AddressUpdateEmptyEvent event, Emitter emit) {
+    emit(state.copyWith(isLoading: false, listAddress: []));
   }
 
-  FutureOr<void> addressSelectedEvent(
-      AddressSelectedEvent event, Emitter<AddressState> emit) async {
+  _onAddressSelected(AddressSelectedEvent event, Emitter emit) async {
     String userID = FirebaseAuth.instance.currentUser!.uid;
 
     final updateRef = FirebaseFirestore.instance.collection('User').doc(userID);
@@ -138,14 +113,5 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         msg: err.toString(),
       );
     });
-
-    // await updateRef.update({'defaultAddress': event.id}).then((value) {
-    //   Fluttertoast.showToast(msg: 'Thay đổi địa chỉ thành công');
-    //   add(AddressLoadingEvent());
-    // }).catchError((err) {
-    //   Fluttertoast.showToast(
-    //     msg: err.toString(),
-    //   );
-    // });
   }
 }

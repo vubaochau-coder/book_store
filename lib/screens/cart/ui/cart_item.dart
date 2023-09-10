@@ -50,6 +50,7 @@ class _CartItemState extends State<CartItem> {
           Expanded(
             flex: 2,
             child: Checkbox(
+              activeColor: themeColor,
               value: widget.cartData.isSelected,
               onChanged: widget.onSelected,
             ),
@@ -88,24 +89,14 @@ class _CartItemState extends State<CartItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        PageRouteSlideTransition(
-                          child: ProductDetailPage(
-                              productID: widget.cartData.bookID),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      widget.cartData.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14.5,
-                        color: Colors.black,
-                      ),
+                  child: Text(
+                    widget.cartData.title,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14.5,
+                      color: Colors.black,
                     ),
                   ),
                 ),

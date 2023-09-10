@@ -74,26 +74,20 @@ class AwaitPickupBloc extends Bloc<AwaitPickupEvent, AwaitPickupState> {
           list.add(TransactionModel.fromSnapshot(ele, products));
         }
 
-        add(AwaitPickupUpdateEvent(transactions: list));
+        if (!isClosed) {
+          add(AwaitPickupUpdateEvent(transactions: list));
+        }
       } else {
-        add(AwaitPickupUpdateEmptyEvent());
+        if (!isClosed) {
+          add(AwaitPickupUpdateEmptyEvent());
+        }
       }
     });
   }
 
   FutureOr<void> awaitPickupUpdateEvent(
       AwaitPickupUpdateEvent event, Emitter<AwaitPickupState> emit) {
-    if (state is AwaitPickupLoadingState || state is AwaitPickupEmptyState) {
-      emit(AwaitPickupLoadingSuccessfulState(transactions: event.transactions));
-    } else if (state is AwaitPickupLoadingSuccessfulState) {
-      final currentState = state as AwaitPickupLoadingSuccessfulState;
-
-      if (currentState.transactions.isNotEmpty) {
-        currentState.transactions.clear();
-      }
-
-      emit(AwaitPickupLoadingSuccessfulState(transactions: event.transactions));
-    }
+    emit(AwaitPickupLoadingSuccessfulState(transactions: event.transactions));
   }
 
   FutureOr<void> awaitPicupUpdateEmptyEvent(

@@ -4,7 +4,7 @@ import 'package:book_store/screens/categories/category_page.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 
-import 'category.dart';
+import 'category_item.dart';
 
 class CategoryList extends StatelessWidget {
   const CategoryList({super.key});

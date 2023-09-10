@@ -90,7 +90,7 @@ class ProductItem extends StatelessWidget {
                         style: TextStyle(
                           color: themeColor,
                           decoration: TextDecoration.underline,
-                          fontSize: 11,
+                          fontSize: 12,
                         ),
                       ),
                       Text(
@@ -99,6 +99,7 @@ class ProductItem extends StatelessWidget {
                         style: TextStyle(
                           color: themeColor,
                           fontSize: 18,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       const Spacer(),

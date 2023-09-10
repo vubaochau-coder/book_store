@@ -12,11 +12,25 @@ class EditPasswordPage extends StatefulWidget {
 }
 
 class _EditPasswordPageState extends State<EditPasswordPage> {
-  TextEditingController newPassController = TextEditingController();
-  TextEditingController confirmController = TextEditingController();
+  late TextEditingController _newPassController;
+  late TextEditingController _confirmController;
 
   bool isHidePass = true;
   bool isHideConfirm = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _newPassController = TextEditingController();
+    _confirmController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _newPassController.dispose();
+    _confirmController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +83,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                       ),
                     ),
                     TextField(
-                      controller: newPassController,
+                      controller: _newPassController,
                       cursorColor: themeColor,
                       obscureText: isHidePass,
                       decoration: InputDecoration(
@@ -107,7 +121,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                       ),
                     ),
                     TextField(
-                      controller: confirmController,
+                      controller: _confirmController,
                       cursorColor: themeColor,
                       obscureText: isHideConfirm,
                       decoration: InputDecoration(
@@ -146,8 +160,8 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                         onPressed: () {
                           BlocProvider.of<EditPasswordBloc>(context).add(
                             EditPasswordUpdateEvent(
-                              newPass: newPassController.text.trim(),
-                              confirmNewPass: confirmController.text.trim(),
+                              newPass: _newPassController.text.trim(),
+                              confirmNewPass: _confirmController.text.trim(),
                             ),
                           );
                         },

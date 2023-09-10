@@ -34,76 +34,97 @@ class _TransactionPageState extends State<TransactionPage>
       vsync: this,
       initialIndex: widget.currentIndex,
     );
+  }
 
-    BlocProvider.of<AwaitPickupBloc>(context).add(AwaitPickupLoadingEvent());
-    BlocProvider.of<UnconfirmedBloc>(context).add(UnconfirmedLoadingEvent());
-    BlocProvider.of<DeliveringBloc>(context).add(DeliveringLoadingEvent());
-    BlocProvider.of<DeliveredBloc>(context).add(DeliveredLoadingEvent());
-    BlocProvider.of<CancelledBloc>(context).add(CancelledLoadingEvent());
+  @override
+  void dispose() {
+    super.dispose();
+    tabController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        title: const Text('Đơn hàng của bạn'),
-        backgroundColor: themeColor,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 3,
-                  offset: const Offset(0, 1),
-                ),
-              ],
-            ),
-            child: TabBar(
-              controller: tabController,
-              isScrollable: true,
-              labelColor: themeColor,
-              unselectedLabelColor: Colors.grey[400],
-              indicator: BoxDecoration(
-                color: Colors.transparent,
-                border: Border(
-                  bottom: BorderSide(
-                    color: themeColor,
-                    width: 2,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              AwaitPickupBloc()..add(AwaitPickupLoadingEvent()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              UnconfirmedBloc()..add(UnconfirmedLoadingEvent()),
+        ),
+        BlocProvider(
+          create: (context) => DeliveringBloc()..add(DeliveringLoadingEvent()),
+        ),
+        BlocProvider(
+          create: (context) => DeliveredBloc()..add(DeliveredLoadingEvent()),
+        ),
+        BlocProvider(
+          create: (context) => CancelledBloc()..add(CancelledLoadingEvent()),
+        ),
+      ],
+      child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        appBar: AppBar(
+          title: const Text('Đơn hàng của bạn'),
+          backgroundColor: themeColor,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+        ),
+        body: Column(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 3,
+                    offset: const Offset(0, 1),
+                  ),
+                ],
+              ),
+              child: TabBar(
+                controller: tabController,
+                isScrollable: true,
+                labelColor: themeColor,
+                unselectedLabelColor: Colors.grey[400],
+                indicator: BoxDecoration(
+                  color: Colors.transparent,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: themeColor,
+                      width: 2,
+                    ),
                   ),
                 ),
+                tabs: [
+                  transactiontab('Chờ xác nhận'),
+                  transactiontab('Chờ lấy hàng'),
+                  transactiontab('Đang giao'),
+                  transactiontab('Đã nhận hàng'),
+                  transactiontab('Đã hủy'),
+                ],
               ),
-              tabs: [
-                transactiontab('Chờ xác nhận'),
-                transactiontab('Chờ lấy hàng'),
-                transactiontab('Đang giao'),
-                transactiontab('Đã nhận hàng'),
-                transactiontab('Đã hủy'),
-              ],
             ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: tabController,
-              children: const [
-                UnconfrimedTransactionPage(),
-                AwaitPickupTransactionPage(),
-                DeliveringTransactionPage(),
-                DeliveredTransactionPage(),
-                CancelledTransactionPage(),
-              ],
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: const [
+                  UnconfrimedTransactionPage(),
+                  AwaitPickupTransactionPage(),
+                  DeliveringTransactionPage(),
+                  DeliveredTransactionPage(),
+                  CancelledTransactionPage(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

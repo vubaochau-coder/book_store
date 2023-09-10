@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:book_store/models/favorite_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,16 +9,15 @@ part 'favorite_event.dart';
 part 'favorite_state.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
-  FavoriteBloc() : super(FavoriteLoadingState()) {
-    on<FavoriteLoadingEvent>(favoriteLoadingEvent);
-    on<FavoriteRemoveEvent>(favoriteRemoveEvent);
-    on<FavoriteUpdateEvent>(favoriteUpdateEvent);
-    on<FavoriteUpdateEmptyEvent>(favoriteUpdateEmptyEvent);
+  FavoriteBloc() : super(const FavoriteState()) {
+    on<FavoriteLoadingEvent>(_onLoading);
+    on<FavoriteRemoveEvent>(_onRemove);
+    on<FavoriteUpdateEvent>(_onUpdate);
+    on<FavoriteUpdateEmptyEvent>(_onUpdateEmpty);
   }
 
-  FutureOr<void> favoriteLoadingEvent(
-      FavoriteLoadingEvent event, Emitter<FavoriteState> emit) async {
-    emit(FavoriteLoadingState());
+  _onLoading(FavoriteLoadingEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -62,8 +59,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     });
   }
 
-  FutureOr<void> favoriteRemoveEvent(
-      FavoriteRemoveEvent event, Emitter<FavoriteState> emit) async {
+  _onRemove(FavoriteRemoveEvent event, Emitter emit) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     final docRef = FirebaseFirestore.instance
@@ -78,23 +74,21 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
         );
   }
 
-  FutureOr<void> favoriteUpdateEvent(
-      FavoriteUpdateEvent event, Emitter<FavoriteState> emit) {
-    if (state is FavoriteLoadingState || state is FavoriteEmptyState) {
-      emit(FavoriteLoadingSuccessfulState(listFavorite: event.listFavorite));
-    } else if (state is FavoriteLoadingSuccessfulState) {
-      final currentState = state as FavoriteLoadingSuccessfulState;
-
-      if (currentState.listFavorite.isNotEmpty) {
-        currentState.listFavorite.clear();
-      }
-
-      emit(FavoriteLoadingSuccessfulState(listFavorite: event.listFavorite));
-    }
+  _onUpdate(FavoriteUpdateEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        listFavorite: event.listFavorite,
+      ),
+    );
   }
 
-  FutureOr<void> favoriteUpdateEmptyEvent(
-      FavoriteUpdateEmptyEvent event, Emitter<FavoriteState> emit) {
-    emit(FavoriteEmptyState());
+  _onUpdateEmpty(FavoriteUpdateEmptyEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        listFavorite: [],
+      ),
+    );
   }
 }

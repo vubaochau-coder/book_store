@@ -1,8 +1,7 @@
-import 'package:book_store/models/address_model.dart';
-import 'package:book_store/screens/address_setting/bloc/address_bloc.dart';
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NewAddressPage extends StatefulWidget {
   const NewAddressPage({super.key});
@@ -22,11 +21,14 @@ class _NewAddressPageState extends State<NewAddressPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Địa chỉ mới'),
-        backgroundColor: themeColor,
-        foregroundColor: Colors.white,
+        title: Text(
+          'Địa chỉ mới',
+          style: AppTexts.appbarTitle,
+        ),
+        backgroundColor: AppColors.themeColor,
+        foregroundColor: AppColors.contentColor,
         elevation: 0,
         centerTitle: true,
       ),
@@ -38,6 +40,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
             TextField(
               controller: nameController,
               keyboardType: TextInputType.name,
+              style: AppTexts.inputTextStyle,
               decoration: const InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 0, horizontal: 14),
@@ -60,6 +63,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
             TextField(
               controller: phoneController,
               keyboardType: TextInputType.phone,
+              style: AppTexts.inputTextStyle,
               decoration: const InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 0, horizontal: 14),
@@ -80,6 +84,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
             TextField(
               controller: cityController,
               keyboardType: TextInputType.streetAddress,
+              style: AppTexts.inputTextStyle,
               decoration: const InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 0, horizontal: 14),
@@ -102,6 +107,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
             TextField(
               controller: addressController,
               keyboardType: TextInputType.streetAddress,
+              style: AppTexts.inputTextStyle,
               decoration: const InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 0, horizontal: 14),
@@ -125,32 +131,25 @@ class _NewAddressPageState extends State<NewAddressPage> {
               child: ElevatedButton(
                 onPressed: isValidate
                     ? () {
-                        BlocProvider.of<AddressBloc>(context).add(
-                          AddNewAddressEvent(
-                            newAddress: AddressModel(
-                              id: '',
-                              name: nameController.text.trim(),
-                              phone: phoneController.text.trim(),
-                              address:
-                                  '${addressController.text.trim()} ${cityController.text.trim()}',
-                              isDefault: false,
-                            ),
-                          ),
-                        );
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop({
+                          'name': nameController.text.trim(),
+                          'phone': phoneController.text.trim(),
+                          'address':
+                              '${addressController.text.trim()} ${cityController.text.trim()}',
+                        });
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: themeColor,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
                   ),
                 ),
                 child: const Text(
                   'Hoàn tất',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                 ),
               ),

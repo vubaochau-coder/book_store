@@ -73,26 +73,20 @@ class DeliveringBloc extends Bloc<DeliveringEvent, DeliveringState> {
           list.add(TransactionModel.fromSnapshot(ele, products));
         }
 
-        add(DeliveringUpdateEvent(transactions: list));
+        if (!isClosed) {
+          add(DeliveringUpdateEvent(transactions: list));
+        }
       } else {
-        add(DeliveringUpdateEmptyEvent());
+        if (!isClosed) {
+          add(DeliveringUpdateEmptyEvent());
+        }
       }
     });
   }
 
   FutureOr<void> deliveringUpdateEvent(
       DeliveringUpdateEvent event, Emitter<DeliveringState> emit) {
-    if (state is DeliveringLoadingState || state is DeliveringEmptyState) {
-      emit(DeliveringLoadingSuccessfulState(transactions: event.transactions));
-    } else if (state is DeliveringLoadingSuccessfulState) {
-      final currentState = state as DeliveringLoadingSuccessfulState;
-
-      if (currentState.transactions.isNotEmpty) {
-        currentState.transactions.clear();
-      }
-
-      emit(DeliveringLoadingSuccessfulState(transactions: event.transactions));
-    }
+    emit(DeliveringLoadingSuccessfulState(transactions: event.transactions));
   }
 
   FutureOr<void> deliveringUpdateEmptyEvent(

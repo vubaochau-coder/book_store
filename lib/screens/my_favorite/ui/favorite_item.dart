@@ -18,41 +18,29 @@ class FavoriteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 124,
-      //margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-      decoration: BoxDecoration(
+      height: 114,
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(4),
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 1,
-            color: Colors.grey,
-            offset: Offset(0, 1),
-          )
-        ],
       ),
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
       child: Row(
         children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  PageRouteSlideTransition(
-                    child:
-                        ProductDetailPage(productID: favoriteModel.productID),
-                  ),
-                );
-              },
-              child: CachedNetworkImage(
-                imageUrl: favoriteModel.imgURL,
-                fit: BoxFit.contain,
-              ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteSlideTransition(
+                  child: ProductDetailPage(productID: favoriteModel.productID),
+                ),
+              );
+            },
+            child: CachedNetworkImage(
+              imageUrl: favoriteModel.imgURL,
+              fit: BoxFit.contain,
+              height: 80,
             ),
           ),
           const SizedBox(width: 8),
           Expanded(
-            flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,89 +56,91 @@ class FavoriteItem extends StatelessWidget {
                     },
                     child: Text(
                       favoriteModel.productTitle,
-                      maxLines: 3,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'đ',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontSize: 13,
-                              color: themeColor,
-                              fontWeight: FontWeight.w500,
-                            ),
+                const SizedBox(height: 4),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'đ',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontSize: 13,
+                            color: themeColor,
+                            fontWeight: FontWeight.w600,
                           ),
-                          Text(
-                            Converter.convertNumberToMoney(favoriteModel.price),
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: themeColor,
-                              fontWeight: FontWeight.w500,
-                            ),
+                        ),
+                        Text(
+                          Converter.convertNumberToMoney(favoriteModel.price),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: themeColor,
+                            fontWeight: FontWeight.w600,
                           ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 34,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                BlocProvider.of<CartBloc>(context).add(
-                                  CartAddItemEvent(
-                                      itemID: favoriteModel.productID),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 12),
-                                backgroundColor: Colors.grey[350],
-                                foregroundColor: Colors.white,
-                                elevation: 0,
-                              ),
-                              child: const Text(
-                                'Đặt mua ngay',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 28,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              BlocProvider.of<CartBloc>(context).add(
+                                CartAddItemEvent(
+                                    itemID: favoriteModel.productID),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              backgroundColor: Colors.grey[350],
+                              foregroundColor: Colors.white,
+                              elevation: 0,
                             ),
-                          ),
-                          SizedBox(
-                            height: 34,
-                            width: 34,
-                            child: IconButton(
-                              onPressed: () {
-                                BlocProvider.of<FavoriteBloc>(context).add(
-                                  FavoriteRemoveEvent(
-                                      idDocument: favoriteModel.id),
-                                );
-                              },
-                              icon: const FaIcon(
-                                FontAwesomeIcons.trashCan,
-                                size: 20,
+                            child: const Text(
+                              'Đặt mua ngay',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                        SizedBox(
+                          height: 28,
+                          width: 28,
+                          child: IconButton(
+                            onPressed: () {
+                              BlocProvider.of<FavoriteBloc>(context).add(
+                                FavoriteRemoveEvent(
+                                    idDocument: favoriteModel.id),
+                              );
+                            },
+                            icon: const FaIcon(
+                              FontAwesomeIcons.trashCan,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),

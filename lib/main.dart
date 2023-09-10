@@ -1,21 +1,14 @@
 import 'package:badges/badges.dart' as badge;
+import 'package:book_store/app_themes/app_fonts.dart';
 import 'package:book_store/authentication_service/auth_service.dart';
 import 'package:book_store/bloc/cart_count_bloc.dart';
-import 'package:book_store/screens/Checkout/bloc/checkout_bloc.dart';
-import 'package:book_store/screens/address_setting/bloc/address_bloc.dart';
+import 'package:book_store/screens/checkout/bloc/checkout_bloc.dart';
 import 'package:book_store/screens/cart/bloc/cart_bloc.dart';
 import 'package:book_store/screens/cart/ui/cart_page.dart';
-import 'package:book_store/screens/categories/child/bloc/child_bloc.dart';
-import 'package:book_store/screens/categories/comic/bloc/comic_bloc.dart';
-import 'package:book_store/screens/categories/literature/bloc/literature_bloc.dart';
-import 'package:book_store/screens/categories/others/bloc/other_bloc.dart';
-import 'package:book_store/screens/categories/science/bloc/science_bloc.dart';
-import 'package:book_store/screens/categories/sgk/bloc/sgk_bloc.dart';
 import 'package:book_store/screens/edit_password/bloc/edit_pass_bloc.dart';
 import 'package:book_store/screens/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:book_store/screens/home/bloc/home_bloc.dart';
 import 'package:book_store/screens/home/ui/home_page.dart';
-import 'package:book_store/screens/my_favorite/bloc/favorite_bloc.dart';
 import 'package:book_store/screens/my_feedback/bloc/my_feedback_bloc.dart';
 import 'package:book_store/screens/notification/bloc/notification_bloc.dart';
 import 'package:book_store/screens/notification/ui/notification_page.dart';
@@ -25,10 +18,6 @@ import 'package:book_store/screens/product_feedback/bloc/product_feedback_bloc.d
 import 'package:book_store/screens/profile/bloc/feedback_count_bloc.dart';
 import 'package:book_store/screens/profile/bloc/user_bloc.dart';
 import 'package:book_store/screens/profile/ui/profile_page.dart';
-import 'package:book_store/screens/transaction_status/cancelled/bloc/cancelled_bloc.dart';
-import 'package:book_store/screens/transaction_status/delivered/bloc/delivered_bloc.dart';
-import 'package:book_store/screens/transaction_status/delivering/bloc/delivering_bloc.dart';
-import 'package:book_store/screens/transaction_status/unconfirmed/bloc/unconfirmed_bloc.dart';
 import 'package:book_store/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +28,6 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import 'bloc/noti_count_bloc.dart';
 import 'screens/search/bloc/search_bloc.dart';
-import 'screens/transaction_status/await_pickup/bloc/await_pickup_bloc.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,23 +51,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => CartBloc()),
         BlocProvider(create: (context) => CartCountBloc()),
         BlocProvider(create: (context) => NotiCountBloc()),
-        BlocProvider(create: (context) => SgkBloc()),
-        BlocProvider(create: (context) => LiteratureBloc()),
-        BlocProvider(create: (context) => ComicBloc()),
-        BlocProvider(create: (context) => ChildBloc()),
-        BlocProvider(create: (context) => ScienceBloc()),
-        BlocProvider(create: (context) => OtherBloc()),
         BlocProvider(create: (context) => UserBloc()),
         BlocProvider(create: (context) => CheckoutBloc()),
-        BlocProvider(create: (context) => AddressBloc()),
         BlocProvider(create: (context) => BillBloc()),
-        BlocProvider(create: (context) => AwaitPickupBloc()),
-        BlocProvider(create: (context) => UnconfirmedBloc()),
-        BlocProvider(create: (context) => DeliveringBloc()),
-        BlocProvider(create: (context) => DeliveredBloc()),
-        BlocProvider(create: (context) => CancelledBloc()),
         BlocProvider(create: (context) => SearchBloc()),
-        BlocProvider(create: (context) => FavoriteBloc()),
         BlocProvider(create: (context) => FeedbackCountBloc()),
         BlocProvider(create: (context) => MyFeedbackBloc()),
         BlocProvider(create: (context) => ProductFeedbackBloc()),
@@ -92,6 +67,7 @@ class MyApp extends StatelessWidget {
         title: 'Book Store',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          fontFamily: 'Averta',
         ),
         home: AuthService().handleAuthState(),
       ),
@@ -137,7 +113,7 @@ class _RootPageState extends State<RootPage> {
         onTap: (p0) {
           controller.animateToPage(
             p0,
-            duration: const Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 300),
             curve: Curves.easeInQuint,
           );
         },
@@ -147,7 +123,10 @@ class _RootPageState extends State<RootPage> {
               FontAwesomeIcons.houseCrack,
               size: 18,
             ),
-            title: const Text('Trang chủ'),
+            title: Text(
+              'Trang chủ',
+              style: TextStyle(fontFamily: AppFonts.averta),
+            ),
           ),
           SalomonBottomBarItem(
             icon: BlocBuilder<NotiCountBloc, NotiCountState>(
@@ -191,7 +170,10 @@ class _RootPageState extends State<RootPage> {
                 }
               },
             ),
-            title: const Text('Thông báo'),
+            title: Text(
+              'Thông báo',
+              style: TextStyle(fontFamily: AppFonts.averta),
+            ),
           ),
           SalomonBottomBarItem(
             icon: BlocBuilder<CartCountBloc, CartCountState>(
@@ -235,14 +217,20 @@ class _RootPageState extends State<RootPage> {
                 }
               },
             ),
-            title: const Text('Giỏ hàng'),
+            title: Text(
+              'Giỏ hàng',
+              style: TextStyle(fontFamily: AppFonts.averta),
+            ),
           ),
           SalomonBottomBarItem(
             icon: const FaIcon(
               FontAwesomeIcons.solidUser,
               size: 18,
             ),
-            title: const Text('Tài khoản'),
+            title: Text(
+              'Tài khoản',
+              style: TextStyle(fontFamily: AppFonts.averta),
+            ),
           ),
         ],
       ),

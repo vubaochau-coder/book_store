@@ -21,9 +21,9 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> {
   File? avatar;
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
+  late TextEditingController _nameController;
+  late TextEditingController _phoneController;
+  late TextEditingController _dateController;
   List<String> sex = ['Nam', 'Nữ'];
 
   DateFormat dateFormat = DateFormat('dd/MM/yyyy');
@@ -32,6 +32,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
   bool isNameErr = false;
   bool isPhoneErr = false;
   bool birthdayErr = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+    _phoneController = TextEditingController();
+    _dateController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _nameController.dispose();
+    _phoneController.dispose();
+    _dateController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +191,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 height: 8,
                               ),
                               TextField(
-                                controller: nameController,
+                                controller: _nameController,
                                 style: const TextStyle(
                                   fontSize: 16,
                                 ),
@@ -208,7 +224,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 height: 8,
                               ),
                               TextField(
-                                controller: phoneController,
+                                controller: _phoneController,
                                 keyboardType: TextInputType.phone,
                                 style: const TextStyle(
                                   fontSize: 16,
@@ -317,7 +333,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           height: 8,
                                         ),
                                         TextField(
-                                          controller: dateController,
+                                          controller: _dateController,
                                           readOnly: true,
                                           decoration: InputDecoration(
                                             errorText: birthdayErr
@@ -356,7 +372,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                                   lastDate: DateTime.now(),
                                                 ).then((value) {
                                                   if (value != null) {
-                                                    dateController.text =
+                                                    _dateController.text =
                                                         dateFormat
                                                             .format(value);
                                                   }
@@ -461,27 +477,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   bool validateData(String oldPhone, String oldBirthday) {
-    if (nameController.text.trim().isNotEmpty &&
-        nameController.text.trim().length < 6) {
+    if (_nameController.text.trim().isNotEmpty &&
+        _nameController.text.trim().length < 6) {
       setState(() {
         isNameErr = true;
       });
       return false;
     }
-    if (phoneController.text.trim().isEmpty && oldPhone.isEmpty) {
+    if (_phoneController.text.trim().isEmpty && oldPhone.isEmpty) {
       setState(() {
         isPhoneErr = true;
       });
       return false;
     }
-    if (phoneController.text.trim().isNotEmpty &&
-        phoneController.text.trim().length != 10) {
+    if (_phoneController.text.trim().isNotEmpty &&
+        _phoneController.text.trim().length != 10) {
       setState(() {
         isPhoneErr = true;
       });
       return false;
     }
-    if (dateController.text.trim().isEmpty && oldBirthday.isEmpty) {
+    if (_dateController.text.trim().isEmpty && oldBirthday.isEmpty) {
       setState(() {
         birthdayErr = true;
       });
@@ -491,24 +507,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   String getName(String oldName) {
-    if (nameController.text.trim().isEmpty) {
+    if (_nameController.text.trim().isEmpty) {
       return oldName;
     }
-    return nameController.text.trim();
+    return _nameController.text.trim();
   }
 
   String getPhone(String oldPhone) {
-    if (phoneController.text.trim().isEmpty) {
+    if (_phoneController.text.trim().isEmpty) {
       return oldPhone;
     }
-    return phoneController.text.trim();
+    return _phoneController.text.trim();
   }
 
   String getBirthday(String oldBirthday) {
-    if (dateController.text.trim().isEmpty) {
+    if (_dateController.text.trim().isEmpty) {
       return oldBirthday;
     }
-    return dateController.text.trim();
+    return _dateController.text.trim();
   }
 
   bool getGender(bool isMale) {

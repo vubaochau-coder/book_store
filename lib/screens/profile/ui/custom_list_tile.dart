@@ -37,7 +37,7 @@ class CustomListTile extends StatelessWidget {
               title,
               style: const TextStyle(
                 fontWeight: FontWeight.w400,
-                fontSize: 15,
+                fontSize: 14,
                 color: Colors.black,
               ),
             ),

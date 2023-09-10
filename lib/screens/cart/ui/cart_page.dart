@@ -1,3 +1,5 @@
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/custom_widgets/custom_page_route.dart';
 import 'package:book_store/models/cart_item_model.dart';
 import 'package:book_store/screens/cart/bloc/cart_bloc.dart';
@@ -16,15 +18,13 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: background,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: themeColor,
+        backgroundColor: AppColors.themeColor,
         elevation: 0,
-        title: const Text('Giỏ hàng'),
-        titleTextStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
+        title: Text(
+          'Giỏ hàng',
+          style: AppTexts.appbarTitle,
         ),
         centerTitle: true,
       ),
@@ -57,25 +57,29 @@ class CartPage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                margin: const EdgeInsets.only(bottom: 4),
                 elevation: 1,
-                child: Row(
-                  children: [
-                    Checkbox(
-                      value: isAllItemSelected(listCart),
-                      onChanged: (value) {
-                        BlocProvider.of<CartBloc>(context)
-                            .add(CartAllItemSelectedEvent(listCart: listCart));
-                      },
-                    ),
-                    Text(
-                      'Chọn tất cả (${listCart.length} sản phẩm)',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        activeColor: themeColor,
+                        value: isAllItemSelected(listCart),
+                        onChanged: (value) {
+                          BlocProvider.of<CartBloc>(context).add(
+                              CartAllItemSelectedEvent(listCart: listCart));
+                        },
                       ),
-                    ),
-                  ],
+                      Text(
+                        'Chọn tất cả (${listCart.length} sản phẩm)',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Expanded(

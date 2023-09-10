@@ -73,26 +73,20 @@ class UnconfirmedBloc extends Bloc<UnconfirmedEvent, UnconfirmedState> {
           list.add(TransactionModel.fromSnapshot(ele, products));
         }
 
-        add(UnconfirmedUpdateEvent(transactions: list));
+        if (!isClosed) {
+          add(UnconfirmedUpdateEvent(transactions: list));
+        }
       } else {
-        add(UnconfirmedUpdateEmptyEvent());
+        if (!isClosed) {
+          add(UnconfirmedUpdateEmptyEvent());
+        }
       }
     });
   }
 
   FutureOr<void> unconfirmedUpdateEvent(
       UnconfirmedUpdateEvent event, Emitter<UnconfirmedState> emit) {
-    if (state is UnconfirmedLoadingState || state is UnconfirmedEmptyState) {
-      emit(UnconfrimedLoadingSuccessfulState(transactions: event.transactions));
-    } else if (state is UnconfrimedLoadingSuccessfulState) {
-      final currentState = state as UnconfrimedLoadingSuccessfulState;
-
-      if (currentState.transactions.isNotEmpty) {
-        currentState.transactions.clear();
-      }
-
-      emit(UnconfrimedLoadingSuccessfulState(transactions: event.transactions));
-    }
+    emit(UnconfrimedLoadingSuccessfulState(transactions: event.transactions));
   }
 
   FutureOr<void> unconfirmedUpdateEmptyEvent(

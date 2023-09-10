@@ -1,18 +1,21 @@
 part of 'address_bloc.dart';
 
-abstract class AddressState extends Equatable {
-  const AddressState();
+class AddressState extends Equatable {
+  final List<AddressModel> listAddress;
+  final bool isLoading;
+
+  const AddressState({
+    this.listAddress = const [],
+    this.isLoading = false,
+  });
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [listAddress, isLoading];
+
+  AddressState copyWith({bool? isLoading, List<AddressModel>? listAddress}) {
+    return AddressState(
+      isLoading: isLoading ?? this.isLoading,
+      listAddress: listAddress ?? this.listAddress,
+    );
+  }
 }
-
-class AddressLoadingState extends AddressState {}
-
-class AddressLoadingSuccessfulState extends AddressState {
-  final List<AddressModel> listAddress;
-
-  const AddressLoadingSuccessfulState({required this.listAddress});
-}
-
-class AddressEmptyState extends AddressState {}

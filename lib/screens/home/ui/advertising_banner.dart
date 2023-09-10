@@ -6,16 +6,16 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class BannerQuangCao extends StatefulWidget {
-  const BannerQuangCao({super.key, required this.datas});
+class AdvertisingBanner extends StatefulWidget {
+  const AdvertisingBanner({super.key, required this.datas});
 
   final List<AdvertisingDataModel> datas;
 
   @override
-  State<BannerQuangCao> createState() => _BannerQuangCaoState();
+  State<AdvertisingBanner> createState() => _AdvertisingBannerState();
 }
 
-class _BannerQuangCaoState extends State<BannerQuangCao> {
+class _AdvertisingBannerState extends State<AdvertisingBanner> {
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {

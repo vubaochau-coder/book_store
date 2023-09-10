@@ -1,20 +1,24 @@
 part of 'favorite_bloc.dart';
 
-abstract class FavoriteState extends Equatable {
-  const FavoriteState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class FavoriteLoadingState extends FavoriteState {}
-
-class FavoriteLoadingSuccessfulState extends FavoriteState {
+class FavoriteState extends Equatable {
   final List<FavoriteModel> listFavorite;
+  final bool isLoading;
 
-  const FavoriteLoadingSuccessfulState({required this.listFavorite});
+  const FavoriteState({
+    this.listFavorite = const [],
+    this.isLoading = false,
+  });
+
   @override
-  List<Object> get props => [listFavorite];
-}
+  List<Object> get props => [listFavorite, isLoading];
 
-class FavoriteEmptyState extends FavoriteState {}
+  FavoriteState copyWith({
+    bool? isLoading,
+    List<FavoriteModel>? listFavorite,
+  }) {
+    return FavoriteState(
+      isLoading: isLoading ?? this.isLoading,
+      listFavorite: listFavorite ?? this.listFavorite,
+    );
+  }
+}

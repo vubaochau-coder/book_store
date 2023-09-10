@@ -1,4 +1,7 @@
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/custom_widgets/custom_page_route.dart';
+import 'package:book_store/models/address_model.dart';
 import 'package:book_store/screens/address_setting/bloc/address_bloc.dart';
 import 'package:book_store/screens/address_setting/ui/add_address_page.dart';
 import 'package:book_store/screens/address_setting/ui/address_loading.dart';
@@ -12,21 +15,30 @@ class AddressSettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: background,
-      appBar: AppBar(
-        title: const Text('Chọn địa chỉ nhận hàng'),
-        backgroundColor: themeColor,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: BlocBuilder<AddressBloc, AddressState>(
-        bloc: BlocProvider.of<AddressBloc>(context)..add(AddressLoadingEvent()),
-        builder: (context, state) {
-          if (state is AddressLoadingState) {
-            return const AddressLoadingPage();
-          } else if (state is AddressLoadingSuccessfulState) {
+    return BlocProvider(
+      create: (context) => AddressBloc()..add(AddressLoadingEvent()),
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          title: Text(
+            'Chọn địa chỉ nhận hàng',
+            style: AppTexts.appbarTitle,
+          ),
+          backgroundColor: AppColors.themeColor,
+          foregroundColor: AppColors.contentColor,
+          elevation: 0,
+          centerTitle: true,
+        ),
+        body: BlocBuilder<AddressBloc, AddressState>(
+          builder: (context, state) {
+            if (state.isLoading) {
+              return const AddressLoadingPage();
+            }
+
+            if (state.listAddress.isEmpty) {
+              return addNewAddressButton(context);
+            }
+
             return ListView.separated(
               itemBuilder: (context, index) {
                 if (index < state.listAddress.length) {
@@ -60,7 +72,7 @@ class AddressSettingPage extends StatelessWidget {
                                       Text(
                                         state.listAddress[index].name,
                                         style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 15,
                                         ),
                                       ),
@@ -74,7 +86,13 @@ class AddressSettingPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                Text(state.listAddress[index].address),
+                                const SizedBox(height: 4),
+                                Text(
+                                  state.listAddress[index].address,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -122,14 +140,8 @@ class AddressSettingPage extends StatelessWidget {
               },
               itemCount: state.listAddress.length + 1,
             );
-          } else if (state is AddressEmptyState) {
-            return addNewAddressButton(context);
-          } else {
-            return const Center(
-              child: Text('Something went wrong'),
-            );
-          }
-        },
+          },
+        ),
       ),
     );
   }
@@ -147,11 +159,28 @@ class AddressSettingPage extends StatelessWidget {
       ),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.of(context).push(
+          Navigator.of(context)
+              .push(
             PageRouteSlideTransition(
               child: const NewAddressPage(),
             ),
-          );
+          )
+              .then((value) {
+            if (value != null) {
+              Map<String, dynamic> map = (value as Map<String, dynamic>);
+              BlocProvider.of<AddressBloc>(context).add(
+                AddNewAddressEvent(
+                  newAddress: AddressModel(
+                    id: '',
+                    name: map['name'],
+                    phone: map['phone'],
+                    address: map['address'],
+                    isDefault: false,
+                  ),
+                ),
+              );
+            }
+          });
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
