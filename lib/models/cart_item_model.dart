@@ -9,7 +9,6 @@ class CartItemModel extends Equatable {
   final double price;
   final double priceBeforeDiscount;
   final String imgUrl;
-  final bool isSelected;
 
   @override
   List<Object?> get props => [
@@ -20,7 +19,6 @@ class CartItemModel extends Equatable {
         price,
         priceBeforeDiscount,
         imgUrl,
-        isSelected
       ];
 
   const CartItemModel({
@@ -30,7 +28,6 @@ class CartItemModel extends Equatable {
     required this.price,
     required this.imgUrl,
     required this.title,
-    required this.isSelected,
     required this.priceBeforeDiscount,
   });
 
@@ -48,7 +45,6 @@ class CartItemModel extends Equatable {
       price: pPrice,
       imgUrl: url,
       title: pTitle,
-      isSelected: false,
       priceBeforeDiscount: pBPrice,
     );
   }

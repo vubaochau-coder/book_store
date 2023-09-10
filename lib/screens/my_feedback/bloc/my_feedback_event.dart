@@ -11,11 +11,9 @@ class MyFeedbackLoadingEvent extends MyFeedbackEvent {}
 
 class MyFeedbackUpdateEvent extends MyFeedbackEvent {
   final List<FeedbackItemModel> newListFeedback;
-  final bool isLoading;
 
   const MyFeedbackUpdateEvent({
     required this.newListFeedback,
-    required this.isLoading,
   });
 }
 

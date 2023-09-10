@@ -257,7 +257,6 @@ class ProductDetailPage extends StatelessWidget {
                                                 state.productData.discount,
                                         imgUrl: state.productData.imageURL[0],
                                         title: state.productData.title,
-                                        isSelected: true,
                                         priceBeforeDiscount:
                                             state.productData.price,
                                       ),

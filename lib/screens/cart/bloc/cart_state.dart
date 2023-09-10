@@ -1,21 +1,33 @@
 part of 'cart_bloc.dart';
 
-abstract class CartState extends Equatable {
-  const CartState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class CartLoadingState extends CartState {}
-
-class CartLoadingSuccessfulState extends CartState {
+class CartState extends Equatable {
   final List<CartItemModel> cartItems;
+  final List<CartItemModel> selectedCartitems;
+  final bool isAllSelected;
+  final bool isLoading;
 
-  const CartLoadingSuccessfulState({required this.cartItems});
+  const CartState({
+    this.cartItems = const [],
+    this.selectedCartitems = const [],
+    this.isLoading = false,
+    this.isAllSelected = false,
+  });
 
   @override
-  List<Object> get props => [cartItems];
-}
+  List<Object> get props =>
+      [cartItems, isLoading, isAllSelected, selectedCartitems];
 
-class CartEmptyState extends CartState {}
+  CartState copyWith({
+    bool? isLoading,
+    bool? isAllSelected,
+    List<CartItemModel>? cartItems,
+    List<CartItemModel>? selectedCartitems,
+  }) {
+    return CartState(
+      cartItems: cartItems ?? this.cartItems,
+      isLoading: isLoading ?? this.isLoading,
+      isAllSelected: isAllSelected ?? this.isAllSelected,
+      selectedCartitems: selectedCartitems ?? this.selectedCartitems,
+    );
+  }
+}

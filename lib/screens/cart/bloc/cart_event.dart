@@ -18,25 +18,21 @@ class CartUpdateEvent extends CartEvent {
 class CartUpdateEmptyEvent extends CartEvent {}
 
 class CartAllItemSelectedEvent extends CartEvent {
-  final List<CartItemModel> listCart;
-
-  const CartAllItemSelectedEvent({required this.listCart});
+  const CartAllItemSelectedEvent();
 }
 
 class CartItemSelectedEvent extends CartEvent {
-  final String itemID;
-  final List<CartItemModel> listCart;
+  final CartItemModel item;
 
-  const CartItemSelectedEvent({required this.itemID, required this.listCart});
+  const CartItemSelectedEvent({required this.item});
 }
 
 class CartChangeItemQuantityEvent extends CartEvent {
-  final String itemID;
+  final CartItemModel item;
   final bool isIncrease;
-  final List<CartItemModel> listCart;
 
   const CartChangeItemQuantityEvent(
-      {required this.itemID, required this.isIncrease, required this.listCart});
+      {required this.item, required this.isIncrease});
 }
 
 class CartRemoveItemEvent extends CartEvent {

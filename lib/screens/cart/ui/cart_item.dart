@@ -1,3 +1,4 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/custom_widgets/custom_page_route.dart';
 import 'package:book_store/models/cart_item_model.dart';
 import 'package:book_store/screens/product_detail/ui/product_detail_page.dart';
@@ -8,12 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 
-class CartItem extends StatefulWidget {
+class CartItem extends StatelessWidget {
   final CartItemModel cartData;
   final void Function(bool?) onSelected;
   final VoidCallback onIncrease;
   final VoidCallback onDecrease;
   final VoidCallback onRemove;
+  final bool isSelected;
+
   const CartItem({
     super.key,
     required this.cartData,
@@ -21,38 +24,26 @@ class CartItem extends StatefulWidget {
     required this.onIncrease,
     required this.onDecrease,
     required this.onRemove,
+    required this.isSelected,
   });
 
-  @override
-  State<CartItem> createState() => _CartItemState();
-}
-
-class _CartItemState extends State<CartItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 126,
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
       margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
+      decoration: const BoxDecoration(
         color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 2,
-            color: Colors.grey,
-            offset: Offset(0, 1),
-          )
-        ],
       ),
       child: Row(
         children: [
           Expanded(
             flex: 2,
             child: Checkbox(
-              activeColor: themeColor,
-              value: widget.cartData.isSelected,
-              onChanged: widget.onSelected,
+              activeColor: AppColors.themeColor,
+              value: isSelected,
+              onChanged: onSelected,
             ),
           ),
           Expanded(
@@ -61,12 +52,12 @@ class _CartItemState extends State<CartItem> {
               onTap: () {
                 Navigator.of(context).push(
                   PageRouteSlideTransition(
-                    child: ProductDetailPage(productID: widget.cartData.bookID),
+                    child: ProductDetailPage(productID: cartData.bookID),
                   ),
                 );
               },
               child: CachedNetworkImage(
-                imageUrl: widget.cartData.imgUrl,
+                imageUrl: cartData.imgUrl,
                 fit: BoxFit.contain,
                 placeholder: (context, url) {
                   return Shimmer.fromColors(
@@ -90,7 +81,7 @@ class _CartItemState extends State<CartItem> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.cartData.title,
+                    cartData.title,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -105,7 +96,7 @@ class _CartItemState extends State<CartItem> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "${Converter.convertNumberToMoney(widget.cartData.price)} đ",
+                      "${Converter.convertNumberToMoney(cartData.price)} đ",
                       style: TextStyle(
                         color: themeColor,
                         fontWeight: FontWeight.w600,
@@ -116,7 +107,7 @@ class _CartItemState extends State<CartItem> {
                       width: 6,
                     ),
                     Text(
-                      "${Converter.convertNumberToMoney(widget.cartData.priceBeforeDiscount)} đ",
+                      "${Converter.convertNumberToMoney(cartData.priceBeforeDiscount)} đ",
                       style: TextStyle(
                         decoration: TextDecoration.lineThrough,
                         color: Colors.grey[600],
@@ -137,47 +128,47 @@ class _CartItemState extends State<CartItem> {
                         flex: 3,
                         child: Container(
                           color: Colors.grey[200],
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 3,
-                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              GestureDetector(
-                                onTap: widget.cartData.count > 1
-                                    ? widget.onDecrease
-                                    : null,
-                                child: const SizedBox(
-                                  width: 32,
-                                  height: 26,
-                                  child: Icon(
-                                    Icons.remove,
-                                    size: 20,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: cartData.count > 1
+                                      ? () => onDecrease()
+                                      : null,
+                                  child: const SizedBox(
+                                    height: double.infinity,
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                    ),
                                   ),
                                 ),
                               ),
                               Container(
                                 width: 48,
+                                margin: const EdgeInsets.symmetric(vertical: 3),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: Text(
-                                  widget.cartData.count.toString(),
+                                  cartData.count.toString(),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: widget.onIncrease,
-                                child: const SizedBox(
-                                  width: 32,
-                                  height: 26,
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 20,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () => onIncrease(),
+                                  child: const SizedBox(
+                                    height: double.infinity,
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 20,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -190,10 +181,10 @@ class _CartItemState extends State<CartItem> {
                           alignment: Alignment.centerRight,
                           padding: const EdgeInsets.only(right: 10),
                           child: GestureDetector(
-                            onTap: widget.onRemove,
+                            onTap: onRemove,
                             child: const FaIcon(
                               FontAwesomeIcons.trashCan,
-                              size: 20,
+                              size: 16,
                             ),
                           ),
                         ),

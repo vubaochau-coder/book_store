@@ -1,5 +1,5 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/models/unfeedback_item_model.dart';
-import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -12,20 +12,11 @@ class MyFeedbackItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       width: double.infinity,
       height: 80,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(4),
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 1,
-            color: Colors.grey,
-            offset: Offset(0, 1),
-          )
-        ],
       ),
       child: Row(
         children: [
@@ -36,8 +27,8 @@ class MyFeedbackItem extends StatelessWidget {
               height: 72,
               placeholder: (context, url) {
                 return Shimmer.fromColors(
-                  baseColor: baseShimmer,
-                  highlightColor: highlightShimmer,
+                  baseColor: AppColors.baseShimmer,
+                  highlightColor: AppColors.highlightShimmer,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -68,8 +59,8 @@ class MyFeedbackItem extends StatelessWidget {
                     Text(
                       'đ',
                       style: TextStyle(
-                        color: themeColor,
-                        fontWeight: FontWeight.w500,
+                        color: AppColors.themeColor,
+                        fontWeight: FontWeight.w600,
                         fontSize: 13,
                         decoration: TextDecoration.underline,
                       ),
@@ -77,8 +68,8 @@ class MyFeedbackItem extends StatelessWidget {
                     Text(
                       Converter.convertNumberToMoney(itemModel.price),
                       style: TextStyle(
-                        color: themeColor,
-                        fontWeight: FontWeight.w500,
+                        color: AppColors.themeColor,
+                        fontWeight: FontWeight.w600,
                         fontSize: 13,
                       ),
                     ),

@@ -9,7 +9,6 @@ import 'package:book_store/screens/edit_password/bloc/edit_pass_bloc.dart';
 import 'package:book_store/screens/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:book_store/screens/home/bloc/home_bloc.dart';
 import 'package:book_store/screens/home/ui/home_page.dart';
-import 'package:book_store/screens/my_feedback/bloc/my_feedback_bloc.dart';
 import 'package:book_store/screens/notification/bloc/notification_bloc.dart';
 import 'package:book_store/screens/notification/ui/notification_page.dart';
 import 'package:book_store/screens/order_bill/bloc/bill_bloc.dart';
@@ -56,7 +55,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BillBloc()),
         BlocProvider(create: (context) => SearchBloc()),
         BlocProvider(create: (context) => FeedbackCountBloc()),
-        BlocProvider(create: (context) => MyFeedbackBloc()),
         BlocProvider(create: (context) => ProductFeedbackBloc()),
         BlocProvider(create: (context) => EditProfileBloc()),
         BlocProvider(create: (context) => EditPasswordBloc()),

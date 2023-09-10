@@ -1,95 +1,75 @@
-import 'package:book_store/theme.dart';
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SupportPage extends StatelessWidget {
   const SupportPage({super.key});
 
+  static TextStyle textStyle = const TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: background,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Thông tin liên hệ'),
-        backgroundColor: themeColor,
-        foregroundColor: Colors.white,
+        title: Text(
+          'Thông tin liên hệ',
+          style: AppTexts.appbarTitle,
+        ),
+        backgroundColor: AppColors.themeColor,
+        foregroundColor: AppColors.contentColor,
         elevation: 0,
         centerTitle: true,
       ),
-      body: const Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 24,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.mail_outline_rounded,
-                color: Color(0xffc71610),
-                size: 28,
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Text(
-                'chauvodoi001@gmail.com',
-                style: TextStyle(
-                  color: Color(0xffc71610),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
+          contentItem(
+            Icons.mail_outline_rounded,
+            'chauvodoi001@gmail.com',
+            const Color(0xffc71610),
           ),
-          SizedBox(
-            height: 14,
+          contentItem(
+            Icons.facebook,
+            'https://www.facebook.com/baochau.vbc/',
+            const Color(0xff3b5998),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.facebook,
-                color: Color(0xff3b5998),
-                size: 28,
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Text(
-                'https://www.facebook.com/baochau.vbc/',
-                style: TextStyle(
-                  color: Color(0xff3b5998),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
+          contentItem(
+            FontAwesomeIcons.github,
+            'vubaochau-coder',
+            const Color(0xff171515),
           ),
-          SizedBox(
-            height: 14,
+        ],
+      ),
+    );
+  }
+
+  Widget contentItem(IconData icon, String content, Color color) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: color,
+            size: 28,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                FontAwesomeIcons.github,
-                color: Color(0xff171515),
-                size: 28,
-              ),
-              SizedBox(
-                width: 8,
-              ),
-              Text(
-                'vubaochau-coder',
-                style: TextStyle(
-                  color: Color(0xff171515),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
+          const SizedBox(
+            width: 8,
+          ),
+          Text(
+            content,
+            style: textStyle.copyWith(
+              color: color,
+            ),
           ),
         ],
       ),

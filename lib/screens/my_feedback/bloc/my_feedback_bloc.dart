@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:book_store/models/unfeedback_item_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,16 +9,15 @@ part 'my_feedback_event.dart';
 part 'my_feedback_state.dart';
 
 class MyFeedbackBloc extends Bloc<MyFeedbackEvent, MyFeedbackState> {
-  MyFeedbackBloc() : super(MyFeedbackLoadingState()) {
-    on<MyFeedbackLoadingEvent>(feedbackLoadingEvent);
-    on<MyFeedbackUpdateEvent>(feedbackUpdateEvent);
-    on<MyFeedbackUpdateEmptyEvent>(feedbackUpdateEmptyEvent);
-    on<MyFeedbackSubmitEvent>(feedbackSubmitEvent);
+  MyFeedbackBloc() : super(const MyFeedbackState()) {
+    on<MyFeedbackLoadingEvent>(_onLoading);
+    on<MyFeedbackUpdateEvent>(_onUpdate);
+    on<MyFeedbackUpdateEmptyEvent>(_onUpdateEmpty);
+    on<MyFeedbackSubmitEvent>(_onSubmitFeedback);
   }
 
-  FutureOr<void> feedbackLoadingEvent(
-      MyFeedbackLoadingEvent event, Emitter<MyFeedbackState> emit) async {
-    emit(MyFeedbackLoadingState());
+  _onLoading(MyFeedbackLoadingEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
     final String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -36,72 +33,48 @@ class MyFeedbackBloc extends Bloc<MyFeedbackEvent, MyFeedbackState> {
           feedbacks.add(FeedbackItemModel.fromSnapshot(ele));
         }
 
-        add(MyFeedbackUpdateEvent(
-            newListFeedback: feedbacks, isLoading: false));
+        add(MyFeedbackUpdateEvent(newListFeedback: feedbacks));
       } else {
         add(MyFeedbackUpdateEmptyEvent());
       }
     });
   }
 
-  FutureOr<void> feedbackUpdateEvent(
-      MyFeedbackUpdateEvent event, Emitter<MyFeedbackState> emit) {
-    if (state is MyFeedbackLoadingState || state is MyFeedbackEmptyState) {
-      emit(MyFeedbackLoadingSuccessfulState(
-          listFeedback: event.newListFeedback, isLoading: event.isLoading));
-    } else if (state is MyFeedbackLoadingSuccessfulState) {
-      final currentState = state as MyFeedbackLoadingSuccessfulState;
-
-      if (currentState.listFeedback.isNotEmpty) {
-        currentState.listFeedback.clear();
-      }
-
-      emit(MyFeedbackLoadingSuccessfulState(
-        listFeedback: event.newListFeedback,
-        isLoading: event.isLoading,
-      ));
-    }
+  _onUpdate(MyFeedbackUpdateEvent event, Emitter emit) {
+    emit(state.copyWith(isLoading: false, listFeedback: event.newListFeedback));
   }
 
-  FutureOr<void> feedbackUpdateEmptyEvent(
-      MyFeedbackUpdateEmptyEvent event, Emitter<MyFeedbackState> emit) {
-    emit(MyFeedbackEmptyState());
+  _onUpdateEmpty(MyFeedbackUpdateEmptyEvent event, Emitter emit) {
+    emit(state.copyWith(isLoading: false, listFeedback: []));
   }
 
-  FutureOr<void> feedbackSubmitEvent(
-      MyFeedbackSubmitEvent event, Emitter<MyFeedbackState> emit) async {
-    if (state is MyFeedbackLoadingSuccessfulState) {
-      final currentState = state as MyFeedbackLoadingSuccessfulState;
+  _onSubmitFeedback(MyFeedbackSubmitEvent event, Emitter emit) async {
+    emit(state.copyWith(showLoadingDialog: true));
 
-      emit(MyFeedbackLoadingSuccessfulState(
-        listFeedback: currentState.listFeedback,
-        isLoading: true,
-      ));
+    String userName = FirebaseAuth.instance.currentUser!.displayName!;
+    String imgUrl = FirebaseAuth.instance.currentUser!.photoURL!;
+    final feedbackColRef = FirebaseFirestore.instance.collection('Feedback');
 
-      String userName = FirebaseAuth.instance.currentUser!.displayName!;
-      String imgUrl = FirebaseAuth.instance.currentUser!.photoURL!;
-      final feedbackColRef = FirebaseFirestore.instance.collection('Feedback');
+    await feedbackColRef.add({
+      'bookID': event.bookID,
+      'user': userName,
+      'userImg': imgUrl,
+      'dateSubmit': DateTime.now(),
+      'rating': event.rating,
+      'review': event.review,
+    }).then((value) async {
+      String uid = FirebaseAuth.instance.currentUser!.uid;
 
-      await feedbackColRef.add({
-        'bookID': event.bookID,
-        'user': userName,
-        'userImg': imgUrl,
-        'dateSubmit': DateTime.now(),
-        'rating': event.rating,
-        'review': event.review,
-      }).then((value) async {
-        String uid = FirebaseAuth.instance.currentUser!.uid;
-
-        await FirebaseFirestore.instance
-            .collection('User')
-            .doc(uid)
-            .collection('Feedback')
-            .doc(event.feedbackID)
-            .delete()
-            .then((value) {
-          Fluttertoast.showToast(msg: 'Cảm ơn bạn đã đánh giá sản phẩm');
-        });
+      await FirebaseFirestore.instance
+          .collection('User')
+          .doc(uid)
+          .collection('Feedback')
+          .doc(event.feedbackID)
+          .delete()
+          .then((value) {
+        emit(state.copyWith(showLoadingDialog: false));
+        Fluttertoast.showToast(msg: 'Cảm ơn bạn đã đánh giá sản phẩm');
       });
-    }
+    });
   }
 }

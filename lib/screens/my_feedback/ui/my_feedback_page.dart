@@ -1,9 +1,10 @@
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/screens/my_feedback/bloc/my_feedback_bloc.dart';
 import 'package:book_store/screens/my_feedback/ui/feedback_bottom_sheet.dart';
 import 'package:book_store/screens/my_feedback/ui/feedback_empty_page.dart';
 import 'package:book_store/screens/my_feedback/ui/my_feedback_item.dart';
 import 'package:book_store/screens/transaction_status/ui/transaction_loading.dart';
-import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -13,48 +14,31 @@ class MyFeedbackPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MyFeedbackBloc, MyFeedbackState>(
-      bloc: BlocProvider.of<MyFeedbackBloc>(context)
-        ..add(MyFeedbackLoadingEvent()),
-      builder: (context, state) {
-        if (state is MyFeedbackLoadingState) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: themeColor,
-              foregroundColor: Colors.white,
-              elevation: 0,
-              centerTitle: true,
-              title: const Text('Đánh giá sản phẩm'),
-            ),
-            body: const TransactionLoadingPage(),
-          );
-        } else if (state is MyFeedbackEmptyState) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: themeColor,
-              foregroundColor: Colors.white,
-              elevation: 0,
-              centerTitle: true,
-              title: const Text('Đánh giá sản phẩm'),
-            ),
-            body: const FeedbackEmptyPage(),
-          );
-        } else if (state is MyFeedbackLoadingSuccessfulState) {
+    return BlocProvider(
+      create: (context) => MyFeedbackBloc()..add(MyFeedbackLoadingEvent()),
+      child: BlocBuilder<MyFeedbackBloc, MyFeedbackState>(
+        builder: (context, state) {
+          if (state.isLoading) {
+            return Scaffold(
+              appBar: buildAppBar(context),
+              body: const TransactionLoadingPage(),
+            );
+          }
+
+          if (state.listFeedback.isEmpty) {
+            return Scaffold(
+              appBar: buildAppBar(context),
+              body: const FeedbackEmptyPage(),
+            );
+          }
+
           return Stack(
             children: [
               Scaffold(
-                backgroundColor: background,
-                resizeToAvoidBottomInset: false,
-                appBar: AppBar(
-                  backgroundColor: themeColor,
-                  foregroundColor: Colors.white,
-                  elevation: 0,
-                  centerTitle: true,
-                  title: const Text('Đánh giá sản phẩm'),
-                ),
+                backgroundColor: AppColors.background,
+                appBar: buildAppBar(context),
                 body: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                  padding: const EdgeInsets.symmetric(vertical: 4),
                   child: ListView.separated(
                     itemCount: state.listFeedback.length,
                     itemBuilder: (context, index) {
@@ -69,10 +53,10 @@ class MyFeedbackPage extends StatelessWidget {
                                 topRight: Radius.circular(8),
                               ),
                             ),
-                            builder: (context) {
+                            builder: (newContext) {
                               return Padding(
                                 padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
+                                    bottom: MediaQuery.of(newContext)
                                         .viewInsets
                                         .bottom),
                                 child: FeedbackBottomSheet(
@@ -107,24 +91,26 @@ class MyFeedbackPage extends StatelessWidget {
                   ),
                 ),
               ),
-              state.isLoading ? progressDialogue(context) : const SizedBox(),
+              state.showLoadingDialog
+                  ? progressDialogue(context)
+                  : const SizedBox(),
             ],
           );
-        } else {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: themeColor,
-              foregroundColor: Colors.white,
-              elevation: 0,
-              centerTitle: true,
-              title: const Text('Đánh giá sản phẩm'),
-            ),
-            body: const Center(
-              child: Text('Something went wrong'),
-            ),
-          );
-        }
-      },
+        },
+      ),
+    );
+  }
+
+  PreferredSizeWidget buildAppBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: AppColors.themeColor,
+      foregroundColor: AppColors.contentColor,
+      elevation: 0,
+      centerTitle: true,
+      title: Text(
+        'Đánh giá sản phẩm',
+        style: AppTexts.appbarTitle,
+      ),
     );
   }
 

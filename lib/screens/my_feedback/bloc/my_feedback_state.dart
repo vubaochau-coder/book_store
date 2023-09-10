@@ -1,25 +1,27 @@
 part of 'my_feedback_bloc.dart';
 
-abstract class MyFeedbackState extends Equatable {
-  const MyFeedbackState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class MyFeedbackLoadingState extends MyFeedbackState {}
-
-class MyFeedbackLoadingSuccessfulState extends MyFeedbackState {
+class MyFeedbackState extends Equatable {
   final List<FeedbackItemModel> listFeedback;
   final bool isLoading;
+  final bool showLoadingDialog;
 
-  const MyFeedbackLoadingSuccessfulState({
-    required this.listFeedback,
-    required this.isLoading,
+  const MyFeedbackState({
+    this.listFeedback = const [],
+    this.isLoading = false,
+    this.showLoadingDialog = false,
   });
 
   @override
-  List<Object> get props => [listFeedback, isLoading];
-}
+  List<Object> get props => [listFeedback, isLoading, showLoadingDialog];
 
-class MyFeedbackEmptyState extends MyFeedbackState {}
+  MyFeedbackState copyWith(
+      {bool? isLoading,
+      bool? showLoadingDialog,
+      List<FeedbackItemModel>? listFeedback}) {
+    return MyFeedbackState(
+      isLoading: isLoading ?? this.isLoading,
+      showLoadingDialog: showLoadingDialog ?? this.showLoadingDialog,
+      listFeedback: listFeedback ?? this.listFeedback,
+    );
+  }
+}
