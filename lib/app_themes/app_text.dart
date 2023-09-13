@@ -13,4 +13,10 @@ class AppTexts {
     color: Colors.black,
     fontWeight: FontWeight.w400,
   );
+
+  static TextStyle buttonContent = const TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    color: Colors.white,
+  );
 }

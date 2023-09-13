@@ -25,7 +25,7 @@ class LoadingAddress extends StatelessWidget {
                     Icon(
                       Icons.pin_drop_outlined,
                       color: themeColor,
-                      size: 20,
+                      size: 18,
                     ),
                     const SizedBox(
                       width: 4,
@@ -33,7 +33,8 @@ class LoadingAddress extends StatelessWidget {
                     const Text(
                       'Địa chỉ giao hàng',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],

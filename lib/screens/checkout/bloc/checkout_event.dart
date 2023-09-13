@@ -11,22 +11,20 @@ class CheckoutLoadingEvent extends CheckoutEvent {}
 
 class CheckoutUpdateAddressEvent extends CheckoutEvent {
   final AddressModel newAddress;
-  // final List<TransportModel> transports;
 
   const CheckoutUpdateAddressEvent({
     required this.newAddress,
-    // required this.transports,
   });
 }
 
 class CheckoutUpdateTransportEvent extends CheckoutEvent {
-  final List<TransportModel> transport;
+  final TransportModel newTransport;
 
-  const CheckoutUpdateTransportEvent({required this.transport});
+  const CheckoutUpdateTransportEvent({required this.newTransport});
 }
 
 class CheckoutUpdatePaymentMethodEvent extends CheckoutEvent {
-  final List<PaymentMethodModel> payment;
+  final PaymentMethodModel payment;
 
   const CheckoutUpdatePaymentMethodEvent({required this.payment});
 }

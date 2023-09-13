@@ -1,45 +1,54 @@
 part of 'checkout_bloc.dart';
 
-abstract class CheckoutState extends Equatable {
-  const CheckoutState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class CheckoutLoadingState extends CheckoutState {}
-
-class CheckoutLoadingSuccessfulState extends CheckoutState {
-  final AddressModel userAddress;
-  final List<TransportModel> transports;
+class CheckoutState extends Equatable {
+  final bool isLoading;
   final bool showLoadingDialog;
+  final AddressModel? userAddress;
+  final List<TransportModel> transports;
+  final TransportModel? selectedTransport;
   final List<PaymentMethodModel> payments;
+  final PaymentMethodModel? selectedPayments;
 
-  const CheckoutLoadingSuccessfulState({
-    required this.userAddress,
-    required this.transports,
-    required this.showLoadingDialog,
-    required this.payments,
+  const CheckoutState({
+    this.isLoading = false,
+    this.userAddress,
+    this.transports = const [],
+    this.selectedTransport,
+    this.selectedPayments,
+    this.showLoadingDialog = false,
+    this.payments = const [],
   });
 
   @override
-  List<Object> get props =>
-      [userAddress, transports, showLoadingDialog, payments];
-}
+  List<Object?> get props => [
+        isLoading,
+        userAddress,
+        transports,
+        showLoadingDialog,
+        payments,
+        selectedPayments,
+        selectedTransport,
+      ];
 
-class CheckoutEmptyAddressState extends CheckoutState {
-  final List<TransportModel> transports;
-  final List<PaymentMethodModel> payments;
-  final bool showLoadingDialog;
-
-  const CheckoutEmptyAddressState({
-    required this.transports,
-    required this.payments,
-    required this.showLoadingDialog,
-  });
-
-  @override
-  List<Object> get props => [transports, payments, showLoadingDialog];
+  CheckoutState copyWith({
+    bool? isLoading,
+    bool? showLoadingDialog,
+    AddressModel? userAddress,
+    List<TransportModel>? transports,
+    TransportModel? selectedTransport,
+    List<PaymentMethodModel>? payments,
+    PaymentMethodModel? selectedPayments,
+  }) {
+    return CheckoutState(
+      isLoading: isLoading ?? this.isLoading,
+      showLoadingDialog: showLoadingDialog ?? this.showLoadingDialog,
+      userAddress: userAddress ?? this.userAddress,
+      transports: transports ?? this.transports,
+      payments: payments ?? this.payments,
+      selectedPayments: selectedPayments ?? this.selectedPayments,
+      selectedTransport: selectedTransport ?? this.selectedTransport,
+    );
+  }
 }
 
 class CheckoutOrderSuccessfulState extends CheckoutState {

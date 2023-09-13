@@ -48,7 +48,9 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
           }
         }
 
-        add(AddressUpdateEvent(listAddress: listResult));
+        if (!isClosed) {
+          add(AddressUpdateEvent(listAddress: listResult));
+        }
       } else {
         add(AddressUpdateEmptyEvent());
       }
@@ -107,7 +109,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
           merge: true,
         )).then((value) {
       Fluttertoast.showToast(msg: 'Thay đổi địa chỉ thành công');
-      add(AddressLoadingEvent());
     }).catchError((err) {
       Fluttertoast.showToast(
         msg: err.toString(),

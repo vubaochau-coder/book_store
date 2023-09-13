@@ -1,36 +1,50 @@
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/models/transport_model.dart';
-import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:flutter/material.dart';
 
 class TransportListPage extends StatefulWidget {
   final List<TransportModel> transports;
-  final void Function(List<TransportModel> list) onFinished;
-  const TransportListPage(
-      {super.key, required this.transports, required this.onFinished});
+  final TransportModel? selectedTransport;
+  final void Function(TransportModel list) onFinished;
+
+  const TransportListPage({
+    super.key,
+    required this.transports,
+    required this.onFinished,
+    this.selectedTransport,
+  });
 
   @override
   State<TransportListPage> createState() => _TransportListPageState();
 }
 
 class _TransportListPageState extends State<TransportListPage> {
-  List<TransportModel> tempList = [];
+  late int indexSelected;
+
   @override
   void initState() {
     super.initState();
-    tempList.clear();
-    tempList = List.from(widget.transports);
+    if (widget.selectedTransport != null) {
+      indexSelected = widget.transports.indexOf(widget.selectedTransport!);
+    } else {
+      indexSelected = -1;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Phương thức vận chuyển'),
+        title: Text(
+          'Phương thức vận chuyển',
+          style: AppTexts.appbarTitle,
+        ),
         centerTitle: true,
-        backgroundColor: themeColor,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.themeColor,
+        foregroundColor: AppColors.contentColor,
         elevation: 0,
       ),
       body: Column(
@@ -59,7 +73,8 @@ class _TransportListPageState extends State<TransportListPage> {
                   ],
                 ),
                 const Text(
-                    'Bạn có thể theo dõi đơn hàng trên ứng dụng IBOO khi chọn một trong các đơn vị vận chuyển:'),
+                  'Bạn có thể theo dõi đơn hàng trên ứng dụng IBOO khi chọn một trong các đơn vị vận chuyển:',
+                ),
               ],
             ),
           ),
@@ -69,7 +84,7 @@ class _TransportListPageState extends State<TransportListPage> {
                 return GestureDetector(
                   onTap: () {
                     setState(() {
-                      tempList = updateList(index);
+                      indexSelected = index;
                     });
                   },
                   child: Container(
@@ -81,8 +96,8 @@ class _TransportListPageState extends State<TransportListPage> {
                         Container(
                           height: 64,
                           width: 4,
-                          color: tempList[index].isSelected
-                              ? themeColor
+                          color: indexSelected == index
+                              ? AppColors.themeColor
                               : Colors.grey,
                           margin: const EdgeInsets.only(right: 12),
                         ),
@@ -97,10 +112,14 @@ class _TransportListPageState extends State<TransportListPage> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        tempList[index].name,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 15,
+                                        widget.transports[index].name,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize:
+                                              indexSelected == index ? 16 : 15,
+                                          color: indexSelected == index
+                                              ? Colors.black
+                                              : Colors.black54,
                                         ),
                                       ),
                                     ),
@@ -110,11 +129,14 @@ class _TransportListPageState extends State<TransportListPage> {
                                     Text(
                                       'đ',
                                       style: TextStyle(
-                                        color: tempList[index].isSelected
-                                            ? themeColor
+                                        color: indexSelected == index
+                                            ? AppColors.themeColor
                                             : Colors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize:
+                                            indexSelected == index ? 16 : 15,
+                                        fontWeight: indexSelected == index
+                                            ? FontWeight.w600
+                                            : FontWeight.w400,
                                         decoration: TextDecoration.underline,
                                       ),
                                     ),
@@ -122,27 +144,27 @@ class _TransportListPageState extends State<TransportListPage> {
                                       flex: 3,
                                       child: Text(
                                         Converter.convertNumberToMoney(
-                                            tempList[index].price),
+                                            widget.transports[index].price),
                                         style: TextStyle(
-                                          color: tempList[index].isSelected
-                                              ? themeColor
+                                          color: indexSelected == index
+                                              ? AppColors.themeColor
                                               : Colors.grey,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
+                                          fontSize:
+                                              indexSelected == index ? 16 : 15,
+                                          fontWeight: indexSelected == index
+                                              ? FontWeight.w600
+                                              : FontWeight.w400,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
                                 Text(
-                                  'Nhận hàng sau ${tempList[index].min}-${tempList[index].max} ngày',
+                                  'Nhận hàng sau ${widget.transports[index].min}-${widget.transports[index].max} ngày',
                                   style: TextStyle(
-                                    color: tempList[index].isSelected
-                                        ? Colors.grey
+                                    color: indexSelected == index
+                                        ? Colors.black
                                         : Colors.grey[400],
-                                    fontWeight: tempList[index].isSelected
-                                        ? FontWeight.w400
-                                        : FontWeight.w300,
                                   ),
                                 ),
                               ],
@@ -154,8 +176,8 @@ class _TransportListPageState extends State<TransportListPage> {
                           alignment: Alignment.center,
                           child: Icon(
                             Icons.check,
-                            color: tempList[index].isSelected
-                                ? themeColor
+                            color: indexSelected == index
+                                ? AppColors.themeColor
                                 : Colors.transparent,
                           ),
                         ),
@@ -170,7 +192,7 @@ class _TransportListPageState extends State<TransportListPage> {
                   thickness: 2,
                 );
               },
-              itemCount: tempList.length,
+              itemCount: widget.transports.length,
             ),
           ),
           Container(
@@ -181,21 +203,20 @@ class _TransportListPageState extends State<TransportListPage> {
               height: 48,
               child: ElevatedButton(
                 onPressed: () {
-                  widget.onFinished(tempList);
+                  if (indexSelected >= 0) {
+                    widget.onFinished(widget.transports[indexSelected]);
+                  }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: themeColor,
+                  backgroundColor: AppColors.themeColor,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Xác nhận',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                  ),
+                  style: AppTexts.buttonContent,
                 ),
               ),
             ),
@@ -203,35 +224,5 @@ class _TransportListPageState extends State<TransportListPage> {
         ],
       ),
     );
-  }
-
-  List<TransportModel> updateList(int index) {
-    List<TransportModel> result = [];
-    for (int i = 0; i < widget.transports.length; i++) {
-      if (i != index) {
-        TransportModel temp = TransportModel(
-          id: widget.transports[i].id,
-          name: widget.transports[i].name,
-          description: widget.transports[i].description,
-          price: widget.transports[i].price,
-          min: widget.transports[i].min,
-          max: widget.transports[i].max,
-          isSelected: false,
-        );
-        result.add(temp);
-      } else {
-        TransportModel temp = TransportModel(
-          id: widget.transports[i].id,
-          name: widget.transports[i].name,
-          description: widget.transports[i].description,
-          price: widget.transports[i].price,
-          min: widget.transports[i].min,
-          max: widget.transports[i].max,
-          isSelected: true,
-        );
-        result.add(temp);
-      }
-    }
-    return result;
   }
 }

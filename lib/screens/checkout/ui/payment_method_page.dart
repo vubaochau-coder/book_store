@@ -1,38 +1,50 @@
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/models/payment_method_model.dart';
-import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PaymentMethodListPage extends StatefulWidget {
   final List<PaymentMethodModel> payments;
-  final void Function(List<PaymentMethodModel> list) onFinished;
-  const PaymentMethodListPage(
-      {super.key, required this.payments, required this.onFinished});
+  final PaymentMethodModel? selectedPayment;
+  final void Function(PaymentMethodModel newPayment) onFinished;
+
+  const PaymentMethodListPage({
+    super.key,
+    required this.payments,
+    required this.onFinished,
+    this.selectedPayment,
+  });
 
   @override
   State<PaymentMethodListPage> createState() => _PaymentMethodListPageState();
 }
 
 class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
-  List<PaymentMethodModel> tempList = [];
+  late int selectedIndex;
 
   @override
   void initState() {
     super.initState();
-    tempList.clear();
-    tempList = List.from(widget.payments);
+    if (widget.selectedPayment != null) {
+      selectedIndex = widget.payments.indexOf(widget.selectedPayment!);
+    } else {
+      selectedIndex = -1;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Phương thức thanh toán'),
+        title: Text(
+          'Phương thức thanh toán',
+          style: AppTexts.appbarTitle,
+        ),
         centerTitle: true,
-        backgroundColor: themeColor,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.themeColor,
+        foregroundColor: AppColors.contentColor,
         elevation: 0,
       ),
       body: Column(
@@ -47,11 +59,8 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    // if (index != 0) {
-                    //   Fluttertoast.showToast(msg: 'Chức năng đang phát triển');
-                    // }
                     setState(() {
-                      tempList = updateList(index);
+                      selectedIndex = index;
                     });
                   },
                   child: Container(
@@ -63,25 +72,25 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
                         Container(
                           height: 64,
                           width: 4,
-                          color: tempList[index].isSelected
-                              ? themeColor
+                          color: selectedIndex == index
+                              ? AppColors.themeColor
                               : Colors.grey,
                           margin: const EdgeInsets.only(right: 12),
                         ),
                         Container(
                           padding: const EdgeInsets.only(right: 8),
-                          child: tempList[index].image == ''
+                          child: widget.payments[index].image == ''
                               ? FaIcon(
                                   FontAwesomeIcons.peopleCarryBox,
-                                  color: tempList[index].isSelected
-                                      ? themeColor
+                                  color: selectedIndex == index
+                                      ? AppColors.themeColor
                                       : Colors.grey,
                                   size: 20,
                                 )
                               : Icon(
                                   Icons.phone_android,
-                                  color: tempList[index].isSelected
-                                      ? themeColor
+                                  color: selectedIndex == index
+                                      ? AppColors.themeColor
                                       : Colors.grey,
                                   size: 24,
                                 ),
@@ -93,7 +102,7 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
                             child: Row(
                               children: [
                                 Text(
-                                  tempList[index].name,
+                                  widget.payments[index].name,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 15,
@@ -102,9 +111,9 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
                                 const SizedBox(
                                   width: 4,
                                 ),
-                                tempList[index].image != ''
+                                widget.payments[index].image != ''
                                     ? Image.asset(
-                                        tempList[index].image,
+                                        widget.payments[index].image,
                                         height: 20,
                                       )
                                     : const SizedBox(),
@@ -117,8 +126,8 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
                           alignment: Alignment.center,
                           child: Icon(
                             Icons.check,
-                            color: tempList[index].isSelected
-                                ? themeColor
+                            color: selectedIndex == index
+                                ? AppColors.themeColor
                                 : Colors.transparent,
                           ),
                         ),
@@ -133,7 +142,7 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
                   thickness: 2,
                 );
               },
-              itemCount: tempList.length,
+              itemCount: widget.payments.length,
             ),
           ),
           Container(
@@ -144,21 +153,20 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
               height: 48,
               child: ElevatedButton(
                 onPressed: () {
-                  widget.onFinished(tempList);
+                  if (selectedIndex >= 0) {
+                    widget.onFinished(widget.payments[selectedIndex]);
+                  }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: themeColor,
+                  backgroundColor: AppColors.themeColor,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Xác nhận',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                  ),
+                  style: AppTexts.buttonContent,
                 ),
               ),
             ),
@@ -166,29 +174,5 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
         ],
       ),
     );
-  }
-
-  List<PaymentMethodModel> updateList(int index) {
-    List<PaymentMethodModel> result = [];
-    for (int i = 0; i < widget.payments.length; i++) {
-      if (i != index) {
-        PaymentMethodModel temp = PaymentMethodModel(
-          id: widget.payments[i].id,
-          name: widget.payments[i].name,
-          image: widget.payments[i].image,
-          isSelected: false,
-        );
-        result.add(temp);
-      } else {
-        PaymentMethodModel temp = PaymentMethodModel(
-          id: widget.payments[i].id,
-          name: widget.payments[i].name,
-          image: widget.payments[i].image,
-          isSelected: true,
-        );
-        result.add(temp);
-      }
-    }
-    return result;
   }
 }

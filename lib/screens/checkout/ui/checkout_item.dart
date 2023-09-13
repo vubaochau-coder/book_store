@@ -62,15 +62,15 @@ class CheckoutItem extends StatelessWidget {
                         style: TextStyle(
                           color: themeColor,
                           decoration: TextDecoration.underline,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       Text(
                         Converter.convertNumberToMoney(data.price),
                         style: TextStyle(
                           color: themeColor,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 17,
                         ),
                       ),
@@ -87,7 +87,7 @@ class CheckoutItem extends StatelessWidget {
                             ],
                           ),
                           color: Colors.grey,
-                          fontSize: 14,
+                          fontSize: 13,
                         ),
                       ),
                       Text(
@@ -96,7 +96,7 @@ class CheckoutItem extends StatelessWidget {
                         style: const TextStyle(
                           decoration: TextDecoration.lineThrough,
                           color: Colors.grey,
-                          fontSize: 14,
+                          fontSize: 13,
                         ),
                       ),
                       const Spacer(),
