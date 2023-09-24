@@ -1,4 +1,4 @@
-import '../models/address_model.dart';
+import '../core/models/address_model.dart';
 
 class AddressUtils {
   static String convertAddressModel(AddressModel? addressModel) {

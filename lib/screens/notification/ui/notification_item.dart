@@ -1,4 +1,4 @@
-import 'package:book_store/models/notification_model.dart';
+import 'package:book_store/core/models/notification_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:flutter/material.dart';

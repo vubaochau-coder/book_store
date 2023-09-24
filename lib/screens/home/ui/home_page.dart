@@ -1,8 +1,8 @@
 import 'package:book_store/screens/home/ui/advertising_banner.dart';
 import 'package:book_store/custom_widgets/product_item.dart';
 import 'package:book_store/custom_widgets/search_bar.dart';
-import 'package:book_store/models/advertising_model.dart';
-import 'package:book_store/models/short_protduct_data_model.dart';
+import 'package:book_store/core/models/advertising_model.dart';
+import 'package:book_store/core/models/short_protduct_data_model.dart';
 import 'package:book_store/screens/home/bloc/home_bloc.dart';
 import 'package:book_store/screens/home/ui/category_list.dart';
 import 'package:book_store/screens/home/ui/home_page_loading.dart';

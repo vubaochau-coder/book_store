@@ -1,6 +1,6 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/custom_widgets/custom_page_route.dart';
-import 'package:book_store/models/cart_item_model.dart';
+import 'package:book_store/core/models/cart_item_model.dart';
 import 'package:book_store/screens/product_detail/ui/product_detail_page.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';

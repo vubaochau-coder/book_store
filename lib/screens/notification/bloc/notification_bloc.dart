@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:book_store/models/notification_model.dart';
+import 'package:book_store/core/models/notification_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,9 +46,13 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
           notiList.add(NotificationModel.fromSnapshot(ele));
         }
 
-        add(NotificationUpdateEvent(newNotis: notiList));
+        if (!isClosed) {
+          add(NotificationUpdateEvent(newNotis: notiList));
+        }
       } else {
-        add(const NotificationUpdateEvent(newNotis: []));
+        if (!isClosed) {
+          add(const NotificationUpdateEvent(newNotis: []));
+        }
       }
     });
   }

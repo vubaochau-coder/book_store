@@ -1,6 +1,6 @@
 import 'package:book_store/app_themes/app_colors.dart';
-import 'package:book_store/models/cart_item_model.dart';
-import 'package:book_store/models/transaction_model.dart';
+import 'package:book_store/core/models/cart_item_model.dart';
+import 'package:book_store/core/models/transaction_model.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

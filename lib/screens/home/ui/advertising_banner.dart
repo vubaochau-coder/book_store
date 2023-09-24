@@ -1,4 +1,4 @@
-import 'package:book_store/models/advertising_model.dart';
+import 'package:book_store/core/models/advertising_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';

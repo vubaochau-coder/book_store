@@ -1,6 +1,6 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/app_themes/app_text.dart';
-import 'package:book_store/models/payment_method_model.dart';
+import 'package:book_store/core/models/payment_method_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

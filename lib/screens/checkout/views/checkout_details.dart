@@ -3,7 +3,7 @@ import 'package:book_store/screens/checkout/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../models/cart_item_model.dart';
+import '../../../core/models/cart_item_model.dart';
 import '../../../utils/convert.dart';
 
 class CheckoutDetails extends StatelessWidget {

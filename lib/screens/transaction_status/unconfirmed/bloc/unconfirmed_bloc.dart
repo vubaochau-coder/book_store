@@ -1,20 +1,22 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:book_store/models/cart_item_model.dart';
-import 'package:book_store/models/notification_model.dart';
-import 'package:book_store/models/transaction_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:book_store/core/models/transaction_model.dart';
+import 'package:book_store/core/repositories/notification_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import '../../../../core/repositories/transaction_repository.dart';
 
 part 'unconfirmed_event.dart';
 part 'unconfirmed_state.dart';
 
 class UnconfirmedBloc extends Bloc<UnconfirmedEvent, UnconfirmedState> {
   StreamSubscription? _bookingStream;
+  final TransactionRepository _transactionRepository;
+  final NotificationRepository _notificationRepository;
 
-  UnconfirmedBloc() : super(const UnconfirmedState()) {
+  UnconfirmedBloc(this._transactionRepository, this._notificationRepository)
+      : super(const UnconfirmedState()) {
     on<UnconfirmedLoadingEvent>(_onLoading);
     on<UnconfirmedUpdateEvent>(_onUpdate);
     on<UnconfirmedUpdateEmptyEvent>(_onEmpty);
@@ -31,54 +33,25 @@ class UnconfirmedBloc extends Bloc<UnconfirmedEvent, UnconfirmedState> {
   _onLoading(UnconfirmedLoadingEvent event, Emitter emit) async {
     emit(state.copyWith(isLoading: true));
 
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-
-    _bookingStream = FirebaseFirestore.instance
-        .collection('User')
-        .doc(uid)
-        .collection('Transaction')
-        .where('status', isEqualTo: 0)
-        .snapshots()
+    _bookingStream = _transactionRepository
+        .transactionStream(0)
         .listen((snapshotEvent) async {
       if (snapshotEvent.docs.isNotEmpty) {
         List<TransactionModel> list = [];
 
-        for (var ele in snapshotEvent.docs) {
-          List<CartItemModel> products = [];
-          final productsQuery = await FirebaseFirestore.instance
-              .collection('User')
-              .doc(uid)
-              .collection('Transaction')
-              .doc(ele.id)
-              .collection('Products')
-              .get();
-          for (var tempEle in productsQuery.docs) {
-            String bookID = tempEle.get('productID');
-            final bookQuery = await FirebaseFirestore.instance
-                .collection('Book')
-                .doc(bookID)
-                .get();
+        final futureGroup = await Future.wait(
+          snapshotEvent.docs.map(
+            (e) => _transactionRepository.getAllProductOfTransaction(e.id),
+          ),
+        );
 
-            String bookTitle = bookQuery.get('title');
-            double bookPrice =
-                double.parse(tempEle.get('priceBeforeDiscount').toString());
-            double bookDiscount = 1 -
-                double.parse(tempEle.get('price').toString()) /
-                    double.parse(tempEle.get('priceBeforeDiscount').toString());
-            String url = List.from(bookQuery.get('listURL'))[0];
-
-            products.add(
-              CartItemModel.fromSnapshot(
-                tempEle,
-                (bookPrice * (1 - bookDiscount)),
-                bookPrice,
-                url,
-                bookTitle,
-              ),
-            );
-          }
-
-          list.add(TransactionModel.fromSnapshot(ele, products));
+        for (int i = 0; i < snapshotEvent.size; i++) {
+          list.add(
+            TransactionModel.fromSnapshot(
+              snapshotEvent.docs[i],
+              futureGroup[i],
+            ),
+          );
         }
 
         if (!isClosed) {
@@ -111,35 +84,12 @@ class UnconfirmedBloc extends Bloc<UnconfirmedEvent, UnconfirmedState> {
   }
 
   _onCancel(UnconfirmedCancelEvent event, Emitter emit) async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-
-    final docRef = FirebaseFirestore.instance
-        .collection('User')
-        .doc(uid)
-        .collection('Transaction')
-        .doc(event.transactionID);
-
-    await docRef.update({
-      'status': -1,
-    }).then((value) async {
-      await FirebaseFirestore.instance
-          .collection('User')
-          .doc(uid)
-          .collection('Notification')
-          .add(createNotification(event.transactionID).toJson());
+    await _transactionRepository
+        .cancelTransaction(event.transactionID)
+        .then((value) async {
+      await _notificationRepository
+          .createCancelTransactionNoti(event.transactionID);
       Fluttertoast.showToast(msg: 'Hủy đơn hàng thành công');
     });
-  }
-
-  NotificationModel createNotification(String checkOutID) {
-    return NotificationModel(
-      id: '',
-      title: 'Đơn hàng đã bị hủy',
-      content:
-          'Đơn hàng $checkOutID của bạn đã bị hủy. Bạn có thể mua lại các sản phẩm trong đơn hàng bất kỳ lúc nào trong mục "Đơn hàng của tôi" - "Đã hủy".',
-      date: DateTime.now(),
-      isRead: false,
-      actionCode: 'order_-1',
-    );
   }
 }

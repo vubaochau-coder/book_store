@@ -1,4 +1,5 @@
 import 'package:book_store/app_themes/app_text.dart';
+import 'package:book_store/core/repositories/main_repository.dart';
 import 'package:book_store/screens/transaction_status/delivered/bloc/delivered_bloc.dart';
 import 'package:book_store/screens/transaction_status/delivered/ui/delivered_transaction_page.dart';
 import 'package:book_store/screens/transaction_status/delivering/bloc/delivering_bloc.dart';
@@ -48,21 +49,34 @@ class _TransactionPageState extends State<TransactionPage>
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              AwaitPickupBloc()..add(AwaitPickupLoadingEvent()),
+          create: (context) => AwaitPickupBloc(
+            RepositoryProvider.of<MainRepository>(context).transRepository,
+            RepositoryProvider.of<MainRepository>(context).notiRepository,
+          )..add(AwaitPickupLoadingEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-              UnconfirmedBloc()..add(UnconfirmedLoadingEvent()),
+          create: (context) => UnconfirmedBloc(
+            RepositoryProvider.of<MainRepository>(context).transRepository,
+            RepositoryProvider.of<MainRepository>(context).notiRepository,
+          )..add(UnconfirmedLoadingEvent()),
         ),
         BlocProvider(
-          create: (context) => DeliveringBloc()..add(DeliveringLoadingEvent()),
+          create: (context) => DeliveringBloc(
+            RepositoryProvider.of<MainRepository>(context).transRepository,
+            RepositoryProvider.of<MainRepository>(context).notiRepository,
+            RepositoryProvider.of<MainRepository>(context).bookRepository,
+            RepositoryProvider.of<MainRepository>(context).feedbackRepository,
+          )..add(DeliveringLoadingEvent()),
         ),
         BlocProvider(
-          create: (context) => DeliveredBloc()..add(DeliveredLoadingEvent()),
+          create: (context) => DeliveredBloc(
+            RepositoryProvider.of<MainRepository>(context).transRepository,
+          )..add(DeliveredLoadingEvent()),
         ),
         BlocProvider(
-          create: (context) => CancelledBloc()..add(CancelledLoadingEvent()),
+          create: (context) => CancelledBloc(
+            RepositoryProvider.of<MainRepository>(context).transRepository,
+          )..add(CancelledLoadingEvent()),
         ),
       ],
       child: Scaffold(

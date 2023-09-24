@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:book_store/models/unfeedback_item_model.dart';
+import 'package:book_store/core/models/unfeedback_item_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +11,8 @@ part 'my_feedback_event.dart';
 part 'my_feedback_state.dart';
 
 class MyFeedbackBloc extends Bloc<MyFeedbackEvent, MyFeedbackState> {
+  StreamSubscription? _feedbackStream;
+
   MyFeedbackBloc() : super(const MyFeedbackState()) {
     on<MyFeedbackLoadingEvent>(_onLoading);
     on<MyFeedbackUpdateEvent>(_onUpdate);
@@ -16,12 +20,19 @@ class MyFeedbackBloc extends Bloc<MyFeedbackEvent, MyFeedbackState> {
     on<MyFeedbackSubmitEvent>(_onSubmitFeedback);
   }
 
+  @override
+  Future<void> close() async {
+    _feedbackStream?.cancel();
+    _feedbackStream = null;
+    super.close();
+  }
+
   _onLoading(MyFeedbackLoadingEvent event, Emitter emit) async {
     emit(state.copyWith(isLoading: true));
 
     final String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    FirebaseFirestore.instance
+    _feedbackStream = FirebaseFirestore.instance
         .collection('User')
         .doc(uid)
         .collection('Feedback')

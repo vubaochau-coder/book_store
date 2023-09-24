@@ -1,4 +1,4 @@
-import 'package:book_store/models/feedback_model.dart';
+import 'package:book_store/core/models/feedback_model.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

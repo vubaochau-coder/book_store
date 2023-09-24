@@ -1,5 +1,5 @@
 import 'package:book_store/custom_widgets/custom_page_route.dart';
-import 'package:book_store/models/favorite_model.dart';
+import 'package:book_store/core/models/favorite_model.dart';
 import 'package:book_store/screens/cart/bloc/cart_bloc.dart';
 import 'package:book_store/screens/my_favorite/bloc/favorite_bloc.dart';
 import 'package:book_store/screens/product_detail/ui/product_detail_page.dart';

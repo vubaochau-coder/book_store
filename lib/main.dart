@@ -22,6 +22,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
+import 'core/repositories/main_repository.dart';
 import 'screens/search/bloc/search_bloc.dart';
 
 Future main() async {
@@ -39,27 +40,31 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => HomeBloc()..add(HomeLoadingEvent())),
-        BlocProvider(create: (context) => ProductBloc()),
-        BlocProvider(create: (context) => CartBloc()),
-        BlocProvider(create: (context) => UserBloc()),
-        BlocProvider(create: (context) => CheckoutBloc()),
-        BlocProvider(create: (context) => BillBloc()),
-        BlocProvider(create: (context) => SearchBloc()),
-        BlocProvider(create: (context) => FeedbackCountBloc()),
-        BlocProvider(create: (context) => EditPasswordBloc()),
-        BlocProvider(create: (context) => NotificationBloc()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Book Store',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          fontFamily: 'Averta',
+    return RepositoryProvider(
+      create: (context) => MainRepository(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+              create: (context) => HomeBloc()..add(HomeLoadingEvent())),
+          BlocProvider(create: (context) => ProductBloc()),
+          BlocProvider(create: (context) => CartBloc()),
+          BlocProvider(create: (context) => UserBloc()),
+          BlocProvider(create: (context) => CheckoutBloc()),
+          BlocProvider(create: (context) => BillBloc()),
+          BlocProvider(create: (context) => SearchBloc()),
+          BlocProvider(create: (context) => FeedbackCountBloc()),
+          BlocProvider(create: (context) => EditPasswordBloc()),
+          BlocProvider(create: (context) => NotificationBloc()),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Book Store',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            fontFamily: 'Averta',
+          ),
+          home: AuthService().handleAuthState(),
         ),
-        home: AuthService().handleAuthState(),
       ),
     );
   }

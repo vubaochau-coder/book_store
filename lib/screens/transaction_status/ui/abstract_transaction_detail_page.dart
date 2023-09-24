@@ -1,6 +1,6 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/app_themes/app_text.dart';
-import 'package:book_store/models/transaction_model.dart';
+import 'package:book_store/core/models/transaction_model.dart';
 import 'package:book_store/screens/transaction_status/ui/body_content.dart';
 import 'package:book_store/screens/transaction_status/ui/header_content.dart';
 import 'package:book_store/screens/transaction_status/ui/transaction_product.dart';

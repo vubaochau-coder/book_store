@@ -1,6 +1,6 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/app_themes/app_text.dart';
-import 'package:book_store/models/transport_model.dart';
+import 'package:book_store/core/models/transport_model.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,7 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/custom_widgets/custom_page_route.dart';
-import 'package:book_store/models/notification_model.dart';
+import 'package:book_store/core/models/notification_model.dart';
 import 'package:book_store/screens/notification/ui/empty_notification_page.dart';
 import 'package:book_store/screens/notification/ui/notification_item.dart';
 import 'package:book_store/screens/notification/ui/notification_loading_page.dart';

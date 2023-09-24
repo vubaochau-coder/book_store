@@ -1,5 +1,5 @@
 import 'package:book_store/custom_widgets/custom_page_route.dart';
-import 'package:book_store/models/category_model.dart';
+import 'package:book_store/core/models/category_model.dart';
 import 'package:book_store/screens/categories/category_page.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';

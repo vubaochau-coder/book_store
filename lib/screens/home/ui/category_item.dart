@@ -1,4 +1,4 @@
-import 'package:book_store/models/category_model.dart';
+import 'package:book_store/core/models/category_model.dart';
 import 'package:flutter/material.dart';
 
 class CategorieItem extends StatelessWidget {
