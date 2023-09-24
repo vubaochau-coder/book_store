@@ -11,19 +11,27 @@ part 'cancelled_event.dart';
 part 'cancelled_state.dart';
 
 class CancelledBloc extends Bloc<CancelledEvent, CancelledState> {
-  CancelledBloc() : super(CancelledLoadingState()) {
-    on<CancelledLoadingEvent>(cancelledLoadingEvent);
-    on<CancelledUpdateEvent>(cancelledUpdateEvent);
-    on<CancelledUpdateEmptyEvent>(cancelledUpdateEmptyEvent);
+  StreamSubscription? _bookingStream;
+
+  CancelledBloc() : super(const CancelledState()) {
+    on<CancelledLoadingEvent>(_onLoading);
+    on<CancelledUpdateEvent>(_onUpdate);
+    on<CancelledUpdateEmptyEvent>(_onEmpty);
   }
 
-  FutureOr<void> cancelledLoadingEvent(
-      CancelledLoadingEvent event, Emitter<CancelledState> emit) async {
-    emit(CancelledLoadingState());
+  @override
+  Future<void> close() async {
+    _bookingStream?.cancel();
+    _bookingStream = null;
+    super.close();
+  }
+
+  _onLoading(CancelledLoadingEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    FirebaseFirestore.instance
+    _bookingStream = FirebaseFirestore.instance
         .collection('User')
         .doc(uid)
         .collection('Transaction')
@@ -82,13 +90,21 @@ class CancelledBloc extends Bloc<CancelledEvent, CancelledState> {
     });
   }
 
-  FutureOr<void> cancelledUpdateEvent(
-      CancelledUpdateEvent event, Emitter<CancelledState> emit) {
-    emit(CancelledLoadingSuccessfulState(transactions: event.transactions));
+  _onUpdate(CancelledUpdateEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        transactions: event.transactions,
+      ),
+    );
   }
 
-  FutureOr<void> cancelledUpdateEmptyEvent(
-      CancelledUpdateEmptyEvent event, Emitter<CancelledState> emit) {
-    emit(CancelledEmptyState());
+  _onEmpty(CancelledUpdateEmptyEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        transactions: [],
+      ),
+    );
   }
 }

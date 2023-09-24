@@ -15,52 +15,53 @@ class AwaitPickupTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AwaitPickupBloc, AwaitPickupState>(
       builder: (context, state) {
-        if (state is AwaitPickupEmptyState) {
-          return const EmptyTransactionPage();
-        } else if (state is AwaitPickupLoadingState) {
+        if (state.isLoading) {
           return const TransactionLoadingPage();
-        } else if (state is AwaitPickupLoadingSuccessfulState) {
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              return AwaitPickupTransactionItem(
-                transactionData: state.transactions[index],
-                onTap: () {
-                  Navigator.of(context).push(
-                    PageRouteSlideTransition(
-                      child: CanCancelledTransactionDetailPage(
-                        transactionData: state.transactions[index],
-                        onCancelled: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return CancelledConfirmDialog(
-                                onCancelTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.of(context).pop();
-                                  BlocProvider.of<AwaitPickupBloc>(context).add(
-                                    AwaitPickupCancelEvent(
-                                      transactionID:
-                                          state.transactions[index].id,
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-            itemCount: state.transactions.length,
-          );
-        } else {
-          return const Center(
-            child: Text('Something went wrong'),
-          );
         }
+
+        if (state.transactions.isEmpty) {
+          return const EmptyTransactionPage();
+        }
+
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return AwaitPickupTransactionItem(
+              transactionData: state.transactions[index],
+              onTap: () {
+                Navigator.of(context)
+                    .push(
+                  PageRouteSlideTransition(
+                    child: CanCancelledTransactionDetailPage(
+                      transactionData: state.transactions[index],
+                      onCancelled: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const CancelledConfirmDialog();
+                          },
+                        ).then((value) {
+                          if (value != null && value == true) {
+                            Navigator.of(context).pop(true);
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                )
+                    .then((value) {
+                  if (value != null && value == true) {
+                    BlocProvider.of<AwaitPickupBloc>(context).add(
+                      AwaitPickupCancelEvent(
+                        transactionID: state.transactions[index].id,
+                      ),
+                    );
+                  }
+                });
+              },
+            );
+          },
+          itemCount: state.transactions.length,
+        );
       },
     );
   }

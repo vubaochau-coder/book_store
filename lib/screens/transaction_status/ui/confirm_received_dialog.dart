@@ -1,9 +1,9 @@
-import 'package:book_store/theme.dart';
+import 'package:book_store/app_themes/app_colors.dart';
+// import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 
 class ReceivedConfirmDialog extends StatelessWidget {
-  final VoidCallback onReceiveTap;
-  const ReceivedConfirmDialog({super.key, required this.onReceiveTap});
+  const ReceivedConfirmDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +18,13 @@ class ReceivedConfirmDialog extends StatelessWidget {
         children: [
           Icon(
             Icons.check_circle,
-            color: Colors.amber[900],
+            color: AppColors.themeColor,
             size: 22,
           ),
           Text(
             ' ĐÃ NHẬN ĐƠN HÀNG',
             style: TextStyle(
-              color: themeColor,
+              color: AppColors.themeColor,
               fontSize: 18,
               fontWeight: FontWeight.w600,
             ),
@@ -38,7 +38,7 @@ class ReceivedConfirmDialog extends StatelessWidget {
           width: 120,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, false);
             },
             style: ElevatedButton.styleFrom(
               elevation: 2,
@@ -50,9 +50,8 @@ class ReceivedConfirmDialog extends StatelessWidget {
             child: Text(
               'Hủy bỏ',
               style: TextStyle(
-                color: themeColor,
-                fontWeight: FontWeight.w500,
-                fontSize: 15,
+                color: AppColors.themeColor,
+                fontSize: 14,
               ),
             ),
           ),
@@ -60,20 +59,21 @@ class ReceivedConfirmDialog extends StatelessWidget {
         SizedBox(
           width: 120,
           child: ElevatedButton(
-            onPressed: onReceiveTap,
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
             style: ElevatedButton.styleFrom(
               elevation: 2,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
-              backgroundColor: themeColor,
+              backgroundColor: AppColors.themeColor,
             ),
             child: const Text(
               'Xác nhận',
               style: TextStyle(
                 color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: 15,
+                fontSize: 14,
               ),
             ),
           ),
@@ -87,7 +87,7 @@ class ReceivedConfirmDialog extends StatelessWidget {
             'Xác nhận hoàn thành đơn hàng',
             style: TextStyle(
               fontWeight: FontWeight.w400,
-              fontSize: 15,
+              fontSize: 14,
             ),
             textAlign: TextAlign.center,
           ),
@@ -97,9 +97,9 @@ class ReceivedConfirmDialog extends StatelessWidget {
           Text(
             'Bạn có muốn tiếp tục?',
             style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
-              color: themeColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: AppColors.themeColor,
             ),
             textAlign: TextAlign.center,
           ),

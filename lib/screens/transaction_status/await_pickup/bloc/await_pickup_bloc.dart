@@ -13,20 +13,28 @@ part 'await_pickup_event.dart';
 part 'await_pickup_state.dart';
 
 class AwaitPickupBloc extends Bloc<AwaitPickupEvent, AwaitPickupState> {
-  AwaitPickupBloc() : super(AwaitPickupLoadingState()) {
-    on<AwaitPickupLoadingEvent>(awaitPickupLoadingEvent);
-    on<AwaitPickupUpdateEvent>(awaitPickupUpdateEvent);
-    on<AwaitPickupUpdateEmptyEvent>(awaitPicupUpdateEmptyEvent);
-    on<AwaitPickupCancelEvent>(awaitPickupCancelEvent);
+  StreamSubscription? _bookingStream;
+
+  AwaitPickupBloc() : super(const AwaitPickupState()) {
+    on<AwaitPickupLoadingEvent>(_onLoading);
+    on<AwaitPickupUpdateEvent>(_onUpdate);
+    on<AwaitPickupUpdateEmptyEvent>(_onEmpty);
+    on<AwaitPickupCancelEvent>(_onCancel);
   }
 
-  FutureOr<void> awaitPickupLoadingEvent(
-      AwaitPickupLoadingEvent event, Emitter<AwaitPickupState> emit) async {
-    emit(AwaitPickupLoadingState());
+  @override
+  Future<void> close() async {
+    _bookingStream?.cancel();
+    _bookingStream = null;
+    super.close();
+  }
+
+  _onLoading(AwaitPickupLoadingEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    FirebaseFirestore.instance
+    _bookingStream = FirebaseFirestore.instance
         .collection('User')
         .doc(uid)
         .collection('Transaction')
@@ -85,18 +93,25 @@ class AwaitPickupBloc extends Bloc<AwaitPickupEvent, AwaitPickupState> {
     });
   }
 
-  FutureOr<void> awaitPickupUpdateEvent(
-      AwaitPickupUpdateEvent event, Emitter<AwaitPickupState> emit) {
-    emit(AwaitPickupLoadingSuccessfulState(transactions: event.transactions));
+  _onUpdate(AwaitPickupUpdateEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        transactions: event.transactions,
+      ),
+    );
   }
 
-  FutureOr<void> awaitPicupUpdateEmptyEvent(
-      AwaitPickupUpdateEmptyEvent event, Emitter<AwaitPickupState> emit) {
-    emit(AwaitPickupEmptyState());
+  _onEmpty(AwaitPickupUpdateEmptyEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        transactions: [],
+      ),
+    );
   }
 
-  FutureOr<void> awaitPickupCancelEvent(
-      AwaitPickupCancelEvent event, Emitter<AwaitPickupState> emit) async {
+  _onCancel(AwaitPickupCancelEvent event, Emitter emit) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     final docRef = FirebaseFirestore.instance

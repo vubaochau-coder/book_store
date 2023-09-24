@@ -11,19 +11,27 @@ part 'delivered_event.dart';
 part 'delivered_state.dart';
 
 class DeliveredBloc extends Bloc<DeliveredEvent, DeliveredState> {
-  DeliveredBloc() : super(DeliveredLoadingState()) {
-    on<DeliveredLoadingEvent>(deliveredLoadingEvent);
-    on<DeliveredUpdateEvent>(deliveredUpdateEvent);
-    on<DeliveredUpdateEmptyEvent>(deliveredUpdateEmptyEvent);
+  StreamSubscription? _bookingStream;
+
+  DeliveredBloc() : super(const DeliveredState()) {
+    on<DeliveredLoadingEvent>(_onLoading);
+    on<DeliveredUpdateEvent>(_onUpdate);
+    on<DeliveredUpdateEmptyEvent>(_onEmpty);
   }
 
-  FutureOr<void> deliveredLoadingEvent(
-      DeliveredLoadingEvent event, Emitter<DeliveredState> emit) async {
-    emit(DeliveredLoadingState());
+  @override
+  Future<void> close() async {
+    _bookingStream?.cancel();
+    _bookingStream = null;
+    super.close();
+  }
+
+  _onLoading(DeliveredLoadingEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    FirebaseFirestore.instance
+    _bookingStream = FirebaseFirestore.instance
         .collection('User')
         .doc(uid)
         .collection('Transaction')
@@ -82,13 +90,19 @@ class DeliveredBloc extends Bloc<DeliveredEvent, DeliveredState> {
     });
   }
 
-  FutureOr<void> deliveredUpdateEvent(
-      DeliveredUpdateEvent event, Emitter<DeliveredState> emit) {
-    emit(DeliveredLoadingSuccessfulState(transactions: event.transactions));
+  _onUpdate(DeliveredUpdateEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        transactions: event.transactions,
+      ),
+    );
   }
 
-  FutureOr<void> deliveredUpdateEmptyEvent(
-      DeliveredUpdateEmptyEvent event, Emitter<DeliveredState> emit) {
-    emit(DeliveredEmptyState());
+  _onEmpty(DeliveredUpdateEmptyEvent event, Emitter emit) {
+    emit(state.copyWith(
+      isLoading: false,
+      transactions: [],
+    ));
   }
 }

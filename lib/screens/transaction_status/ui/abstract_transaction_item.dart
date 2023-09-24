@@ -1,6 +1,6 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/models/cart_item_model.dart';
 import 'package:book_store/models/transaction_model.dart';
-import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -76,8 +76,8 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                             imageUrl: transactionData.products[0].imgUrl,
                             placeholder: (context, url) {
                               return Shimmer.fromColors(
-                                baseColor: baseShimmer,
-                                highlightColor: Colors.grey[200]!,
+                                baseColor: AppColors.baseShimmer,
+                                highlightColor: AppColors.highlightShimmer,
                                 child: Container(
                                   width: double.infinity,
                                   height: double.infinity,
@@ -148,7 +148,7 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                                   Text(
                                     'đ',
                                     style: TextStyle(
-                                      color: themeColor,
+                                      color: AppColors.themeColor,
                                       decoration: TextDecoration.underline,
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
@@ -158,7 +158,7 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                                     Converter.convertNumberToMoney(
                                         transactionData.products[0].price),
                                     style: TextStyle(
-                                      color: themeColor,
+                                      color: AppColors.themeColor,
                                       fontWeight: FontWeight.w400,
                                       fontSize: 15,
                                     ),
@@ -194,19 +194,19 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                       Text(
                         'đ',
                         style: TextStyle(
-                          color: themeColor,
+                          color: AppColors.themeColor,
                           decoration: TextDecoration.underline,
                           fontSize: 17,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       Text(
                         Converter.convertNumberToMoney(
                             transactionData.totalPrice),
                         style: TextStyle(
-                          color: themeColor,
+                          color: AppColors.themeColor,
                           fontSize: 17,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],

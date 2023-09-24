@@ -12,20 +12,28 @@ part 'unconfirmed_event.dart';
 part 'unconfirmed_state.dart';
 
 class UnconfirmedBloc extends Bloc<UnconfirmedEvent, UnconfirmedState> {
-  UnconfirmedBloc() : super(UnconfirmedLoadingState()) {
-    on<UnconfirmedLoadingEvent>(unconfirmedLoadingEvent);
-    on<UnconfirmedUpdateEvent>(unconfirmedUpdateEvent);
-    on<UnconfirmedUpdateEmptyEvent>(unconfirmedUpdateEmptyEvent);
-    on<UnconfirmedCancelEvent>(unconfirmedCancelEvent);
+  StreamSubscription? _bookingStream;
+
+  UnconfirmedBloc() : super(const UnconfirmedState()) {
+    on<UnconfirmedLoadingEvent>(_onLoading);
+    on<UnconfirmedUpdateEvent>(_onUpdate);
+    on<UnconfirmedUpdateEmptyEvent>(_onEmpty);
+    on<UnconfirmedCancelEvent>(_onCancel);
   }
 
-  FutureOr<void> unconfirmedLoadingEvent(
-      UnconfirmedLoadingEvent event, Emitter<UnconfirmedState> emit) async {
-    emit(UnconfirmedLoadingState());
+  @override
+  Future<void> close() async {
+    _bookingStream?.cancel();
+    _bookingStream = null;
+    super.close();
+  }
+
+  _onLoading(UnconfirmedLoadingEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    FirebaseFirestore.instance
+    _bookingStream = FirebaseFirestore.instance
         .collection('User')
         .doc(uid)
         .collection('Transaction')
@@ -84,18 +92,25 @@ class UnconfirmedBloc extends Bloc<UnconfirmedEvent, UnconfirmedState> {
     });
   }
 
-  FutureOr<void> unconfirmedUpdateEvent(
-      UnconfirmedUpdateEvent event, Emitter<UnconfirmedState> emit) {
-    emit(UnconfrimedLoadingSuccessfulState(transactions: event.transactions));
+  _onUpdate(UnconfirmedUpdateEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        transactions: event.transactions,
+      ),
+    );
   }
 
-  FutureOr<void> unconfirmedUpdateEmptyEvent(
-      UnconfirmedUpdateEmptyEvent event, Emitter<UnconfirmedState> emit) {
-    emit(UnconfirmedEmptyState());
+  _onEmpty(UnconfirmedUpdateEmptyEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        transactions: [],
+      ),
+    );
   }
 
-  FutureOr<void> unconfirmedCancelEvent(
-      UnconfirmedCancelEvent event, Emitter<UnconfirmedState> emit) async {
+  _onCancel(UnconfirmedCancelEvent event, Emitter emit) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     final docRef = FirebaseFirestore.instance

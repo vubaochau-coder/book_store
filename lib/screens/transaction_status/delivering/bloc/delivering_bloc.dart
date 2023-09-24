@@ -12,20 +12,28 @@ part 'delivering_event.dart';
 part 'delivering_state.dart';
 
 class DeliveringBloc extends Bloc<DeliveringEvent, DeliveringState> {
-  DeliveringBloc() : super(DeliveringLoadingState()) {
-    on<DeliveringLoadingEvent>(deliveringLoadingEvent);
-    on<DeliveringUpdateEvent>(deliveringUpdateEvent);
-    on<DeliveringUpdateEmptyEvent>(deliveringUpdateEmptyEvent);
-    on<DeliveringReceiveEvent>(deliveringReceiveEvent);
+  StreamSubscription? _bookingStream;
+
+  DeliveringBloc() : super(const DeliveringState()) {
+    on<DeliveringLoadingEvent>(_onLoading);
+    on<DeliveringUpdateEvent>(_onUpdate);
+    on<DeliveringUpdateEmptyEvent>(_onEmpty);
+    on<DeliveringReceiveEvent>(_onReceiveTransaction);
   }
 
-  FutureOr<void> deliveringLoadingEvent(
-      DeliveringLoadingEvent event, Emitter<DeliveringState> emit) async {
-    emit(DeliveringLoadingState());
+  @override
+  Future<void> close() async {
+    _bookingStream?.cancel();
+    _bookingStream = null;
+    super.close();
+  }
+
+  _onLoading(DeliveringLoadingEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    FirebaseFirestore.instance
+    _bookingStream = FirebaseFirestore.instance
         .collection('User')
         .doc(uid)
         .collection('Transaction')
@@ -84,19 +92,26 @@ class DeliveringBloc extends Bloc<DeliveringEvent, DeliveringState> {
     });
   }
 
-  FutureOr<void> deliveringUpdateEvent(
-      DeliveringUpdateEvent event, Emitter<DeliveringState> emit) {
-    emit(DeliveringLoadingSuccessfulState(transactions: event.transactions));
+  _onUpdate(DeliveringUpdateEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        transactions: event.transactions,
+      ),
+    );
   }
 
-  FutureOr<void> deliveringUpdateEmptyEvent(
-      DeliveringUpdateEmptyEvent event, Emitter<DeliveringState> emit) {
-    emit(DeliveringEmptyState());
+  _onEmpty(DeliveringUpdateEmptyEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        transactions: [],
+      ),
+    );
   }
 
-  FutureOr<void> deliveringReceiveEvent(
-      DeliveringReceiveEvent event, Emitter<DeliveringState> emit) async {
-    emit(DeliveringLoadingState());
+  _onReceiveTransaction(DeliveringReceiveEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 

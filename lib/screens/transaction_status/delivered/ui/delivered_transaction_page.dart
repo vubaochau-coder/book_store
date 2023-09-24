@@ -15,53 +15,51 @@ class DeliveredTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DeliveredBloc, DeliveredState>(
       builder: (context, state) {
-        if (state is DeliveredEmptyState) {
-          return const EmptyTransactionPage();
-        } else if (state is DeliveredLoadingState) {
+        if (state.isLoading) {
           return const TransactionLoadingPage();
-        } else if (state is DeliveredLoadingSuccessfulState) {
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              return DeliveredItem(
-                transactionData: state.transactions[index],
-                onTap: () {
-                  Navigator.of(context).push(
-                    PageRouteSlideTransition(
-                      child: ReOrderTransactionDetailPage(
-                        transactionData: state.transactions[index],
-                        onReOrder: () {
-                          Navigator.of(context).push(
-                            PageRouteSlideTransition(
-                              child: CheckoutPage(
-                                listProduct: state.transactions[index].products,
-                                checkoutFromCart: false,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                },
-                onReOrder: () {
-                  Navigator.of(context).push(
-                    PageRouteSlideTransition(
-                      child: CheckoutPage(
-                        listProduct: state.transactions[index].products,
-                        checkoutFromCart: false,
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-            itemCount: state.transactions.length,
-          );
-        } else {
-          return const Center(
-            child: Text('Something went wrong'),
-          );
         }
+
+        if (state.transactions.isEmpty) {
+          return const EmptyTransactionPage();
+        }
+
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return DeliveredItem(
+              transactionData: state.transactions[index],
+              onTap: () {
+                Navigator.of(context).push(
+                  PageRouteSlideTransition(
+                    child: ReOrderTransactionDetailPage(
+                      transactionData: state.transactions[index],
+                      onReOrder: () {
+                        Navigator.of(context).push(
+                          PageRouteSlideTransition(
+                            child: CheckoutPage(
+                              listProduct: state.transactions[index].products,
+                              checkoutFromCart: false,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                );
+              },
+              onReOrder: () {
+                Navigator.of(context).push(
+                  PageRouteSlideTransition(
+                    child: CheckoutPage(
+                      listProduct: state.transactions[index].products,
+                      checkoutFromCart: false,
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+          itemCount: state.transactions.length,
+        );
       },
     );
   }
