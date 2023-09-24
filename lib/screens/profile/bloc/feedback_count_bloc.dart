@@ -9,18 +9,26 @@ part 'feedback_count_event.dart';
 part 'feedback_count_state.dart';
 
 class FeedbackCountBloc extends Bloc<FeedbackCountEvent, FeedbackCountState> {
-  FeedbackCountBloc() : super(FeedbackCountLoadingState()) {
-    on<FeedbackCountLoadingEvent>(feedbackCountLoadingEvent);
-    on<FeedbackCountUpdateEvent>(feedbackCountUpdateEvent);
+  StreamSubscription? _feedbackStream;
+
+  FeedbackCountBloc() : super(const FeedbackCountState()) {
+    on<FeedbackCountLoadingEvent>(_onLoading);
+    on<FeedbackCountUpdateEvent>(_onUpdate);
   }
 
-  FutureOr<void> feedbackCountLoadingEvent(
-      FeedbackCountLoadingEvent event, Emitter<FeedbackCountState> emit) {
-    emit(FeedbackCountLoadingState());
+  @override
+  Future<void> close() async {
+    _feedbackStream?.cancel();
+    _feedbackStream = null;
+    super.close();
+  }
+
+  _onLoading(FeedbackCountLoadingEvent event, Emitter emit) {
+    emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    FirebaseFirestore.instance
+    _feedbackStream = FirebaseFirestore.instance
         .collection('User')
         .doc(uid)
         .collection('Feedback')
@@ -32,8 +40,13 @@ class FeedbackCountBloc extends Bloc<FeedbackCountEvent, FeedbackCountState> {
     });
   }
 
-  FutureOr<void> feedbackCountUpdateEvent(
+  FutureOr<void> _onUpdate(
       FeedbackCountUpdateEvent event, Emitter<FeedbackCountState> emit) {
-    emit(FeedbackCountLoadedState(totalFeedback: event.updateTotal));
+    emit(
+      state.copyWith(
+        isLoading: false,
+        totalFeedback: event.updateTotal,
+      ),
+    );
   }
 }

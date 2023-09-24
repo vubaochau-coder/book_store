@@ -43,132 +43,107 @@ class TransactionStatusBanner extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                BlocBuilder<UserBloc, UserState>(
-                  builder: (context, state) {
-                    if (state is UserLoadingSuccessfulState) {
-                      return Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            navigateToTransactionPage(0, context);
-                          },
-                          child: OrderStatusButton(
-                            text: 'Chờ xác nhận',
-                            icon: FontAwesomeIcons.envelopeOpenText,
-                            badgeCount: state.zero,
-                          ),
-                        ),
-                      );
-                    } else if (state is UserLoadingState) {
-                      return const Expanded(
-                        child: OrderStatusButton(
+                Expanded(
+                  child: BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return const OrderStatusButton(
                           text: 'Chờ xác nhận',
                           icon: FontAwesomeIcons.envelopeOpenText,
                           badgeCount: 0,
+                        );
+                      }
+
+                      return GestureDetector(
+                        onTap: () {
+                          navigateToTransactionPage(0, context);
+                        },
+                        child: OrderStatusButton(
+                          text: 'Chờ xác nhận',
+                          icon: FontAwesomeIcons.envelopeOpenText,
+                          badgeCount: state.zero,
                         ),
                       );
-                    } else {
-                      return const Center(
-                        child: Text('Something went wrong'),
-                      );
-                    }
-                  },
+                    },
+                  ),
                 ),
                 const SizedBox(width: 8),
-                BlocBuilder<UserBloc, UserState>(
-                  builder: (context, state) {
-                    if (state is UserLoadingSuccessfulState) {
-                      return Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            navigateToTransactionPage(1, context);
-                          },
-                          child: OrderStatusButton(
-                            text: 'Chờ lấy hàng',
-                            icon: FontAwesomeIcons.box,
-                            badgeCount: state.one,
-                          ),
-                        ),
-                      );
-                    } else if (state is UserLoadingState) {
-                      return const Expanded(
-                        child: OrderStatusButton(
+                Expanded(
+                  child: BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return const OrderStatusButton(
                           text: 'Chờ lấy hàng',
                           icon: FontAwesomeIcons.box,
                           badgeCount: 0,
+                        );
+                      }
+
+                      return GestureDetector(
+                        onTap: () {
+                          navigateToTransactionPage(1, context);
+                        },
+                        child: OrderStatusButton(
+                          text: 'Chờ lấy hàng',
+                          icon: FontAwesomeIcons.box,
+                          badgeCount: state.one,
                         ),
                       );
-                    } else {
-                      return const Center(
-                        child: Text('Something went wrong'),
-                      );
-                    }
-                  },
+                    },
+                  ),
                 ),
                 const SizedBox(width: 8),
-                BlocBuilder<UserBloc, UserState>(
-                  builder: (context, state) {
-                    if (state is UserLoadingSuccessfulState) {
-                      return Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            navigateToTransactionPage(2, context);
-                          },
-                          child: OrderStatusButton(
-                            text: 'Đang giao',
-                            icon: FontAwesomeIcons.truckFast,
-                            badgeCount: state.two,
-                          ),
-                        ),
-                      );
-                    } else if (state is UserLoadingState) {
-                      return const Expanded(
-                        child: OrderStatusButton(
+                Expanded(
+                  child: BlocBuilder<UserBloc, UserState>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return const OrderStatusButton(
                           text: 'Đang giao',
                           icon: FontAwesomeIcons.truckFast,
                           badgeCount: 0,
+                        );
+                      }
+                      return GestureDetector(
+                        onTap: () {
+                          navigateToTransactionPage(2, context);
+                        },
+                        child: OrderStatusButton(
+                          text: 'Đang giao',
+                          icon: FontAwesomeIcons.truckFast,
+                          badgeCount: state.two,
                         ),
                       );
-                    } else {
-                      return const Center(
-                        child: Text('Something went wrong'),
-                      );
-                    }
-                  },
+                    },
+                  ),
                 ),
                 const SizedBox(width: 8),
-                BlocBuilder<FeedbackCountBloc, FeedbackCountState>(
-                  builder: (context, state) {
-                    if (state is FeedbackCountLoadedState) {
-                      return Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              PageRouteSlideTransition(
-                                child: const MyFeedbackPage(),
-                              ),
-                            );
-                          },
-                          child: OrderStatusButton(
-                            text: 'Chưa đánh giá',
-                            icon: FontAwesomeIcons.star,
-                            badgeCount: state.totalFeedback,
-                          ),
-                        ),
-                      );
-                    } else if (state is FeedbackCountLoadingState) {
-                      return const Expanded(
-                        child: OrderStatusButton(
-                          text: 'Chưa đánh giá',
+                Expanded(
+                  child: BlocBuilder<FeedbackCountBloc, FeedbackCountState>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return const OrderStatusButton(
+                          text: 'Đánh giá',
                           icon: FontAwesomeIcons.star,
                           badgeCount: 0,
+                        );
+                      }
+
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            PageRouteSlideTransition(
+                              child: const MyFeedbackPage(),
+                            ),
+                          );
+                        },
+                        child: OrderStatusButton(
+                          text: 'Đánh giá',
+                          icon: FontAwesomeIcons.star,
+                          badgeCount: state.totalFeedback,
                         ),
                       );
-                    } else {
-                      return const Center(
-                        child: Text('Something went wrong'),
-                      );
-                    }
-                  },
+                    },
+                  ),
                 )
               ],
             ),

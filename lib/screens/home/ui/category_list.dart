@@ -16,6 +16,8 @@ class CategoryList extends StatelessWidget {
       children: [
         InkWell(
           splashColor: splashColor,
+          borderRadius: BorderRadius.circular(6),
+          radius: 6,
           onTap: () => Future.delayed(
             Duration(milliseconds: delay),
             () => Navigator.of(context).push(
@@ -30,6 +32,8 @@ class CategoryList extends StatelessWidget {
         ),
         InkWell(
           splashColor: splashColor,
+          borderRadius: BorderRadius.circular(6),
+          radius: 6,
           onTap: () => Future.delayed(
             Duration(milliseconds: delay),
             () => Navigator.of(context).push(
@@ -44,6 +48,8 @@ class CategoryList extends StatelessWidget {
         ),
         InkWell(
           splashColor: splashColor,
+          borderRadius: BorderRadius.circular(6),
+          radius: 6,
           onTap: () => Future.delayed(
             Duration(milliseconds: delay),
             () => Navigator.of(context).push(
@@ -58,6 +64,8 @@ class CategoryList extends StatelessWidget {
         ),
         InkWell(
           splashColor: splashColor,
+          borderRadius: BorderRadius.circular(6),
+          radius: 6,
           onTap: () => Future.delayed(
             Duration(milliseconds: delay),
             () => Navigator.of(context).push(
@@ -72,6 +80,8 @@ class CategoryList extends StatelessWidget {
         ),
         InkWell(
           splashColor: splashColor,
+          borderRadius: BorderRadius.circular(6),
+          radius: 6,
           onTap: () => Future.delayed(
             Duration(milliseconds: delay),
             () => Navigator.of(context).push(
@@ -86,6 +96,8 @@ class CategoryList extends StatelessWidget {
         ),
         InkWell(
           splashColor: splashColor,
+          borderRadius: BorderRadius.circular(6),
+          radius: 6,
           onTap: () => Future.delayed(
             Duration(milliseconds: delay),
             () => Navigator.of(context).push(

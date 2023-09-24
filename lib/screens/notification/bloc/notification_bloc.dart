@@ -10,21 +10,29 @@ part 'notification_event.dart';
 part 'notification_state.dart';
 
 class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
-  NotificationBloc() : super(NotificationLoadingState()) {
-    on<NotificationLoadingEvent>(_loading);
-    on<NotificationUpdateEvent>(_update);
-    on<NotificationFilterEvent>(_filter);
-    on<NotificationTappedEvent>(_itemTapped);
-    on<NotificationReadAllEvent>(_readAll);
+  StreamSubscription? _streamSubscription;
+
+  NotificationBloc() : super(const NotificationState()) {
+    on<NotificationLoadingEvent>(_onLoading);
+    on<NotificationUpdateEvent>(_onUpdate);
+    on<NotificationFilterEvent>(_onFilter);
+    on<NotificationTappedEvent>(_onItemTapped);
+    on<NotificationReadAllEvent>(_onReadAll);
   }
 
-  FutureOr<void> _loading(
-      NotificationLoadingEvent event, Emitter<NotificationState> emit) {
-    emit(NotificationLoadingState());
+  @override
+  Future<void> close() async {
+    _streamSubscription?.cancel();
+    _streamSubscription = null;
+    super.close();
+  }
+
+  _onLoading(NotificationLoadingEvent event, Emitter emit) {
+    emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    FirebaseFirestore.instance
+    _streamSubscription = FirebaseFirestore.instance
         .collection('User')
         .doc(uid)
         .collection('Notification')
@@ -45,57 +53,72 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     });
   }
 
-  FutureOr<void> _update(
-      NotificationUpdateEvent event, Emitter<NotificationState> emit) {
-    emit(NotificationLoadingSuccessfulState(
-        notis: event.newNotis, sortType: 'all'));
-  }
+  _onUpdate(NotificationUpdateEvent event, Emitter emit) {
+    List<NotificationModel> showed = [];
+    if (state.sortType == SortTypes.all) {
+      showed = List.from(event.newNotis);
+    }
 
-  FutureOr<void> _filter(
-      NotificationFilterEvent event, Emitter<NotificationState> emit) async {
-    emit(NotificationLoadingState());
-
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    List<NotificationModel> newNoti = [];
-
-    final notiCollection = FirebaseFirestore.instance
-        .collection('User')
-        .doc(uid)
-        .collection('Notification');
-
-    if (event.filterType == 'all') //Get all notification
-    {
-      final notiQuery =
-          await notiCollection.orderBy('date', descending: true).get();
-      for (var ele in notiQuery.docs) {
-        newNoti.add(NotificationModel.fromSnapshot(ele));
-      }
-    } else if (event.filterType == 'unread') //Get unread notification
-    {
-      final notiQuery = await notiCollection
-          .where('isRead', isEqualTo: false)
-          .orderBy('date', descending: true)
-          .get();
-      for (var ele in notiQuery.docs) {
-        newNoti.add(NotificationModel.fromSnapshot(ele));
-      }
-    } else if (event.filterType == 'read') //Get read notifiation
-    {
-      final notiQuery = await notiCollection
-          .where('isRead', isEqualTo: true)
-          .orderBy('date', descending: true)
-          .get();
-      for (var ele in notiQuery.docs) {
-        newNoti.add(NotificationModel.fromSnapshot(ele));
+    if (state.sortType == SortTypes.read) {
+      for (var ele in event.newNotis) {
+        if (ele.isRead == true) {
+          showed.add(ele);
+        }
       }
     }
 
-    emit(NotificationLoadingSuccessfulState(
-        notis: newNoti, sortType: event.filterType));
+    if (state.sortType == SortTypes.unRead) {
+      for (var ele in event.newNotis) {
+        if (ele.isRead == false) {
+          showed.add(ele);
+        }
+      }
+    }
+
+    emit(
+      state.copyWith(
+        allNotis: event.newNotis,
+        sortType: SortTypes.all,
+        isLoading: false,
+        showedNotis: showed,
+      ),
+    );
   }
 
-  FutureOr<void> _itemTapped(
-      NotificationTappedEvent event, Emitter<NotificationState> emit) async {
+  _onFilter(NotificationFilterEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
+
+    List<NotificationModel> showed = [];
+    if (event.filterType == SortTypes.all) {
+      showed = List.from(state.allNotis);
+    }
+
+    if (event.filterType == SortTypes.read) {
+      for (var ele in state.allNotis) {
+        if (ele.isRead == true) {
+          showed.add(ele);
+        }
+      }
+    }
+
+    if (event.filterType == SortTypes.unRead) {
+      for (var ele in state.allNotis) {
+        if (ele.isRead == false) {
+          showed.add(ele);
+        }
+      }
+    }
+
+    emit(
+      state.copyWith(
+        sortType: event.filterType,
+        showedNotis: showed,
+        isLoading: false,
+      ),
+    );
+  }
+
+  _onItemTapped(NotificationTappedEvent event, Emitter emit) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     final notiDocRef = FirebaseFirestore.instance
@@ -106,8 +129,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     await notiDocRef.update({'isRead': true});
   }
 
-  FutureOr<void> _readAll(
-      NotificationReadAllEvent event, Emitter<NotificationState> emit) async {
+  _onReadAll(NotificationReadAllEvent event, Emitter emit) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
     final notiColRef = FirebaseFirestore.instance

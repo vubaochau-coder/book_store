@@ -1,6 +1,4 @@
 import 'package:book_store/screens/login_register/auth_page.dart';
-import 'package:book_store/bloc/cart_count_bloc.dart';
-import 'package:book_store/bloc/noti_count_bloc.dart';
 import 'package:book_store/main.dart';
 import 'package:book_store/screens/cart/bloc/cart_bloc.dart';
 import 'package:book_store/screens/notification/bloc/notification_bloc.dart';
@@ -19,8 +17,6 @@ class AuthService {
       builder: (BuildContext context, snapshot) {
         if (snapshot.hasData) {
           BlocProvider.of<CartBloc>(context).add(CartLoadingEvent());
-          BlocProvider.of<CartCountBloc>(context).add(CartCountLoadingEvent());
-          BlocProvider.of<NotiCountBloc>(context).add(NotiCountLoadingEvent());
           BlocProvider.of<UserBloc>(context).add(UserLoadingEvent());
           BlocProvider.of<FeedbackCountBloc>(context)
               .add(FeedbackCountLoadingEvent());

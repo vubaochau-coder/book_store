@@ -132,17 +132,12 @@ class CartItem extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Expanded(
-                                child: GestureDetector(
-                                  onTap: cartData.count > 1
+                                child: IconButton(
+                                  onPressed: cartData.count > 1
                                       ? () => onDecrease()
                                       : null,
-                                  child: const SizedBox(
-                                    height: double.infinity,
-                                    child: Icon(
-                                      Icons.remove,
-                                      size: 20,
-                                    ),
-                                  ),
+                                  padding: EdgeInsets.zero,
+                                  icon: const Icon(Icons.remove, size: 20),
                                 ),
                               ),
                               Container(
@@ -161,14 +156,11 @@ class CartItem extends StatelessWidget {
                                 ),
                               ),
                               Expanded(
-                                child: GestureDetector(
-                                  onTap: () => onIncrease(),
-                                  child: const SizedBox(
-                                    height: double.infinity,
-                                    child: Icon(
-                                      Icons.add,
-                                      size: 20,
-                                    ),
+                                child: Center(
+                                  child: IconButton(
+                                    onPressed: () => onIncrease(),
+                                    padding: EdgeInsets.zero,
+                                    icon: const Icon(Icons.add, size: 20),
                                   ),
                                 ),
                               ),
@@ -177,12 +169,11 @@ class CartItem extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 10),
-                          child: GestureDetector(
-                            onTap: onRemove,
-                            child: const FaIcon(
+                        child: Center(
+                          child: IconButton(
+                            onPressed: onRemove,
+                            padding: EdgeInsets.zero,
+                            icon: const FaIcon(
                               FontAwesomeIcons.trashCan,
                               size: 16,
                             ),

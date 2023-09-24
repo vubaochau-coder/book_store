@@ -9,83 +9,83 @@ part 'user_event.dart';
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  UserBloc() : super(UserLoadingState()) {
-    on<UserLoadingEvent>(userLoadingEvent);
-    on<UserUpdateEvent>(userUpdateEvent);
+  StreamSubscription? _userStream;
+
+  UserBloc() : super(const UserState()) {
+    on<UserLoadingEvent>(_onLoading);
+    on<UserUpdateEvent>(_onUpdate);
   }
 
-  FutureOr<void> userLoadingEvent(
-      UserLoadingEvent event, Emitter<UserState> emit) async {
-    emit(UserLoadingState());
+  @override
+  Future<void> close() async {
+    _userStream?.cancel();
+    _userStream = null;
+    super.close();
+  }
 
-    try {
-      final user = FirebaseAuth.instance.currentUser!;
+  _onLoading(UserLoadingEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
-      List<String> userAddress = [];
-      String uid = user.uid;
-      String name = user.displayName!;
-      String photoURL = user.photoURL!;
+    final user = FirebaseAuth.instance.currentUser!;
 
-      FirebaseFirestore.instance
-          .collection('User')
-          .doc(uid)
-          .collection('Transaction')
-          .snapshots()
-          .listen((event) async {
-        final userDocRef =
-            FirebaseFirestore.instance.collection('User').doc(uid);
+    List<String> userAddress = [];
+    String uid = user.uid;
+    String name = user.displayName!;
+    String photoURL = user.photoURL!;
 
-        final addressQuery = await userDocRef.get();
-        if (addressQuery.exists) {
-          if (addressQuery.data() != null) {
-            if (addressQuery.data()!['address'] != null) {
-              userAddress = List.from(addressQuery.get('address'));
-            }
+    FirebaseFirestore.instance
+        .collection('User')
+        .doc(uid)
+        .collection('Transaction')
+        .snapshots()
+        .listen((event) async {
+      final userDocRef = FirebaseFirestore.instance.collection('User').doc(uid);
+
+      final addressQuery = await userDocRef.get();
+      if (addressQuery.exists) {
+        if (addressQuery.data() != null) {
+          if (addressQuery.data()!['address'] != null) {
+            userAddress = List.from(addressQuery.get('address'));
           }
         }
-        UserModel model = UserModel(
-            id: uid, name: name, imgUrl: photoURL, address: userAddress);
+      }
+      UserModel model = UserModel(
+          id: uid, name: name, imgUrl: photoURL, address: userAddress);
 
-        final transactionZero = await userDocRef
+      final futureGroup = await Future.wait([
+        userDocRef
             .collection('Transaction')
             .where('status', isEqualTo: 0)
-            .get();
-
-        final transactionOne = await userDocRef
+            .get(),
+        userDocRef
             .collection('Transaction')
             .where('status', isEqualTo: 1)
-            .get();
-
-        final transactionTwo = await userDocRef
+            .get(),
+        userDocRef
             .collection('Transaction')
             .where('status', isEqualTo: 2)
-            .get();
+            .get(),
+      ]);
 
-        final transactionThree = await userDocRef
-            .collection('Transaction')
-            .where('status', isEqualTo: 3)
-            .get();
+      final transactionZero = futureGroup[0].size;
+      final transactionOne = futureGroup[1].size;
+      final transactionTwo = futureGroup[2].size;
 
-        add(UserUpdateEvent(
-          countZero: transactionZero.size,
-          countOne: transactionOne.size,
-          countTwo: transactionTwo.size,
-          countThree: transactionThree.size,
-          model: model,
-        ));
-      });
-    } on Exception catch (e) {
-      emit(UserLoadingFailedState(error: e.toString()));
-    }
+      add(UserUpdateEvent(
+        countZero: transactionZero,
+        countOne: transactionOne,
+        countTwo: transactionTwo,
+        model: model,
+      ));
+    });
   }
 
-  FutureOr<void> userUpdateEvent(
-      UserUpdateEvent event, Emitter<UserState> emit) {
-    emit(UserLoadingSuccessfulState(
+  _onUpdate(UserUpdateEvent event, Emitter emit) {
+    emit(state.copyWith(
+      isLoading: false,
       zero: event.countZero,
       one: event.countOne,
       two: event.countTwo,
-      three: event.countThree,
       userModel: event.model,
     ));
   }

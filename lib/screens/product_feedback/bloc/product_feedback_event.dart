@@ -8,11 +8,15 @@ abstract class ProductFeedbackEvent extends Equatable {
 }
 
 class ProductFeedbackLoadingEvent extends ProductFeedbackEvent {
-  final int sortOption;
   final String bookID;
 
   const ProductFeedbackLoadingEvent({
-    required this.sortOption,
     required this.bookID,
   });
+}
+
+class ProductFeedbackFilterEvent extends ProductFeedbackEvent {
+  final FeedbackTypes sortType;
+
+  const ProductFeedbackFilterEvent({required this.sortType});
 }

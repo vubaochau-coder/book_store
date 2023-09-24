@@ -22,7 +22,7 @@ InputBorder textFieldBorder2 = OutlineInputBorder(
 );
 
 InputBorder textFieldBorder3 = OutlineInputBorder(
-  borderRadius: BorderRadius.circular(12),
+  borderRadius: BorderRadius.circular(6),
   borderSide: const BorderSide(
     color: Colors.black,
     width: 1,

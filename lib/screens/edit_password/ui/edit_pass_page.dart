@@ -157,7 +157,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                     const Spacer(),
                     Container(
                       width: double.infinity,
-                      height: 48,
+                      height: 44,
                       margin: const EdgeInsets.symmetric(
                           horizontal: 6, vertical: 14),
                       child: ElevatedButton(
@@ -172,7 +172,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.themeColor,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(5),
                           ),
                         ),
                         child: const Text(
@@ -180,7 +180,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                         ),
                       ),

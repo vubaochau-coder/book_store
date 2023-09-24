@@ -1,3 +1,4 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/custom_widgets/search_bar.dart';
 import 'package:book_store/screens/categories/child/bloc/child_bloc.dart';
 import 'package:book_store/screens/categories/child/ui/child_category_page.dart';
@@ -72,10 +73,11 @@ class _CategoryPageState extends State<CategoryPage>
         ),
       ],
       child: Scaffold(
+        backgroundColor: AppColors.background,
         appBar: AppBar(
           titleSpacing: 10,
           leadingWidth: 62,
-          backgroundColor: themeColor,
+          backgroundColor: AppColors.themeColor,
           title: const MyCustomSearchBar(),
           centerTitle: true,
           elevation: 0,

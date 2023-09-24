@@ -76,16 +76,15 @@ class ProfileLoadingPage extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    Container(
-                      width: 38,
-                      height: 38,
-                      alignment: Alignment.center,
-                      child: FaIcon(
+                    IconButton(
+                      onPressed: () {},
+                      padding: EdgeInsets.zero,
+                      icon: FaIcon(
                         size: 14,
                         FontAwesomeIcons.penToSquare,
                         color: themeColor,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

@@ -22,14 +22,12 @@ class UserUpdateEvent extends UserEvent {
   final int countZero;
   final int countOne;
   final int countTwo;
-  final int countThree;
   final UserModel model;
 
   const UserUpdateEvent({
     required this.countZero,
     required this.countOne,
     required this.countTwo,
-    required this.countThree,
     required this.model,
   });
 }

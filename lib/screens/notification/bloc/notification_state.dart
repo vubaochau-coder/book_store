@@ -1,21 +1,34 @@
 part of 'notification_bloc.dart';
 
-abstract class NotificationState extends Equatable {
-  const NotificationState();
+enum SortTypes { all, unRead, read }
+
+class NotificationState extends Equatable {
+  final bool isLoading;
+  final List<NotificationModel> allNotis;
+  final List<NotificationModel> showedNotis;
+  final SortTypes sortType;
+
+  const NotificationState({
+    this.isLoading = true,
+    this.allNotis = const [],
+    this.showedNotis = const [],
+    this.sortType = SortTypes.all,
+  });
 
   @override
-  List<Object> get props => [];
-}
+  List<Object> get props => [isLoading, allNotis, sortType, showedNotis];
 
-class NotificationLoadingState extends NotificationState {}
-
-class NotificationLoadingSuccessfulState extends NotificationState {
-  final List<NotificationModel> notis;
-  final String sortType;
-
-  const NotificationLoadingSuccessfulState(
-      {required this.notis, required this.sortType});
-
-  @override
-  List<Object> get props => [notis, sortType];
+  NotificationState copyWith({
+    bool? isLoading,
+    List<NotificationModel>? allNotis,
+    List<NotificationModel>? showedNotis,
+    SortTypes? sortType,
+  }) {
+    return NotificationState(
+      isLoading: isLoading ?? this.isLoading,
+      allNotis: allNotis ?? this.allNotis,
+      showedNotis: showedNotis ?? this.showedNotis,
+      sortType: sortType ?? this.sortType,
+    );
+  }
 }

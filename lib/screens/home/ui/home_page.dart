@@ -38,13 +38,10 @@ class _HomePageState extends State<HomePage> {
       ),
       body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
-          if (state is HomeLoadingState) {
+          if (state.isLoading) {
             return const HomePageLoading();
-          } else if (state is HomeLoadingSuccessfulState) {
-            return homePageSuccess(state.products, state.advertisements);
-          } else {
-            return const SizedBox();
           }
+          return homePageSuccess(state.products, state.advertisements);
         },
       ),
     );
