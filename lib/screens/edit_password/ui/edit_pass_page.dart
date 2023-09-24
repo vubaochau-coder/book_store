@@ -1,5 +1,6 @@
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/screens/edit_password/bloc/edit_pass_bloc.dart';
-import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -47,14 +48,17 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
           return Stack(
             children: [
               Scaffold(
-                backgroundColor: background,
+                backgroundColor: AppColors.background,
                 resizeToAvoidBottomInset: false,
                 appBar: AppBar(
-                  backgroundColor: themeColor,
-                  foregroundColor: Colors.white,
+                  backgroundColor: AppColors.themeColor,
+                  foregroundColor: AppColors.contentColor,
                   elevation: 0,
                   centerTitle: true,
-                  title: const Text('Thay đổi mật khẩu'),
+                  title: Text(
+                    'Thay đổi mật khẩu',
+                    style: AppTexts.appbarTitle,
+                  ),
                 ),
                 body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,7 +88,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                     ),
                     TextField(
                       controller: _newPassController,
-                      cursorColor: themeColor,
+                      cursorColor: AppColors.themeColor,
                       obscureText: isHidePass,
                       decoration: InputDecoration(
                         fillColor: Colors.white,
@@ -104,7 +108,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                             isHidePass
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            color: themeColor,
+                            color: AppColors.themeColor,
                           ),
                         ),
                       ),
@@ -122,7 +126,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                     ),
                     TextField(
                       controller: _confirmController,
-                      cursorColor: themeColor,
+                      cursorColor: AppColors.themeColor,
                       obscureText: isHideConfirm,
                       decoration: InputDecoration(
                         errorText:
@@ -145,7 +149,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                             isHideConfirm
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            color: themeColor,
+                            color: AppColors.themeColor,
                           ),
                         ),
                       ),
@@ -153,7 +157,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                     const Spacer(),
                     Container(
                       width: double.infinity,
-                      height: 48,
+                      height: 44,
                       margin: const EdgeInsets.symmetric(
                           horizontal: 6, vertical: 14),
                       child: ElevatedButton(
@@ -166,9 +170,9 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: themeColor,
+                          backgroundColor: AppColors.themeColor,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(5),
                           ),
                         ),
                         child: const Text(
@@ -176,7 +180,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
-                            fontSize: 16,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -189,13 +193,16 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
           );
         } else if (state is EditPassGgFbState) {
           return Scaffold(
-            backgroundColor: background,
+            backgroundColor: AppColors.background,
             appBar: AppBar(
-              backgroundColor: themeColor,
-              foregroundColor: Colors.white,
+              backgroundColor: AppColors.themeColor,
+              foregroundColor: AppColors.contentColor,
               elevation: 0,
               centerTitle: true,
-              title: const Text('Thay đổi mật khẩu'),
+              title: Text(
+                'Thay đổi mật khẩu',
+                style: AppTexts.appbarTitle,
+              ),
             ),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -228,9 +235,9 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
           );
         } else {
           return Scaffold(
-            backgroundColor: background,
+            backgroundColor: AppColors.background,
             appBar: AppBar(
-              backgroundColor: themeColor,
+              backgroundColor: AppColors.themeColor,
               foregroundColor: Colors.white,
               elevation: 0,
               centerTitle: true,

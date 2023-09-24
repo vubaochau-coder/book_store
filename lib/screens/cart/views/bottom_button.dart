@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../custom_widgets/custom_page_route.dart';
-import '../../../models/cart_item_model.dart';
+import '../../../core/models/cart_item_model.dart';
 import '../../../utils/convert.dart';
 import '../../checkout/ui/checkout_page.dart';
 

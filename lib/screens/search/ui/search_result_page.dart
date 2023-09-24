@@ -1,5 +1,5 @@
 import 'package:book_store/custom_widgets/product_item.dart';
-import 'package:book_store/models/short_protduct_data_model.dart';
+import 'package:book_store/core/models/short_protduct_data_model.dart';
 import 'package:book_store/screens/search/bloc/search_bloc.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';

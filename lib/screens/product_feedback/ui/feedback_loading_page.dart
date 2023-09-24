@@ -18,8 +18,8 @@ class FeedbackLoadingPage extends StatelessWidget {
               const Text(
                 'Sắp xếp theo',
                 style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
                 ),
               ),
               Shimmer.fromColors(
@@ -27,7 +27,7 @@ class FeedbackLoadingPage extends StatelessWidget {
                 highlightColor: highlightShimmer,
                 child: Container(
                   margin: const EdgeInsets.only(top: 8, bottom: 8),
-                  width: 140,
+                  width: 120,
                   height: 32,
                   decoration: BoxDecoration(
                     color: Colors.white,

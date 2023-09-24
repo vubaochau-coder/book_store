@@ -1,21 +1,24 @@
 part of 'cancelled_bloc.dart';
 
-abstract class CancelledState extends Equatable {
-  const CancelledState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class CancelledLoadingState extends CancelledState {}
-
-class CancelledLoadingSuccessfulState extends CancelledState {
+class CancelledState extends Equatable {
+  final bool isLoading;
   final List<TransactionModel> transactions;
 
-  const CancelledLoadingSuccessfulState({required this.transactions});
+  const CancelledState({
+    this.isLoading = true,
+    this.transactions = const [],
+  });
 
   @override
-  List<Object> get props => [transactions];
-}
+  List<Object> get props => [isLoading, transactions];
 
-class CancelledEmptyState extends CancelledState {}
+  CancelledState copyWith({
+    bool? isLoading,
+    List<TransactionModel>? transactions,
+  }) {
+    return CancelledState(
+      isLoading: isLoading ?? this.isLoading,
+      transactions: transactions ?? this.transactions,
+    );
+  }
+}

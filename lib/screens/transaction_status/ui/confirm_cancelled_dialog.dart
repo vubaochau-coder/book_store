@@ -1,15 +1,15 @@
-import 'package:book_store/theme.dart';
+// import 'package:book_store/theme.dart';
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CancelledConfirmDialog extends StatelessWidget {
-  final VoidCallback onCancelTap;
-  const CancelledConfirmDialog({super.key, required this.onCancelTap});
+  const CancelledConfirmDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(5),
       ),
       actionsAlignment: MainAxisAlignment.center,
       actionsPadding: const EdgeInsets.only(bottom: 8),
@@ -18,13 +18,13 @@ class CancelledConfirmDialog extends StatelessWidget {
         children: [
           Icon(
             Icons.warning,
-            color: Colors.amber[900],
+            color: AppColors.themeColor,
             size: 22,
           ),
           Text(
             ' HỦY ĐƠN HÀNG',
             style: TextStyle(
-              color: themeColor,
+              color: AppColors.themeColor,
               fontSize: 18,
               fontWeight: FontWeight.w600,
             ),
@@ -38,7 +38,7 @@ class CancelledConfirmDialog extends StatelessWidget {
           width: 120,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, false);
             },
             style: ElevatedButton.styleFrom(
               elevation: 2,
@@ -50,9 +50,9 @@ class CancelledConfirmDialog extends StatelessWidget {
             child: Text(
               'Hủy bỏ',
               style: TextStyle(
-                color: themeColor,
+                color: AppColors.themeColor,
                 fontWeight: FontWeight.w500,
-                fontSize: 15,
+                fontSize: 14,
               ),
             ),
           ),
@@ -60,20 +60,22 @@ class CancelledConfirmDialog extends StatelessWidget {
         SizedBox(
           width: 120,
           child: ElevatedButton(
-            onPressed: onCancelTap,
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
             style: ElevatedButton.styleFrom(
               elevation: 2,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
-              backgroundColor: themeColor,
+              backgroundColor: AppColors.themeColor,
             ),
             child: const Text(
               'Hủy đơn',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w500,
-                fontSize: 15,
+                fontSize: 14,
               ),
             ),
           ),
@@ -87,7 +89,7 @@ class CancelledConfirmDialog extends StatelessWidget {
             'Lưu ý: Đơn hàng bị hủy không thể hoàn tác',
             style: TextStyle(
               fontWeight: FontWeight.w400,
-              fontSize: 15,
+              fontSize: 14,
             ),
             textAlign: TextAlign.center,
           ),
@@ -97,9 +99,9 @@ class CancelledConfirmDialog extends StatelessWidget {
           Text(
             'Bạn có muốn tiếp tục?',
             style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
-              color: themeColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: AppColors.themeColor,
             ),
             textAlign: TextAlign.center,
           ),

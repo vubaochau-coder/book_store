@@ -1,4 +1,4 @@
-import 'package:book_store/models/notification_model.dart';
+import 'package:book_store/core/models/notification_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +49,7 @@ class NotificationItem extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     fontSize: 15,
                     color: notiData.isRead ? Colors.black54 : Colors.black,
                   ),
@@ -74,6 +74,7 @@ class NotificationItem extends StatelessWidget {
             notiData.content,
             style: TextStyle(
               height: 1.4,
+              fontSize: 13,
               color: notiData.isRead ? Colors.black54 : Colors.black,
             ),
           ),

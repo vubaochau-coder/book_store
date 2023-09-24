@@ -1,21 +1,22 @@
 part of 'unconfirmed_bloc.dart';
 
-abstract class UnconfirmedState extends Equatable {
-  const UnconfirmedState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class UnconfirmedLoadingState extends UnconfirmedState {}
-
-class UnconfrimedLoadingSuccessfulState extends UnconfirmedState {
+class UnconfirmedState extends Equatable {
+  final bool isLoading;
   final List<TransactionModel> transactions;
 
-  const UnconfrimedLoadingSuccessfulState({required this.transactions});
+  const UnconfirmedState({
+    this.isLoading = true,
+    this.transactions = const [],
+  });
 
   @override
-  List<Object> get props => [transactions];
-}
+  List<Object> get props => [isLoading, transactions];
 
-class UnconfirmedEmptyState extends UnconfirmedState {}
+  UnconfirmedState copyWith(
+      {bool? isLoading, List<TransactionModel>? transactions}) {
+    return UnconfirmedState(
+      isLoading: isLoading ?? this.isLoading,
+      transactions: transactions ?? this.transactions,
+    );
+  }
+}

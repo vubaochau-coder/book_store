@@ -1,4 +1,4 @@
-import 'package:book_store/models/search_data_model.dart';
+import 'package:book_store/core/models/search_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SearchListSingleton {

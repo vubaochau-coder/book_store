@@ -16,7 +16,7 @@ class NotificationUpdateEvent extends NotificationEvent {
 }
 
 class NotificationFilterEvent extends NotificationEvent {
-  final String filterType;
+  final SortTypes filterType;
 
   const NotificationFilterEvent({required this.filterType});
 }

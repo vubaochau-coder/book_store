@@ -1,3 +1,5 @@
+import 'package:book_store/app_themes/app_text.dart';
+import 'package:book_store/core/repositories/main_repository.dart';
 import 'package:book_store/screens/transaction_status/delivered/bloc/delivered_bloc.dart';
 import 'package:book_store/screens/transaction_status/delivered/ui/delivered_transaction_page.dart';
 import 'package:book_store/screens/transaction_status/delivering/bloc/delivering_bloc.dart';
@@ -7,10 +9,10 @@ import 'package:book_store/screens/transaction_status/unconfirmed/ui/unconfirmed
 import 'package:book_store/screens/transaction_status/await_pickup/bloc/await_pickup_bloc.dart';
 import 'package:book_store/screens/transaction_status/await_pickup/ui/await_pickup_page.dart';
 import 'package:book_store/screens/transaction_status/cancelled/ui/cancelled_transaction_page.dart';
-import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app_themes/app_colors.dart';
 import '../cancelled/bloc/cancelled_bloc.dart';
 
 class TransactionPage extends StatefulWidget {
@@ -47,29 +49,45 @@ class _TransactionPageState extends State<TransactionPage>
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              AwaitPickupBloc()..add(AwaitPickupLoadingEvent()),
+          create: (context) => AwaitPickupBloc(
+            RepositoryProvider.of<MainRepository>(context).transRepository,
+            RepositoryProvider.of<MainRepository>(context).notiRepository,
+          )..add(AwaitPickupLoadingEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-              UnconfirmedBloc()..add(UnconfirmedLoadingEvent()),
+          create: (context) => UnconfirmedBloc(
+            RepositoryProvider.of<MainRepository>(context).transRepository,
+            RepositoryProvider.of<MainRepository>(context).notiRepository,
+          )..add(UnconfirmedLoadingEvent()),
         ),
         BlocProvider(
-          create: (context) => DeliveringBloc()..add(DeliveringLoadingEvent()),
+          create: (context) => DeliveringBloc(
+            RepositoryProvider.of<MainRepository>(context).transRepository,
+            RepositoryProvider.of<MainRepository>(context).notiRepository,
+            RepositoryProvider.of<MainRepository>(context).bookRepository,
+            RepositoryProvider.of<MainRepository>(context).feedbackRepository,
+          )..add(DeliveringLoadingEvent()),
         ),
         BlocProvider(
-          create: (context) => DeliveredBloc()..add(DeliveredLoadingEvent()),
+          create: (context) => DeliveredBloc(
+            RepositoryProvider.of<MainRepository>(context).transRepository,
+          )..add(DeliveredLoadingEvent()),
         ),
         BlocProvider(
-          create: (context) => CancelledBloc()..add(CancelledLoadingEvent()),
+          create: (context) => CancelledBloc(
+            RepositoryProvider.of<MainRepository>(context).transRepository,
+          )..add(CancelledLoadingEvent()),
         ),
       ],
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: AppColors.background,
         appBar: AppBar(
-          title: const Text('Đơn hàng của bạn'),
-          backgroundColor: themeColor,
-          foregroundColor: Colors.white,
+          title: Text(
+            'Đơn hàng của bạn',
+            style: AppTexts.appbarTitle,
+          ),
+          backgroundColor: AppColors.themeColor,
+          foregroundColor: AppColors.contentColor,
           elevation: 0,
           centerTitle: true,
         ),
@@ -91,13 +109,13 @@ class _TransactionPageState extends State<TransactionPage>
               child: TabBar(
                 controller: tabController,
                 isScrollable: true,
-                labelColor: themeColor,
+                labelColor: AppColors.themeColor,
                 unselectedLabelColor: Colors.grey[400],
                 indicator: BoxDecoration(
                   color: Colors.transparent,
                   border: Border(
                     bottom: BorderSide(
-                      color: themeColor,
+                      color: AppColors.themeColor,
                       width: 2,
                     ),
                   ),

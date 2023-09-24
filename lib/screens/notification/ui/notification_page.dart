@@ -1,7 +1,7 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/custom_widgets/custom_page_route.dart';
-import 'package:book_store/models/notification_model.dart';
+import 'package:book_store/core/models/notification_model.dart';
 import 'package:book_store/screens/notification/ui/empty_notification_page.dart';
 import 'package:book_store/screens/notification/ui/notification_item.dart';
 import 'package:book_store/screens/notification/ui/notification_loading_page.dart';
@@ -30,33 +30,38 @@ class NotificationPage extends StatelessWidget {
       ),
       body: BlocBuilder<NotificationBloc, NotificationState>(
         builder: (context, state) {
-          if (state is NotificationLoadingState) {
+          if (state.isLoading) {
             return const NotificationLoadingPage();
-          } else if (state is NotificationLoadingSuccessfulState) {
-            return buildNotificationPage(context, state.notis, state.sortType);
-          } else {
-            return const Center(
-              child: Text('Something went wrong'),
-            );
           }
+
+          if (state.showedNotis.isEmpty) {
+            return const NotificationEmptyPage();
+          }
+
+          return buildNotificationPage(
+              context, state.showedNotis, state.sortType);
         },
       ),
     );
   }
 
   Widget buildNotificationPage(
-      BuildContext context, List<NotificationModel> notis, String sortType) {
+      BuildContext context, List<NotificationModel> notis, SortTypes sortType) {
     int indexSelected = 0;
     List<String> filter = ['Tất cả', 'Chưa đọc', 'Đã đọc'];
-    List<String> filterCode = ['all', 'unread', 'read'];
+    List<SortTypes> filterCode = [
+      SortTypes.all,
+      SortTypes.unRead,
+      SortTypes.read
+    ];
     switch (sortType) {
-      case 'all':
+      case SortTypes.all:
         indexSelected = 0;
         break;
-      case 'unread':
+      case SortTypes.unRead:
         indexSelected = 1;
         break;
-      case 'read':
+      case SortTypes.read:
         indexSelected = 2;
         break;
     }
@@ -170,7 +175,8 @@ class NotificationPage extends StatelessWidget {
         text,
         style: TextStyle(
           color: select ? themeColor : Colors.grey,
-          fontWeight: select ? FontWeight.w500 : FontWeight.w400,
+          fontWeight: select ? FontWeight.w600 : FontWeight.w400,
+          fontSize: 14,
         ),
       ),
     );

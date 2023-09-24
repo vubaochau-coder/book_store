@@ -1,21 +1,22 @@
 part of 'await_pickup_bloc.dart';
 
-abstract class AwaitPickupState extends Equatable {
-  const AwaitPickupState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class AwaitPickupLoadingState extends AwaitPickupState {}
-
-class AwaitPickupLoadingSuccessfulState extends AwaitPickupState {
+class AwaitPickupState extends Equatable {
+  final bool isLoading;
   final List<TransactionModel> transactions;
 
-  const AwaitPickupLoadingSuccessfulState({required this.transactions});
+  const AwaitPickupState({
+    this.isLoading = true,
+    this.transactions = const [],
+  });
 
   @override
-  List<Object> get props => [transactions];
-}
+  List<Object> get props => [isLoading, transactions];
 
-class AwaitPickupEmptyState extends AwaitPickupState {}
+  AwaitPickupState copyWith(
+      {bool? isLoading, List<TransactionModel>? transactions}) {
+    return AwaitPickupState(
+      isLoading: isLoading ?? this.isLoading,
+      transactions: transactions ?? this.transactions,
+    );
+  }
+}

@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
-import 'package:book_store/models/address_model.dart';
-import 'package:book_store/models/create_order_response.dart';
-import 'package:book_store/models/notification_model.dart';
-import 'package:book_store/models/payment_method_model.dart';
-import 'package:book_store/models/transaction_model.dart';
-import 'package:book_store/models/transport_model.dart';
+import 'package:book_store/core/models/address_model.dart';
+import 'package:book_store/core/models/create_order_response.dart';
+import 'package:book_store/core/models/notification_model.dart';
+import 'package:book_store/core/models/payment_method_model.dart';
+import 'package:book_store/core/models/transaction_model.dart';
+import 'package:book_store/core/models/transport_model.dart';
 import 'package:book_store/utils/zalopay_app_config.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
@@ -24,19 +24,18 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   static const MethodChannel platform =
       MethodChannel('flutter.native/channelPayOrder');
 
-  CheckoutBloc() : super(CheckoutLoadingState()) {
-    on<CheckoutLoadingEvent>(checkoutLoadingEvent);
-    on<CheckoutUpdateEmptyAddressEvent>(checkoutUpdateEmptyAddressEvent);
-    on<CheckoutUpdateAddressEvent>(checkoutUpdateAddressEvent);
-    on<CheckoutSimpleOrderEvent>(checkoutOrderEvent);
-    on<CheckoutZaloPayOrderEvent>(checkoutZaloPayOrderEvent);
-    on<CheckoutUpdatePaymentMethodEvent>(checkoutUpdatePaymentMethodEvent);
-    on<CheckoutUpdateTransportEvent>(checkoutUpdateTransportEvent);
+  CheckoutBloc() : super(const CheckoutState(isLoading: true)) {
+    on<CheckoutLoadingEvent>(_onLoading);
+    on<CheckoutUpdateEmptyAddressEvent>(_onUpdateEmptyAddress);
+    on<CheckoutUpdateAddressEvent>(_onUpdateAdrress);
+    on<CheckoutSimpleOrderEvent>(_onOder);
+    on<CheckoutZaloPayOrderEvent>(_onZaloPayOrder);
+    on<CheckoutUpdatePaymentMethodEvent>(_onUpdatePaymentMethod);
+    on<CheckoutUpdateTransportEvent>(_onUpdateTransport);
   }
 
-  FutureOr<void> checkoutLoadingEvent(
-      CheckoutLoadingEvent event, Emitter<CheckoutState> emit) {
-    emit(CheckoutLoadingState());
+  _onLoading(CheckoutLoadingEvent event, Emitter emit) {
+    emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -67,31 +66,23 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
           userAddress = AddressModel.fromSnapshot(addressQuery, true);
         }
 
-        add(CheckoutUpdateAddressEvent(
-          newAddress: userAddress,
-        ));
+        add(CheckoutUpdateAddressEvent(newAddress: userAddress));
       } else {
         List<TransportModel> transports = [];
 
         final transportQuery =
             await FirebaseFirestore.instance.collection('Transport').get();
         for (int i = 0; i < transportQuery.size; i++) {
-          if (i == 0) {
-            transports
-                .add(TransportModel.fromSnapshot(transportQuery.docs[i], true));
-          } else {
-            transports.add(
-                TransportModel.fromSnapshot(transportQuery.docs[i], false));
-          }
+          transports
+              .add(TransportModel.fromSnapshot(transportQuery.docs[i], i == 0));
         }
         add(CheckoutUpdateEmptyAddressEvent(transports: transports));
       }
     });
   }
 
-  FutureOr<void> checkoutUpdateAddressEvent(
-      CheckoutUpdateAddressEvent event, Emitter<CheckoutState> emit) async {
-    if (state is CheckoutLoadingState) {
+  _onUpdateAdrress(CheckoutUpdateAddressEvent event, Emitter emit) async {
+    if (state.isLoading) {
       List<TransportModel> transports = [];
       List<PaymentMethodModel> payments =
           List.from(PaymentMethodModel.listPayment);
@@ -99,65 +90,49 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       final transportQuery =
           await FirebaseFirestore.instance.collection('Transport').get();
       for (int i = 0; i < transportQuery.size; i++) {
-        if (i == 0) {
-          transports
-              .add(TransportModel.fromSnapshot(transportQuery.docs[i], true));
-        } else {
-          transports
-              .add(TransportModel.fromSnapshot(transportQuery.docs[i], false));
-        }
+        transports
+            .add(TransportModel.fromSnapshot(transportQuery.docs[i], i == 0));
       }
 
-      emit(CheckoutLoadingSuccessfulState(
-        userAddress: event.newAddress,
-        transports: transports,
-        payments: payments,
-        showLoadingDialog: false,
-      ));
-    } else if (state is CheckoutLoadingSuccessfulState) {
-      final currentState = state as CheckoutLoadingSuccessfulState;
-
-      emit(CheckoutLoadingSuccessfulState(
-        userAddress: event.newAddress,
-        transports: currentState.transports,
-        payments: currentState.payments,
-        showLoadingDialog: false,
-      ));
-    } else if (state is CheckoutEmptyAddressState) {
-      final currentState = state as CheckoutEmptyAddressState;
-
-      emit(CheckoutLoadingSuccessfulState(
-        userAddress: event.newAddress,
-        transports: currentState.transports,
-        payments: currentState.payments,
-        showLoadingDialog: false,
-      ));
+      emit(
+        state.copyWith(
+          isLoading: false,
+          showLoadingDialog: false,
+          userAddress: event.newAddress,
+          transports: transports,
+          selectedTransport: transports.firstOrNull,
+          payments: payments,
+          selectedPayments: payments.firstOrNull,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          showLoadingDialog: false,
+          userAddress: event.newAddress,
+        ),
+      );
     }
   }
 
-  FutureOr<void> checkoutUpdateEmptyAddressEvent(
-      CheckoutUpdateEmptyAddressEvent event, Emitter<CheckoutState> emit) {
+  _onUpdateEmptyAddress(CheckoutUpdateEmptyAddressEvent event, Emitter emit) {
     List<PaymentMethodModel> payments =
         List.from(PaymentMethodModel.listPayment);
-    emit(CheckoutEmptyAddressState(
-      transports: event.transports,
-      payments: payments,
+
+    emit(state.copyWith(
       showLoadingDialog: false,
+      isLoading: false,
+      payments: payments,
+      selectedPayments: payments.firstOrNull,
+      transports: event.transports,
+      selectedTransport: event.transports.firstOrNull,
     ));
   }
 
-  FutureOr<void> checkoutOrderEvent(
-      CheckoutSimpleOrderEvent event, Emitter<CheckoutState> emit) async {
-    if (state is CheckoutLoadingSuccessfulState) {
-      final currentState = state as CheckoutLoadingSuccessfulState;
-      emit(
-        CheckoutLoadingSuccessfulState(
-          userAddress: currentState.userAddress,
-          transports: currentState.transports,
-          payments: currentState.payments,
-          showLoadingDialog: true,
-        ),
-      );
+  _onOder(CheckoutSimpleOrderEvent event, Emitter emit) async {
+    if (state.userAddress != null) {
+      emit(state.copyWith(showLoadingDialog: true));
 
       String uid = FirebaseAuth.instance.currentUser!.uid;
 
@@ -199,33 +174,17 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
           emit(CheckoutOrderSuccessfulState(idTransaction: value.id));
         });
       } on FirebaseException catch (e) {
-        emit(
-          CheckoutLoadingSuccessfulState(
-            userAddress: currentState.userAddress,
-            transports: currentState.transports,
-            payments: currentState.payments,
-            showLoadingDialog: false,
-          ),
-        );
+        emit(state.copyWith(showLoadingDialog: false));
         Fluttertoast.showToast(msg: "Error: ${e.message}");
       }
-    } else if (state is CheckoutEmptyAddressState) {
+    } else if (state.userAddress == null) {
       Fluttertoast.showToast(msg: 'Vui lòng cung cấp địa chỉ giao hàng');
     }
   }
 
-  FutureOr<void> checkoutZaloPayOrderEvent(
-      CheckoutZaloPayOrderEvent event, Emitter<CheckoutState> emit) async {
-    if (state is CheckoutLoadingSuccessfulState) {
-      final currentState = state as CheckoutLoadingSuccessfulState;
-      emit(
-        CheckoutLoadingSuccessfulState(
-          userAddress: currentState.userAddress,
-          transports: currentState.transports,
-          payments: currentState.payments,
-          showLoadingDialog: true,
-        ),
-      );
+  _onZaloPayOrder(CheckoutZaloPayOrderEvent event, Emitter emit) async {
+    if (state.userAddress != null) {
+      emit(state.copyWith(showLoadingDialog: true));
 
       var createOrderResult =
           await createOrder(event.transaction.totalPrice.toInt());
@@ -271,54 +230,26 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
               emit(CheckoutOrderSuccessfulState(idTransaction: value.id));
             });
           } on FirebaseException catch (e) {
-            emit(
-              CheckoutLoadingSuccessfulState(
-                userAddress: currentState.userAddress,
-                transports: currentState.transports,
-                payments: currentState.payments,
-                showLoadingDialog: false,
-              ),
-            );
+            emit(state.copyWith(showLoadingDialog: false));
             Fluttertoast.showToast(msg: "Error: ${e.message}");
           }
         } else {
           switch (result) {
             case 'User Canceled':
-              emit(
-                CheckoutLoadingSuccessfulState(
-                  userAddress: currentState.userAddress,
-                  transports: currentState.transports,
-                  payments: currentState.payments,
-                  showLoadingDialog: false,
-                ),
-              );
+              emit(state.copyWith(showLoadingDialog: false));
               Fluttertoast.showToast(msg: "Thanh toán bị hủy");
               break;
             case 'Payment failed':
-              emit(
-                CheckoutLoadingSuccessfulState(
-                  userAddress: currentState.userAddress,
-                  transports: currentState.transports,
-                  payments: currentState.payments,
-                  showLoadingDialog: false,
-                ),
-              );
+              emit(state.copyWith(showLoadingDialog: false));
               Fluttertoast.showToast(msg: "Lỗi thanh toán");
               break;
           }
         }
       } else {
-        emit(
-          CheckoutLoadingSuccessfulState(
-            userAddress: currentState.userAddress,
-            transports: currentState.transports,
-            payments: currentState.payments,
-            showLoadingDialog: false,
-          ),
-        );
+        emit(state.copyWith(showLoadingDialog: false));
         Fluttertoast.showToast(msg: "Lỗi không xác định");
       }
-    } else if (state is CheckoutEmptyAddressState) {
+    } else if (state.userAddress == null) {
       Fluttertoast.showToast(msg: 'Vui lòng cung cấp địa chỉ giao hàng');
     }
   }
@@ -377,31 +308,19 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     return hmac.convert(utf8.encode(dataGetMac)).toString();
   }
 
-  FutureOr<void> checkoutUpdatePaymentMethodEvent(
-      CheckoutUpdatePaymentMethodEvent event, Emitter<CheckoutState> emit) {
-    if (state is CheckoutLoadingSuccessfulState) {
-      final currentState = state as CheckoutLoadingSuccessfulState;
-
-      emit(CheckoutLoadingSuccessfulState(
-        userAddress: currentState.userAddress,
-        transports: currentState.transports,
-        payments: event.payment,
-        showLoadingDialog: false,
-      ));
-    }
+  _onUpdatePaymentMethod(CheckoutUpdatePaymentMethodEvent event, Emitter emit) {
+    emit(state.copyWith(
+      showLoadingDialog: false,
+      selectedPayments: event.payment,
+    ));
   }
 
-  FutureOr<void> checkoutUpdateTransportEvent(
-      CheckoutUpdateTransportEvent event, Emitter<CheckoutState> emit) {
-    if (state is CheckoutLoadingSuccessfulState) {
-      final currentState = state as CheckoutLoadingSuccessfulState;
-
-      emit(CheckoutLoadingSuccessfulState(
-        userAddress: currentState.userAddress,
-        transports: event.transport,
-        payments: currentState.payments,
+  _onUpdateTransport(CheckoutUpdateTransportEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        selectedTransport: event.newTransport,
         showLoadingDialog: false,
-      ));
-    }
+      ),
+    );
   }
 }

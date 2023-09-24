@@ -1,4 +1,4 @@
-import 'package:book_store/models/search_suggestion_model.dart';
+import 'package:book_store/core/models/search_suggestion_model.dart';
 import 'package:flutter/material.dart';
 
 class SearchSuggestionItem extends StatelessWidget {

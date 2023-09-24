@@ -1,4 +1,4 @@
-import 'package:book_store/models/cart_item_model.dart';
+import 'package:book_store/core/models/cart_item_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -62,15 +62,15 @@ class CheckoutItem extends StatelessWidget {
                         style: TextStyle(
                           color: themeColor,
                           decoration: TextDecoration.underline,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       Text(
                         Converter.convertNumberToMoney(data.price),
                         style: TextStyle(
                           color: themeColor,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                           fontSize: 17,
                         ),
                       ),
@@ -87,7 +87,7 @@ class CheckoutItem extends StatelessWidget {
                             ],
                           ),
                           color: Colors.grey,
-                          fontSize: 14,
+                          fontSize: 13,
                         ),
                       ),
                       Text(
@@ -96,7 +96,7 @@ class CheckoutItem extends StatelessWidget {
                         style: const TextStyle(
                           decoration: TextDecoration.lineThrough,
                           color: Colors.grey,
-                          fontSize: 14,
+                          fontSize: 13,
                         ),
                       ),
                       const Spacer(),

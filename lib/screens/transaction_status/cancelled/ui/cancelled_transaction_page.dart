@@ -16,53 +16,51 @@ class CancelledTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CancelledBloc, CancelledState>(
       builder: (context, state) {
-        if (state is CancelledEmptyState) {
-          return const EmptyTransactionPage();
-        } else if (state is CancelledLoadingState) {
+        if (state.isLoading) {
           return const TransactionLoadingPage();
-        } else if (state is CancelledLoadingSuccessfulState) {
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              return CancelledItem(
-                transactionData: state.transactions[index],
-                onReOrder: () {
-                  Navigator.of(context).push(
-                    PageRouteSlideTransition(
-                      child: CheckoutPage(
-                        listProduct: state.transactions[index].products,
-                        checkoutFromCart: false,
-                      ),
-                    ),
-                  );
-                },
-                onTap: () {
-                  Navigator.of(context).push(
-                    PageRouteSlideTransition(
-                      child: ReOrderTransactionDetailPage(
-                        transactionData: state.transactions[index],
-                        onReOrder: () {
-                          Navigator.of(context).push(
-                            PageRouteSlideTransition(
-                              child: CheckoutPage(
-                                listProduct: state.transactions[index].products,
-                                checkoutFromCart: false,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-            itemCount: state.transactions.length,
-          );
-        } else {
-          return const Center(
-            child: Text('Something went wrong'),
-          );
         }
+
+        if (state.transactions.isEmpty) {
+          return const EmptyTransactionPage();
+        }
+
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return CancelledItem(
+              transactionData: state.transactions[index],
+              onReOrder: () {
+                Navigator.of(context).push(
+                  PageRouteSlideTransition(
+                    child: CheckoutPage(
+                      listProduct: state.transactions[index].products,
+                      checkoutFromCart: false,
+                    ),
+                  ),
+                );
+              },
+              onTap: () {
+                Navigator.of(context).push(
+                  PageRouteSlideTransition(
+                    child: ReOrderTransactionDetailPage(
+                      transactionData: state.transactions[index],
+                      onReOrder: () {
+                        Navigator.of(context).push(
+                          PageRouteSlideTransition(
+                            child: CheckoutPage(
+                              listProduct: state.transactions[index].products,
+                              checkoutFromCart: false,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+          itemCount: state.transactions.length,
+        );
       },
     );
   }

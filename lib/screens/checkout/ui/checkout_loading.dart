@@ -1,7 +1,8 @@
-import 'package:book_store/models/cart_item_model.dart';
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
+import 'package:book_store/core/models/cart_item_model.dart';
 import 'package:book_store/screens/checkout/ui/address_loading.dart';
 import 'package:book_store/screens/checkout/ui/checkout_item.dart';
-import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -13,11 +14,14 @@ class CheckoutLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[200],
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Thanh toán'),
-        foregroundColor: Colors.white,
-        backgroundColor: themeColor,
+        title: Text(
+          'Thanh toán',
+          style: AppTexts.appbarTitle,
+        ),
+        foregroundColor: AppColors.contentColor,
+        backgroundColor: AppColors.themeColor,
         elevation: 0,
         centerTitle: true,
       ),
@@ -41,7 +45,7 @@ class CheckoutLoading extends StatelessWidget {
                             const SizedBox(width: 8),
                             Icon(
                               Icons.shopping_bag_outlined,
-                              color: themeColor,
+                              color: AppColors.themeColor,
                               size: 20,
                             ),
                             const SizedBox(
@@ -99,7 +103,7 @@ class CheckoutLoading extends StatelessWidget {
                             Icon(
                               Icons.delivery_dining_outlined,
                               size: 20,
-                              color: themeColor,
+                              color: AppColors.themeColor,
                             ),
                             const SizedBox(
                               width: 4,
@@ -120,8 +124,8 @@ class CheckoutLoading extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Shimmer.fromColors(
-                              baseColor: baseShimmer,
-                              highlightColor: highlightShimmer,
+                              baseColor: AppColors.baseShimmer,
+                              highlightColor: AppColors.highlightShimmer,
                               child: Container(
                                 width: 88,
                                 height: 20,
@@ -132,8 +136,8 @@ class CheckoutLoading extends StatelessWidget {
                             ),
                             const Spacer(),
                             Shimmer.fromColors(
-                              baseColor: baseShimmer,
-                              highlightColor: highlightShimmer,
+                              baseColor: AppColors.baseShimmer,
+                              highlightColor: AppColors.highlightShimmer,
                               child: Container(
                                 width: 88,
                                 height: 20,
@@ -148,8 +152,8 @@ class CheckoutLoading extends StatelessWidget {
                           height: 4,
                         ),
                         Shimmer.fromColors(
-                          baseColor: baseShimmer,
-                          highlightColor: highlightShimmer,
+                          baseColor: AppColors.baseShimmer,
+                          highlightColor: AppColors.highlightShimmer,
                           child: Container(
                             width: 176,
                             height: 20,
@@ -162,8 +166,8 @@ class CheckoutLoading extends StatelessWidget {
                     ),
                   ),
                   Shimmer.fromColors(
-                    baseColor: baseShimmer,
-                    highlightColor: highlightShimmer,
+                    baseColor: AppColors.baseShimmer,
+                    highlightColor: AppColors.highlightShimmer,
                     child: Container(
                       height: 48,
                       width: double.infinity,
@@ -200,8 +204,8 @@ class CheckoutLoading extends StatelessWidget {
                           height: 4,
                         ),
                         Shimmer.fromColors(
-                          baseColor: baseShimmer,
-                          highlightColor: highlightShimmer,
+                          baseColor: AppColors.baseShimmer,
+                          highlightColor: AppColors.highlightShimmer,
                           child: Container(
                             width: 104,
                             height: 22,
@@ -221,7 +225,7 @@ class CheckoutLoading extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: themeColor,
+                        backgroundColor: AppColors.themeColor,
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
                         ),

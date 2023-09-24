@@ -1,74 +1,52 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:book_store/models/cart_item_model.dart';
-import 'package:book_store/models/transaction_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:book_store/core/models/transaction_model.dart';
+import 'package:book_store/core/repositories/transaction_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 part 'cancelled_event.dart';
 part 'cancelled_state.dart';
 
 class CancelledBloc extends Bloc<CancelledEvent, CancelledState> {
-  CancelledBloc() : super(CancelledLoadingState()) {
-    on<CancelledLoadingEvent>(cancelledLoadingEvent);
-    on<CancelledUpdateEvent>(cancelledUpdateEvent);
-    on<CancelledUpdateEmptyEvent>(cancelledUpdateEmptyEvent);
+  StreamSubscription? _bookingStream;
+  final TransactionRepository _transactionRepository;
+
+  CancelledBloc(this._transactionRepository) : super(const CancelledState()) {
+    on<CancelledLoadingEvent>(_onLoading);
+    on<CancelledUpdateEvent>(_onUpdate);
+    on<CancelledUpdateEmptyEvent>(_onEmpty);
   }
 
-  FutureOr<void> cancelledLoadingEvent(
-      CancelledLoadingEvent event, Emitter<CancelledState> emit) async {
-    emit(CancelledLoadingState());
+  @override
+  Future<void> close() async {
+    _bookingStream?.cancel();
+    _bookingStream = null;
+    super.close();
+  }
 
-    String uid = FirebaseAuth.instance.currentUser!.uid;
+  _onLoading(CancelledLoadingEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
-    FirebaseFirestore.instance
-        .collection('User')
-        .doc(uid)
-        .collection('Transaction')
-        .where('status', isEqualTo: -1)
-        .snapshots()
+    _bookingStream = _transactionRepository
+        .transactionStream(-1)
         .listen((snapshotEvent) async {
       if (snapshotEvent.docs.isNotEmpty) {
         List<TransactionModel> list = [];
 
-        for (var ele in snapshotEvent.docs) {
-          List<CartItemModel> products = [];
-          final productsQuery = await FirebaseFirestore.instance
-              .collection('User')
-              .doc(uid)
-              .collection('Transaction')
-              .doc(ele.id)
-              .collection('Products')
-              .get();
-          for (var tempEle in productsQuery.docs) {
-            String bookID = tempEle.get('productID');
-            final bookQuery = await FirebaseFirestore.instance
-                .collection('Book')
-                .doc(bookID)
-                .get();
+        final futureGroup = await Future.wait(
+          snapshotEvent.docs.map(
+            (e) => _transactionRepository.getAllProductOfTransaction(e.id),
+          ),
+        );
 
-            String bookTitle = bookQuery.get('title');
-            double bookPrice =
-                double.parse(tempEle.get('priceBeforeDiscount').toString());
-            double bookDiscount = 1 -
-                double.parse(tempEle.get('price').toString()) /
-                    double.parse(tempEle.get('priceBeforeDiscount').toString());
-            String url = List.from(bookQuery.get('listURL'))[0];
-
-            products.add(
-              CartItemModel.fromSnapshot(
-                tempEle,
-                (bookPrice * (1 - bookDiscount)),
-                bookPrice,
-                url,
-                bookTitle,
-              ),
-            );
-          }
-
-          list.add(TransactionModel.fromSnapshot(ele, products));
+        for (int i = 0; i < snapshotEvent.size; i++) {
+          list.add(
+            TransactionModel.fromSnapshot(
+              snapshotEvent.docs[i],
+              futureGroup[i],
+            ),
+          );
         }
 
         if (!isClosed) {
@@ -82,13 +60,21 @@ class CancelledBloc extends Bloc<CancelledEvent, CancelledState> {
     });
   }
 
-  FutureOr<void> cancelledUpdateEvent(
-      CancelledUpdateEvent event, Emitter<CancelledState> emit) {
-    emit(CancelledLoadingSuccessfulState(transactions: event.transactions));
+  _onUpdate(CancelledUpdateEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        transactions: event.transactions,
+      ),
+    );
   }
 
-  FutureOr<void> cancelledUpdateEmptyEvent(
-      CancelledUpdateEmptyEvent event, Emitter<CancelledState> emit) {
-    emit(CancelledEmptyState());
+  _onEmpty(CancelledUpdateEmptyEvent event, Emitter emit) {
+    emit(
+      state.copyWith(
+        isLoading: false,
+        transactions: [],
+      ),
+    );
   }
 }

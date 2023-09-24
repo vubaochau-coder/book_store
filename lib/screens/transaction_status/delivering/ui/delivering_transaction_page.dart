@@ -15,69 +15,69 @@ class DeliveringTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DeliveringBloc, DeliveringState>(
       builder: (context, state) {
-        if (state is DeliveringEmptyState) {
-          return const EmptyTransactionPage();
-        } else if (state is DeliveringLoadingState) {
+        if (state.isLoading) {
           return const TransactionLoadingPage();
-        } else if (state is DeliveringLoadingSuccessfulState) {
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              return DeliveringItem(
-                transactionData: state.transactions[index],
-                onTap: () {
-                  Navigator.of(context).push(
-                    PageRouteSlideTransition(
-                      child: ReceivedTransactionDetailPage(
-                        transactionData: state.transactions[index],
-                        onReceive: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return ReceivedConfirmDialog(
-                                onReceiveTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.of(context).pop();
-                                  BlocProvider.of<DeliveringBloc>(context).add(
-                                    DeliveringReceiveEvent(
-                                      transactionID:
-                                          state.transactions[index].id,
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                },
-                onReceived: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ReceivedConfirmDialog(
-                        onReceiveTap: () {
-                          Navigator.pop(context);
-                          BlocProvider.of<DeliveringBloc>(context).add(
-                            DeliveringReceiveEvent(
-                              transactionID: state.transactions[index].id,
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  );
-                },
-              );
-            },
-            itemCount: state.transactions.length,
-          );
-        } else {
-          return const Center(
-            child: Text('Something went wrong'),
-          );
         }
+
+        if (state.transactions.isEmpty) {
+          return const EmptyTransactionPage();
+        }
+
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return DeliveringItem(
+              transactionData: state.transactions[index],
+              onTap: () {
+                Navigator.of(context)
+                    .push(
+                  PageRouteSlideTransition(
+                    child: ReceivedTransactionDetailPage(
+                      transactionData: state.transactions[index],
+                      onReceive: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const ReceivedConfirmDialog();
+                          },
+                        ).then((value) {
+                          if (value != null && value == true) {
+                            Navigator.of(context).pop(true);
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                )
+                    .then((value) {
+                  if (value != null && value == true) {
+                    BlocProvider.of<DeliveringBloc>(context).add(
+                      DeliveringReceiveEvent(
+                        transactionID: state.transactions[index].id,
+                      ),
+                    );
+                  }
+                });
+              },
+              onReceived: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const ReceivedConfirmDialog();
+                  },
+                ).then((value) {
+                  if (value != null && value == true) {
+                    BlocProvider.of<DeliveringBloc>(context).add(
+                      DeliveringReceiveEvent(
+                        transactionID: state.transactions[index].id,
+                      ),
+                    );
+                  }
+                });
+              },
+            );
+          },
+          itemCount: state.transactions.length,
+        );
       },
     );
   }

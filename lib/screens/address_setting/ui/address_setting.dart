@@ -1,7 +1,7 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/custom_widgets/custom_page_route.dart';
-import 'package:book_store/models/address_model.dart';
+import 'package:book_store/core/models/address_model.dart';
 import 'package:book_store/screens/address_setting/bloc/address_bloc.dart';
 import 'package:book_store/screens/address_setting/ui/add_address_page.dart';
 import 'package:book_store/screens/address_setting/ui/address_loading.dart';

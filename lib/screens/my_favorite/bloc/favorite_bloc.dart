@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:book_store/models/favorite_model.dart';
+import 'package:book_store/core/models/favorite_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +11,8 @@ part 'favorite_event.dart';
 part 'favorite_state.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
+  StreamSubscription? _favoriteStream;
+
   FavoriteBloc() : super(const FavoriteState()) {
     on<FavoriteLoadingEvent>(_onLoading);
     on<FavoriteRemoveEvent>(_onRemove);
@@ -16,12 +20,19 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     on<FavoriteUpdateEmptyEvent>(_onUpdateEmpty);
   }
 
+  @override
+  Future<void> close() async {
+    _favoriteStream?.cancel();
+    _favoriteStream = null;
+    super.close();
+  }
+
   _onLoading(FavoriteLoadingEvent event, Emitter emit) async {
     emit(state.copyWith(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    FirebaseFirestore.instance
+    _favoriteStream = FirebaseFirestore.instance
         .collection('User')
         .doc(uid)
         .collection('Favorite')

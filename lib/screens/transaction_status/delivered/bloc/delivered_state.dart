@@ -1,21 +1,24 @@
 part of 'delivered_bloc.dart';
 
-abstract class DeliveredState extends Equatable {
-  const DeliveredState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class DeliveredLoadingState extends DeliveredState {}
-
-class DeliveredLoadingSuccessfulState extends DeliveredState {
+class DeliveredState extends Equatable {
+  final bool isLoading;
   final List<TransactionModel> transactions;
 
-  const DeliveredLoadingSuccessfulState({required this.transactions});
+  const DeliveredState({
+    this.isLoading = true,
+    this.transactions = const [],
+  });
 
   @override
-  List<Object> get props => [transactions];
-}
+  List<Object> get props => [isLoading, transactions];
 
-class DeliveredEmptyState extends DeliveredState {}
+  DeliveredState copyWith({
+    bool? isLoading,
+    List<TransactionModel>? transactions,
+  }) {
+    return DeliveredState(
+      isLoading: isLoading ?? this.isLoading,
+      transactions: transactions ?? this.transactions,
+    );
+  }
+}

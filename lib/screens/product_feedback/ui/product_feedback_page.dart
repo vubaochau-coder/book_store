@@ -1,10 +1,11 @@
-import 'package:book_store/screens/product_feedback/bloc/product_feedback_bloc.dart';
-import 'package:book_store/screens/product_feedback/ui/feedback_empty_page.dart';
-import 'package:book_store/screens/product_feedback/ui/feedback_loading_page.dart';
-import 'package:book_store/theme.dart';
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
+import '../bloc/product_feedback_bloc.dart';
+import 'feedback_empty_page.dart';
+import 'feedback_loading_page.dart';
+import 'sort_feedback_button.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,111 +13,51 @@ class ProductFeedbackPage extends StatelessWidget {
   final String productID;
   const ProductFeedbackPage({super.key, required this.productID});
 
-  static List<String> sortType = [
-    'Tất cả',
-    '1 sao',
-    '2 sao',
-    '3 sao',
-    '4 sao',
-    '5 sao',
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: background,
-      appBar: AppBar(
-        title: const Text('Đánh giá'),
-        backgroundColor: themeColor,
-        elevation: 0,
-        centerTitle: true,
-        foregroundColor: Colors.white,
-      ),
-      body: BlocBuilder<ProductFeedbackBloc, ProductFeedbackState>(
-        bloc: BlocProvider.of<ProductFeedbackBloc>(context)
-          ..add(ProductFeedbackLoadingEvent(sortOption: 0, bookID: productID)),
-        builder: (context, state) {
-          if (state is ProductFeedbackLoadingState) {
-            return const FeedbackLoadingPage();
-          } else if (state is ProductFeedbackLoadedState) {
+    return BlocProvider(
+      create: (context) => ProductFeedbackBloc()
+        ..add(ProductFeedbackLoadingEvent(bookID: productID)),
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          title: Text(
+            'Đánh giá',
+            style: AppTexts.appbarTitle,
+          ),
+          backgroundColor: AppColors.themeColor,
+          elevation: 0,
+          centerTitle: true,
+          foregroundColor: AppColors.contentColor,
+        ),
+        body: BlocBuilder<ProductFeedbackBloc, ProductFeedbackState>(
+          builder: (context, state) {
+            if (state.isLoading) {
+              return const FeedbackLoadingPage();
+            }
+
             return Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 6),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'Sắp xếp theo',
                         style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 8, bottom: 8),
-                        width: 140,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 1,
-                              color: Colors.grey,
-                              offset: Offset(0, 1),
-                            )
-                          ],
-                        ),
-                        child: DropdownButtonFormField2(
-                          value: sortType[state.sortType],
-                          decoration: const InputDecoration(
-                            isDense: true,
-                            contentPadding: EdgeInsets.zero,
-                            border: InputBorder.none,
-                          ),
-                          dropdownStyleData: DropdownStyleData(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            elevation: 4,
-                          ),
-                          isExpanded: true,
-                          buttonStyleData: const ButtonStyleData(
-                            height: 32,
-                            padding: EdgeInsets.only(right: 8),
-                          ),
-                          items: sortType
-                              .map((e) => DropdownMenuItem(
-                                    value: e,
-                                    child: Text(
-                                      e,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ))
-                              .toList(),
-                          onChanged: (value) {
-                            if (value != null &&
-                                state.sortType != sortType.indexOf(value)) {
-                              BlocProvider.of<ProductFeedbackBloc>(context).add(
-                                ProductFeedbackLoadingEvent(
-                                  sortOption: sortType.indexOf(value),
-                                  bookID: productID,
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      ),
+                      SortFeedbackButton(),
                     ],
                   ),
                 ),
                 Expanded(
-                  child: state.feedbacks.isNotEmpty
+                  child: state.showedFeedbacks.isNotEmpty
                       ? ListView.separated(
-                          itemCount: state.feedbacks.length,
+                          itemCount: state.showedFeedbacks.length,
                           separatorBuilder: (context, index) {
                             return Divider(
                               height: 4,
@@ -133,7 +74,8 @@ class ProductFeedbackPage extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: CachedNetworkImage(
-                                      imageUrl: state.feedbacks[index].userImg,
+                                      imageUrl:
+                                          state.showedFeedbacks[index].userImg,
                                       fit: BoxFit.contain,
                                       imageBuilder: (context, imageProvider) {
                                         return Container(
@@ -165,12 +107,15 @@ class ProductFeedbackPage extends StatelessWidget {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              state.feedbacks[index].userName,
+                                              state.showedFeedbacks[index]
+                                                  .userName,
                                             ),
                                             Text(
                                               Converter
                                                   .convertDateToStringWithoutTime(
-                                                      state.feedbacks[index]
+                                                      state
+                                                          .showedFeedbacks[
+                                                              index]
                                                           .dateSubmit),
                                               style: const TextStyle(
                                                 color: Colors.grey,
@@ -181,14 +126,14 @@ class ProductFeedbackPage extends StatelessWidget {
                                         ),
                                         SizedBox(
                                           height: 18,
-                                          child: buildRating(
-                                              state.feedbacks[index].rating),
+                                          child: buildRating(state
+                                              .showedFeedbacks[index].rating),
                                         ),
                                         const SizedBox(
                                           height: 8,
                                         ),
                                         Text(
-                                          state.feedbacks[index].review,
+                                          state.showedFeedbacks[index].review,
                                         ),
                                       ],
                                     ),
@@ -202,12 +147,8 @@ class ProductFeedbackPage extends StatelessWidget {
                 ),
               ],
             );
-          } else {
-            return const Center(
-              child: Text('Something went wrong'),
-            );
-          }
-        },
+          },
+        ),
       ),
     );
   }

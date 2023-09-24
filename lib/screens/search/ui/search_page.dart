@@ -1,5 +1,5 @@
 import 'package:book_store/custom_widgets/custom_page_route.dart';
-import 'package:book_store/models/search_suggestion_model.dart';
+import 'package:book_store/core/models/search_suggestion_model.dart';
 import 'package:book_store/screens/search/bloc/search_bloc.dart';
 import 'package:book_store/screens/search/ui/search_loading_page.dart';
 import 'package:book_store/screens/search/ui/search_result_page.dart';

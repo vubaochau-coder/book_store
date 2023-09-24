@@ -1,3 +1,4 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/authentication_service/auth_service.dart';
 import 'package:book_store/screens/profile/ui/custom_list_tile.dart';
 import 'package:book_store/custom_widgets/custom_page_route.dart';
@@ -27,7 +28,7 @@ class ProfilePage extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: background,
+        color: AppColors.background,
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -38,120 +39,127 @@ class ProfilePage extends StatelessWidget {
             ),
             BlocBuilder<UserBloc, UserState>(
               builder: (context, state) {
-                if (state is UserLoadingSuccessfulState) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: SafeArea(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                PageRouteSlideTransition(
-                                  child: const EditProfilePage(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: themeColor,
-                                  width: 2,
-                                ),
-                                shape: BoxShape.circle,
+                if (state.isLoading) {
+                  return const ProfileLoadingPage();
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: SafeArea(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(
+                              PageRouteSlideTransition(
+                                child: const EditProfilePage(),
                               ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: CachedNetworkImage(
-                                  imageUrl: state.userModel.imgUrl,
-                                  fit: BoxFit.cover,
-                                  width: 66,
-                                  height: 66,
-                                  errorWidget: (context, url, error) {
-                                    return Image.asset(
-                                      'images/user.png',
-                                      fit: BoxFit.contain,
-                                      width: 66,
-                                      height: 66,
-                                    );
-                                  },
-                                ),
+                            )
+                                .then((value) {
+                              if (value != null && value == true) {
+                                BlocProvider.of<UserBloc>(context).add(
+                                  UserLoadingEvent(),
+                                );
+                              }
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: themeColor,
+                                width: 2,
+                              ),
+                              shape: BoxShape.circle,
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: CachedNetworkImage(
+                                imageUrl: state.userModel!.imgUrl,
+                                fit: BoxFit.cover,
+                                width: 66,
+                                height: 66,
+                                errorWidget: (context, url, error) {
+                                  return Image.asset(
+                                    'images/user.png',
+                                    fit: BoxFit.contain,
+                                    width: 66,
+                                    height: 66,
+                                  );
+                                },
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Expanded(
-                            child: SizedBox(
-                              height: 62,
-                              child: Row(
-                                children: [
-                                  const SizedBox(width: 6),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(
-                                        height: 14,
-                                      ),
-                                      Text(
-                                        state.userModel.name,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 6),
-                                      const Text(
-                                        'Chỉnh sửa tài khoản',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        PageRouteSlideTransition(
-                                          child: const EditProfilePage(),
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 38,
-                                      height: 38,
-                                      alignment: Alignment.center,
-                                      child: FaIcon(
-                                        size: 14,
-                                        FontAwesomeIcons.penToSquare,
-                                        color: themeColor,
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            height: 62,
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 6),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 14,
+                                    ),
+                                    Text(
+                                      state.userModel!.name,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
+                                    const SizedBox(height: 6),
+                                    const Text(
+                                      'Chỉnh sửa tài khoản',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Spacer(),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push(
+                                      PageRouteSlideTransition(
+                                        child: const EditProfilePage(),
+                                      ),
+                                    )
+                                        .then((value) {
+                                      if (value != null && value == true) {
+                                        BlocProvider.of<UserBloc>(context).add(
+                                          UserLoadingEvent(),
+                                        );
+                                      }
+                                    });
+                                  },
+                                  padding: EdgeInsets.zero,
+                                  icon: FaIcon(
+                                    size: 14,
+                                    FontAwesomeIcons.penToSquare,
+                                    color: themeColor,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  );
-                } else if (state is UserLoadingState) {
-                  return const ProfileLoadingPage();
-                } else {
-                  return const Center(
-                    child: Text('Something went wrong'),
-                  );
-                }
+                  ),
+                );
               },
             ),
             const TransactionStatusBanner(),

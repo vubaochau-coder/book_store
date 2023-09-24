@@ -1,5 +1,5 @@
-import 'package:book_store/models/cart_item_model.dart';
-import 'package:book_store/theme.dart';
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/core/models/cart_item_model.dart';
 import 'package:book_store/utils/convert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,6 @@ class TransactionProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 72,
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
@@ -26,8 +25,8 @@ class TransactionProduct extends StatelessWidget {
               fit: BoxFit.contain,
               placeholder: (context, url) {
                 return Shimmer.fromColors(
-                  baseColor: baseShimmer,
-                  highlightColor: highlightShimmer,
+                  baseColor: AppColors.baseShimmer,
+                  highlightColor: AppColors.highlightShimmer,
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
@@ -43,6 +42,7 @@ class TransactionProduct extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   productData.title,
@@ -53,9 +53,10 @@ class TransactionProduct extends StatelessWidget {
                     fontSize: 14,
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(height: 4),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       'x${productData.count}',
@@ -96,18 +97,18 @@ class TransactionProduct extends StatelessWidget {
                         Text(
                           'đ',
                           style: TextStyle(
-                            color: themeColor,
+                            color: AppColors.themeColor,
                             decoration: TextDecoration.underline,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         Text(
                           Converter.convertNumberToMoney(productData.price),
                           style: TextStyle(
-                            color: themeColor,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 17,
+                            color: AppColors.themeColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
                           ),
                         ),
                       ],

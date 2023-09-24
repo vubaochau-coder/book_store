@@ -1,6 +1,6 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/app_themes/app_text.dart';
-import 'package:book_store/models/unfeedback_item_model.dart';
+import 'package:book_store/core/models/unfeedback_item_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

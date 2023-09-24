@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:book_store/models/address_model.dart';
+import 'package:book_store/core/models/address_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,7 +48,9 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
           }
         }
 
-        add(AddressUpdateEvent(listAddress: listResult));
+        if (!isClosed) {
+          add(AddressUpdateEvent(listAddress: listResult));
+        }
       } else {
         add(AddressUpdateEmptyEvent());
       }
@@ -107,7 +109,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
           merge: true,
         )).then((value) {
       Fluttertoast.showToast(msg: 'Thay đổi địa chỉ thành công');
-      add(AddressLoadingEvent());
     }).catchError((err) {
       Fluttertoast.showToast(
         msg: err.toString(),

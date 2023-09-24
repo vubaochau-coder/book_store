@@ -1,4 +1,4 @@
-import 'package:book_store/models/cart_item_model.dart';
+import 'package:book_store/core/models/cart_item_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TransactionModel {
