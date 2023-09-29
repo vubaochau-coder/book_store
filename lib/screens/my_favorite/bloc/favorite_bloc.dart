@@ -51,7 +51,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 
   _onRemove(FavoriteRemoveEvent event, Emitter emit) async {
     await _favoriteRepository
-        .removeFavoriteBook(event.idDocument)
+        .unFavoriteByFavoriteId(event.idDocument)
         .then((value) {
       Fluttertoast.showToast(msg: 'Bỏ thích sản phẩm thành công');
     });

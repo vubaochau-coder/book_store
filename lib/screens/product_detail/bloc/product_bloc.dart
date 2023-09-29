@@ -2,116 +2,66 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:book_store/core/models/feedback_model.dart';
 import 'package:book_store/core/models/product_data_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:book_store/core/repositories/book_repository.dart';
+import 'package:book_store/core/repositories/favorite_repository.dart';
+import 'package:book_store/core/repositories/feedback_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  ProductBloc() : super(ProductLoadingState()) {
-    on<ProductLoadingEvent>(productLoadingEvent);
-    on<ProductFavoriteEvent>(productFavoriteEvent);
+  final BookRepository _bookRepository;
+  final FeedbackRepository _feedbackRepository;
+  final FavoriteRepository _favoriteRepository;
+
+  ProductBloc(
+      this._bookRepository, this._feedbackRepository, this._favoriteRepository)
+      : super(const ProductState()) {
+    on<ProductLoadingEvent>(_onLoading);
+    on<ProductFavoriteEvent>(_onFavorite);
   }
 
-  FutureOr<void> productLoadingEvent(
-      ProductLoadingEvent event, Emitter<ProductState> emit) async {
-    emit(ProductLoadingState());
+  _onLoading(ProductLoadingEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
 
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    bool isFavorited = false;
-    List<FeedbackModel> feedbacks = [];
-    int totalFeedback = 0;
+    final futureGroup = await Future.wait([
+      _bookRepository.getBookInfo(event.idProduct),
+      _favoriteRepository.isBookFavorited(event.idProduct),
+      _feedbackRepository.getAllFeedback(event.idProduct),
+    ]);
 
-    final bookDataQuery = await FirebaseFirestore.instance
-        .collection('Book')
-        .doc(event.idProduct)
-        .get();
+    List<FeedbackModel> limit = [];
 
-    ProductDataModel bookData = ProductDataModel.fromSnapshot(bookDataQuery);
-
-    final allFeedbackQuery = await FirebaseFirestore.instance
-        .collection('Feedback')
-        .where('bookID', isEqualTo: event.idProduct)
-        .get();
-
-    if (allFeedbackQuery.docs.isNotEmpty) {
-      totalFeedback = allFeedbackQuery.size;
-
-      final feedbackQuery = await FirebaseFirestore.instance
-          .collection('Feedback')
-          .where('bookID', isEqualTo: event.idProduct)
-          .orderBy('dateSubmit', descending: true)
-          .limit(3)
-          .get();
-
-      for (var ele in feedbackQuery.docs) {
-        feedbacks.add(FeedbackModel.fromSnaphot(ele));
-      }
+    List<FeedbackModel> allFeedbacks = futureGroup[2] as List<FeedbackModel>;
+    if (allFeedbacks.length >= 3) {
+      limit = allFeedbacks.sublist(0, 3);
+    } else {
+      limit = List.from(allFeedbacks);
     }
 
-    final checkFavoriteQuery = await FirebaseFirestore.instance
-        .collection('User')
-        .doc(uid)
-        .collection('Favorite')
-        .where('productID', isEqualTo: event.idProduct)
-        .get();
-
-    if (checkFavoriteQuery.docs.isNotEmpty) {
-      isFavorited = true;
-    }
-
-    emit(ProductLoadingSuccesfulSatte(
-      productData: bookData,
-      isFavorited: isFavorited,
-      feedbacks: feedbacks,
-      totalFeedback: totalFeedback,
+    emit(state.copyWith(
+      isLoading: false,
+      isFavorited: futureGroup[1] as bool,
+      feedbacks: limit,
+      productData: futureGroup[0] as ProductDataModel,
+      allFeedbacks: allFeedbacks,
     ));
   }
 
-  FutureOr<void> productFavoriteEvent(
-      ProductFavoriteEvent event, Emitter<ProductState> emit) async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    final currentState = state as ProductLoadingSuccesfulSatte;
-
-    final checkFavoriteQuery = await FirebaseFirestore.instance
-        .collection('User')
-        .doc(uid)
-        .collection('Favorite')
-        .where('productID', isEqualTo: event.idProduct)
-        .get();
-
-    if (checkFavoriteQuery.docs.isNotEmpty) {
-      final docRef = FirebaseFirestore.instance
-          .collection('User')
-          .doc(uid)
-          .collection('Favorite')
-          .doc(checkFavoriteQuery.docs.first.id);
-
-      await docRef.delete().then((value) {
+  _onFavorite(ProductFavoriteEvent event, Emitter emit) async {
+    if (state.isFavorited) {
+      await _favoriteRepository
+          .unFavoriteByBookId(event.idProduct)
+          .then((value) {
         Fluttertoast.showToast(msg: 'Bỏ thích sản phẩm thành công');
-        emit(ProductLoadingSuccesfulSatte(
-          productData: currentState.productData,
-          isFavorited: false,
-          feedbacks: currentState.feedbacks,
-          totalFeedback: currentState.totalFeedback,
-        ));
+        emit(state.copyWith(isFavorited: false));
       });
     } else {
-      await FirebaseFirestore.instance
-          .collection('User')
-          .doc(uid)
-          .collection('Favorite')
-          .add({'productID': event.idProduct}).then((value) {
-        Fluttertoast.showToast(msg: 'Đã Yêu thích sản phẩm');
-        emit(ProductLoadingSuccesfulSatte(
-          productData: currentState.productData,
-          isFavorited: true,
-          feedbacks: currentState.feedbacks,
-          totalFeedback: currentState.totalFeedback,
-        ));
+      await _favoriteRepository.addFavoriteBook(event.idProduct).then((value) {
+        Fluttertoast.showToast(msg: 'Đã thêm sản phẩm vào mục Yêu thích');
+        emit(state.copyWith(isFavorited: true));
       });
     }
   }
