@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:book_store/core/models/feedback_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 part 'product_feedback_event.dart';
@@ -16,20 +15,8 @@ class ProductFeedbackBloc
   _onLoading(ProductFeedbackLoadingEvent event, Emitter emit) async {
     emit(state.copyWith(isLoading: true));
 
-    List<FeedbackModel> allFeedbacks = [];
-    List<FeedbackModel> showedFeedbacks = [];
-
-    final feedbackQuery = await FirebaseFirestore.instance
-        .collection('Feedback')
-        .where('bookID', isEqualTo: event.bookID)
-        .orderBy('dateSubmit', descending: true)
-        .get();
-
-    for (var ele in feedbackQuery.docs) {
-      allFeedbacks.add(FeedbackModel.fromSnaphot(ele));
-    }
-
-    showedFeedbacks = List.from(allFeedbacks);
+    List<FeedbackModel> allFeedbacks = event.allFeedbacks;
+    List<FeedbackModel> showedFeedbacks = List.from(allFeedbacks);
 
     emit(
       state.copyWith(

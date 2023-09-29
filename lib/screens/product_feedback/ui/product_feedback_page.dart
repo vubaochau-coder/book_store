@@ -1,5 +1,6 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/app_themes/app_text.dart';
+import 'package:book_store/core/models/feedback_model.dart';
 import '../bloc/product_feedback_bloc.dart';
 import 'feedback_empty_page.dart';
 import 'feedback_loading_page.dart';
@@ -11,13 +12,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductFeedbackPage extends StatelessWidget {
   final String productID;
-  const ProductFeedbackPage({super.key, required this.productID});
+  final List<FeedbackModel> allFeedback;
+
+  const ProductFeedbackPage({
+    super.key,
+    required this.productID,
+    required this.allFeedback,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProductFeedbackBloc()
-        ..add(ProductFeedbackLoadingEvent(bookID: productID)),
+        ..add(
+          ProductFeedbackLoadingEvent(
+            bookID: productID,
+            allFeedbacks: allFeedback,
+          ),
+        ),
       child: Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(

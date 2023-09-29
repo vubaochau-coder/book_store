@@ -9,9 +9,11 @@ abstract class ProductFeedbackEvent extends Equatable {
 
 class ProductFeedbackLoadingEvent extends ProductFeedbackEvent {
   final String bookID;
+  final List<FeedbackModel> allFeedbacks;
 
   const ProductFeedbackLoadingEvent({
     required this.bookID,
+    required this.allFeedbacks,
   });
 }
 
