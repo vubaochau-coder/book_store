@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:book_store/core/models/address_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:book_store/core/repositories/address_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 part 'address_event.dart';
 part 'address_state.dart';
 
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
-  AddressBloc() : super(const AddressState()) {
+  StreamSubscription? _addressStream;
+  final AddressRepository _addressRepository;
+
+  AddressBloc(this._addressRepository) : super(const AddressState()) {
     on<AddressLoadingEvent>(_onLoading);
     on<AddNewAddressEvent>(_onAddNewAddress);
     on<RemoveAddressEvent>(_onRemoveAddress);
@@ -18,34 +22,23 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     on<AddressSelectedEvent>(_onAddressSelected);
   }
 
+  @override
+  Future<void> close() async {
+    _addressStream?.cancel();
+    _addressStream = null;
+    super.close();
+  }
+
   _onLoading(AddressLoadingEvent event, Emitter emit) async {
     emit(state.copyWith(isLoading: true));
 
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    String addressCode = '';
-
-    final addressCodeQuery =
-        await FirebaseFirestore.instance.collection('User').doc(uid).get();
-
-    if (addressCodeQuery.data() != null) {
-      addressCode = await addressCodeQuery.data()!['defaultAddress'] ?? '';
-    }
-
-    FirebaseFirestore.instance
-        .collection('User')
-        .doc(uid)
-        .collection('Address')
-        .snapshots()
-        .listen((event) async {
+    _addressStream =
+        _addressRepository.userAddressStream().listen((event) async {
       if (event.docs.isNotEmpty) {
         List<AddressModel> listResult = [];
 
         for (var ele in event.docs) {
-          if (ele.id == addressCode) {
-            listResult.add(AddressModel.fromSnapshot(ele, true));
-          } else {
-            listResult.add(AddressModel.fromSnapshot(ele, false));
-          }
+          listResult.add(AddressModel.fromSnapshot(ele));
         }
 
         if (!isClosed) {
@@ -58,35 +51,14 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
   }
 
   _onAddNewAddress(AddNewAddressEvent event, Emitter emit) async {
-    String userID = FirebaseAuth.instance.currentUser!.uid;
-    await FirebaseFirestore.instance
-        .collection('User')
-        .doc(userID)
-        .collection('Address')
-        .add(event.newAddress.toJson())
-        .then((value) {
+    await _addressRepository.createAddress(event.newAddress).then((value) {
       Fluttertoast.showToast(msg: 'Thêm địa chỉ mới thành công');
-    }).catchError((err) {
-      Fluttertoast.showToast(
-        msg: err.toString(),
-      );
     });
   }
 
   _onRemoveAddress(RemoveAddressEvent event, Emitter emit) async {
-    String userID = FirebaseAuth.instance.currentUser!.uid;
-    final docRef = FirebaseFirestore.instance
-        .collection('User')
-        .doc(userID)
-        .collection('Address')
-        .doc(event.idAddress);
-
-    await docRef.delete().then((value) {
+    await _addressRepository.removeAddress(event.idAddress).then((value) {
       Fluttertoast.showToast(msg: 'Xóa thành công');
-    }).catchError((err) {
-      Fluttertoast.showToast(
-        msg: err.toString(),
-      );
     });
   }
 
@@ -99,20 +71,8 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
   }
 
   _onAddressSelected(AddressSelectedEvent event, Emitter emit) async {
-    String userID = FirebaseAuth.instance.currentUser!.uid;
-
-    final updateRef = FirebaseFirestore.instance.collection('User').doc(userID);
-
-    updateRef.set(
-        {'defaultAddress': event.id},
-        SetOptions(
-          merge: true,
-        )).then((value) {
+    await _addressRepository.updateDefaultAddress(event.id).then((value) {
       Fluttertoast.showToast(msg: 'Thay đổi địa chỉ thành công');
-    }).catchError((err) {
-      Fluttertoast.showToast(
-        msg: err.toString(),
-      );
     });
   }
 }

@@ -49,7 +49,11 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => ProductBloc()),
           BlocProvider(create: (context) => CartBloc()),
           BlocProvider(create: (context) => UserBloc()),
-          BlocProvider(create: (context) => CheckoutBloc()),
+          BlocProvider(
+            create: (context) => CheckoutBloc(
+              RepositoryProvider.of<MainRepository>(context).addressRepository,
+            ),
+          ),
           BlocProvider(create: (context) => BillBloc()),
           BlocProvider(create: (context) => SearchBloc()),
           BlocProvider(create: (context) => FeedbackCountBloc()),
@@ -108,7 +112,7 @@ class _RootPageState extends State<RootPage> {
         onTap: (p0) {
           controller.animateToPage(
             p0,
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 200),
             curve: Curves.easeInQuint,
           );
         },
