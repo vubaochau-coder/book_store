@@ -1,5 +1,6 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/app_themes/app_text.dart';
+import 'package:book_store/core/repositories/main_repository.dart';
 import 'package:book_store/screens/my_favorite/bloc/favorite_bloc.dart';
 import 'package:book_store/screens/my_favorite/ui/favorite_item.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,9 @@ class FavoritePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => FavoriteBloc()..add(FavoriteLoadingEvent()),
+      create: (context) => FavoriteBloc(
+        RepositoryProvider.of<MainRepository>(context).favoriteRepository,
+      )..add(FavoriteLoadingEvent()),
       child: Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
