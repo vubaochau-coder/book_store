@@ -17,7 +17,7 @@ class SortFeedbackButton extends StatelessWidget {
           child: DropdownButton2(
             isExpanded: true,
             dropdownStyleData: DropdownStyleData(
-              offset: const Offset(0, -5),
+              offset: const Offset(0, 0),
               elevation: 0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),

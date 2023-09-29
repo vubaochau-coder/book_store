@@ -109,16 +109,11 @@ class ProductDetailPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(
-                                left: 14,
-                                right: 14,
-                                top: 12,
-                                bottom: 8,
-                              ),
+                              padding: const EdgeInsets.only(left: 14),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   const Text(
                                     'ĐÁNH GIÁ TỪ KHÁCH HÀNG',
@@ -128,51 +123,33 @@ class ProductDetailPage extends StatelessWidget {
                                       fontSize: 15,
                                     ),
                                   ),
-                                  InkWell(
-                                    onTap: () {
+                                  TextButton(
+                                    onPressed: () {
                                       Navigator.of(context).push(
                                         PageRouteSlideTransition(
                                           child: ProductFeedbackPage(
                                             productID: productID,
+                                            allFeedback: state.allFeedbacks,
                                           ),
                                         ),
                                       );
                                     },
-                                    child: RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                        children: [
-                                          WidgetSpan(
-                                            child: Container(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 0),
-                                              decoration: BoxDecoration(
-                                                border: Border(
-                                                  bottom: BorderSide(
-                                                    color: themeColor,
-                                                  ),
-                                                ),
-                                              ),
-                                              child: Text(
-                                                'Xem thêm',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: themeColor,
-                                                ),
-                                              ),
-                                            ),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'Xem thêm',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: themeColor,
                                           ),
-                                          WidgetSpan(
-                                            alignment:
-                                                PlaceholderAlignment.middle,
-                                            child: Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: themeColor,
-                                              size: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: themeColor,
+                                          size: 12,
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
