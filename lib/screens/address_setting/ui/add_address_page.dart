@@ -1,6 +1,5 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/app_themes/app_text.dart';
-import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 
 class NewAddressPage extends StatefulWidget {
@@ -36,11 +35,13 @@ class _NewAddressPageState extends State<NewAddressPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildText('Liên hệ'),
+            buildText('Liên hệ',
+                const EdgeInsets.only(top: 14, bottom: 12, left: 14)),
             TextField(
               controller: nameController,
               keyboardType: TextInputType.name,
               style: AppTexts.inputTextStyle,
+              textCapitalization: TextCapitalization.words,
               decoration: const InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 0, horizontal: 14),
@@ -85,6 +86,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
               controller: cityController,
               keyboardType: TextInputType.streetAddress,
               style: AppTexts.inputTextStyle,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 0, horizontal: 14),
@@ -108,6 +110,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
               controller: addressController,
               keyboardType: TextInputType.streetAddress,
               style: AppTexts.inputTextStyle,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 0, horizontal: 14),
@@ -140,7 +143,7 @@ class _NewAddressPageState extends State<NewAddressPage> {
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: themeColor,
+                  backgroundColor: AppColors.themeColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
@@ -160,13 +163,15 @@ class _NewAddressPageState extends State<NewAddressPage> {
     );
   }
 
-  Widget buildText(String text) {
+  Widget buildText(String text,
+      [EdgeInsets padding =
+          const EdgeInsets.only(top: 24, bottom: 12, left: 14)]) {
     return Padding(
-      padding: const EdgeInsets.only(top: 24, bottom: 12, left: 14),
+      padding: padding,
       child: Text(
         text,
         style: const TextStyle(
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w600,
           fontSize: 15,
         ),
       ),

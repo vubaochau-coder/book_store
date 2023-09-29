@@ -7,6 +7,7 @@ import 'package:book_store/core/models/notification_model.dart';
 import 'package:book_store/core/models/payment_method_model.dart';
 import 'package:book_store/core/models/transaction_model.dart';
 import 'package:book_store/core/models/transport_model.dart';
+import 'package:book_store/core/repositories/address_repository.dart';
 import 'package:book_store/utils/zalopay_app_config.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
@@ -23,8 +24,11 @@ part 'checkout_state.dart';
 class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
   static const MethodChannel platform =
       MethodChannel('flutter.native/channelPayOrder');
+  StreamSubscription? _addressStream;
+  final AddressRepository _addressRepository;
 
-  CheckoutBloc() : super(const CheckoutState(isLoading: true)) {
+  CheckoutBloc(this._addressRepository)
+      : super(const CheckoutState(isLoading: true)) {
     on<CheckoutLoadingEvent>(_onLoading);
     on<CheckoutUpdateEmptyAddressEvent>(_onUpdateEmptyAddress);
     on<CheckoutUpdateAddressEvent>(_onUpdateAdrress);
@@ -34,37 +38,21 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     on<CheckoutUpdateTransportEvent>(_onUpdateTransport);
   }
 
+  @override
+  Future<void> close() async {
+    _addressStream?.cancel();
+    _addressStream = null;
+    super.close();
+  }
+
   _onLoading(CheckoutLoadingEvent event, Emitter emit) {
     emit(state.copyWith(isLoading: true));
-
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-
-    FirebaseFirestore.instance
-        .collection('User')
-        .doc(uid)
-        .snapshots()
+    _addressStream = _addressRepository
+        .userMainAddressStream()
         .listen((firebaseEvent) async {
-      if (firebaseEvent.exists) {
-        AddressModel userAddress;
-
-        final addressCodeQuery =
-            await FirebaseFirestore.instance.collection('User').doc(uid).get();
-
-        String addressCode =
-            await addressCodeQuery.data()!['defaultAddress'] ?? '';
-
-        if (addressCode == '') {
-          userAddress = const AddressModel(
-              id: '', name: '', phone: '', address: '', isDefault: false);
-        } else {
-          final addressQuery = await FirebaseFirestore.instance
-              .collection('User')
-              .doc(uid)
-              .collection('Address')
-              .doc(addressCode)
-              .get();
-          userAddress = AddressModel.fromSnapshot(addressQuery, true);
-        }
+      if (firebaseEvent.docs.isNotEmpty) {
+        AddressModel userAddress =
+            AddressModel.fromSnapshot(firebaseEvent.docs.first);
 
         add(CheckoutUpdateAddressEvent(newAddress: userAddress));
       } else {

@@ -1,3 +1,4 @@
+import 'package:book_store/core/repositories/address_repository.dart';
 import 'package:book_store/core/repositories/book_repository.dart';
 import 'package:book_store/core/repositories/feedback_repository.dart';
 import 'package:book_store/core/repositories/notification_repository.dart';
@@ -8,11 +9,13 @@ class MainRepository {
   late NotificationRepository notiRepository;
   late BookRepository bookRepository;
   late FeedbackRepository feedbackRepository;
+  late AddressRepository addressRepository;
 
   MainRepository() {
     transRepository = TransactionRepository();
     notiRepository = NotificationRepository();
     bookRepository = BookRepository();
     feedbackRepository = FeedbackRepository();
+    addressRepository = AddressRepository();
   }
 }

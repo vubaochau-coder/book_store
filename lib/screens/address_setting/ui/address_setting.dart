@@ -1,5 +1,6 @@
 import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/app_themes/app_text.dart';
+import 'package:book_store/core/repositories/main_repository.dart';
 import 'package:book_store/custom_widgets/custom_page_route.dart';
 import 'package:book_store/core/models/address_model.dart';
 import 'package:book_store/screens/address_setting/bloc/address_bloc.dart';
@@ -16,7 +17,9 @@ class AddressSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddressBloc()..add(AddressLoadingEvent()),
+      create: (context) => AddressBloc(
+        RepositoryProvider.of<MainRepository>(context).addressRepository,
+      )..add(AddressLoadingEvent()),
       child: Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
@@ -56,8 +59,6 @@ class AddressSettingPage extends StatelessWidget {
                               AddressSelectedEvent(
                                   id: state.listAddress[index].id),
                             );
-
-                            Navigator.of(context).pop();
                           },
                         ),
                         Expanded(
@@ -73,7 +74,7 @@ class AddressSettingPage extends StatelessWidget {
                                         state.listAddress[index].name,
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w600,
-                                          fontSize: 15,
+                                          fontSize: 14,
                                         ),
                                       ),
                                       const VerticalDivider(
@@ -82,23 +83,28 @@ class AddressSettingPage extends StatelessWidget {
                                         indent: 2,
                                         endIndent: 2,
                                       ),
-                                      Text(state.listAddress[index].phone),
+                                      Text(
+                                        state.listAddress[index].phone,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
-                                const SizedBox(height: 4),
+                                const SizedBox(height: 6),
                                 Text(
                                   state.listAddress[index].address,
                                   style: const TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 13,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
+                        TextButton(
+                          onPressed: () {
                             if (state.listAddress[index].isDefault) {
                               Fluttertoast.showToast(
                                 msg: 'Không thể xóa địa chỉ giao hàng mặc định',
@@ -111,17 +117,11 @@ class AddressSettingPage extends StatelessWidget {
                               );
                             }
                           },
-                          child: SizedBox(
-                            height: 40,
-                            width: 52,
-                            child: Center(
-                              child: Text(
-                                'Xóa',
-                                style: TextStyle(
-                                  color: themeColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                          child: Text(
+                            'Xóa',
+                            style: TextStyle(
+                              color: themeColor,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),

@@ -17,13 +17,13 @@ class AddressModel extends Equatable {
   });
 
   factory AddressModel.fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> snapshot, bool check) {
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
     return AddressModel(
       id: snapshot.id,
       name: snapshot.data()!['name'],
       phone: snapshot.data()!['phone'],
       address: snapshot.data()!['address'],
-      isDefault: check,
+      isDefault: snapshot.data()!['isDefault'] ?? false,
     );
   }
 
