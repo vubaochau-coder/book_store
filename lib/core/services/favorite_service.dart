@@ -24,15 +24,37 @@ class FavoriteService {
         .snapshots();
   }
 
-  Future<void> removeFavoriteBook(String favoriteId) async {
+  Future<void> addFavoriteBook(String bookId) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance
+        .collection(FirebaseCollections.user)
+        .doc(uid)
+        .collection(FirebaseCollections.favorite)
+        .add({'productID': bookId});
+  }
 
+  Future<void> unFavoriteByBookId(String bookId) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    final docs = await FirebaseFirestore.instance
+        .collection(FirebaseCollections.user)
+        .doc(uid)
+        .collection(FirebaseCollections.favorite)
+        .where('productID', isEqualTo: bookId)
+        .get();
+    await Future.wait([
+      ...docs.docs.map(
+        (e) => e.reference.delete(),
+      )
+    ]);
+  }
+
+  Future<void> unFavoriteByFavoriteId(String favoriteId) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
     final docRef = FirebaseFirestore.instance
         .collection(FirebaseCollections.user)
         .doc(uid)
         .collection(FirebaseCollections.favorite)
         .doc(favoriteId);
-
     await docRef.delete();
   }
 

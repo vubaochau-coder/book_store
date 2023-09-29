@@ -46,7 +46,13 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(
               create: (context) => HomeBloc()..add(HomeLoadingEvent())),
-          BlocProvider(create: (context) => ProductBloc()),
+          BlocProvider(
+            create: (context) => ProductBloc(
+              RepositoryProvider.of<MainRepository>(context).bookRepository,
+              RepositoryProvider.of<MainRepository>(context).feedbackRepository,
+              RepositoryProvider.of<MainRepository>(context).favoriteRepository,
+            ),
+          ),
           BlocProvider(create: (context) => CartBloc()),
           BlocProvider(create: (context) => UserBloc()),
           BlocProvider(

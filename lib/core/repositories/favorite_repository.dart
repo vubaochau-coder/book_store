@@ -18,8 +18,16 @@ class FavoriteRepository {
     return _service.favoriteStream();
   }
 
-  Future<void> removeFavoriteBook(String favoriteId) async {
-    return await _service.removeFavoriteBook(favoriteId);
+  Future<void> addFavoriteBook(String bookId) async {
+    return await _service.addFavoriteBook(bookId);
+  }
+
+  Future<void> unFavoriteByBookId(String bookId) async {
+    return await _service.unFavoriteByBookId(bookId);
+  }
+
+  Future<void> unFavoriteByFavoriteId(String favoriteId) async {
+    return await _service.unFavoriteByFavoriteId(favoriteId);
   }
 
   Future<FavoriteModel> getFavoriteBook(String favoId, String bookId) async {
