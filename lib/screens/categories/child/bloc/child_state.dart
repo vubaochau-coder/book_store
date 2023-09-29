@@ -1,20 +1,28 @@
 part of 'child_bloc.dart';
 
-abstract class ChildState extends Equatable {
-  const ChildState();
+class ChildState extends Equatable {
+  final bool isLoading;
+  final List<ShortProductDataModel> listChild;
+  final BookSortType sortType;
+
+  const ChildState({
+    this.listChild = const [],
+    this.sortType = BookSortType.bestSale,
+    this.isLoading = true,
+  });
 
   @override
-  List<Object> get props => [];
-}
+  List<Object> get props => [isLoading, listChild, sortType];
 
-class ChildLoadingState extends ChildState {}
-
-class ChildLoadingSuccessfulState extends ChildState {
-  final List<ShortProductDataModel> listChild;
-  final int sortType;
-
-  const ChildLoadingSuccessfulState({
-    required this.listChild,
-    required this.sortType,
-  });
+  ChildState copyWith({
+    bool? isLoading,
+    List<ShortProductDataModel>? listChild,
+    BookSortType? sortType,
+  }) {
+    return ChildState(
+      isLoading: isLoading ?? this.isLoading,
+      listChild: listChild ?? this.listChild,
+      sortType: sortType ?? this.sortType,
+    );
+  }
 }

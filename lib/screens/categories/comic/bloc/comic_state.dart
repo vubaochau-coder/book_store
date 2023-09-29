@@ -1,20 +1,28 @@
 part of 'comic_bloc.dart';
 
-abstract class ComicState extends Equatable {
-  const ComicState();
+class ComicState extends Equatable {
+  final List<ShortProductDataModel> listComic;
+  final BookSortType sortType;
+  final bool isLoading;
+
+  const ComicState({
+    this.listComic = const [],
+    this.sortType = BookSortType.bestSale,
+    this.isLoading = true,
+  });
 
   @override
-  List<Object> get props => [];
-}
+  List<Object> get props => [isLoading, listComic, sortType];
 
-class ComicLoadingState extends ComicState {}
-
-class ComicLoadingSuccessfulState extends ComicState {
-  final List<ShortProductDataModel> listComic;
-  final int sortType;
-
-  const ComicLoadingSuccessfulState({
-    required this.listComic,
-    required this.sortType,
-  });
+  ComicState copyWith({
+    bool? isLoading,
+    List<ShortProductDataModel>? listComic,
+    BookSortType? sortType,
+  }) {
+    return ComicState(
+      isLoading: isLoading ?? this.isLoading,
+      listComic: listComic ?? this.listComic,
+      sortType: sortType ?? this.sortType,
+    );
+  }
 }

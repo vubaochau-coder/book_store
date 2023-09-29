@@ -1,23 +1,28 @@
 part of 'literature_bloc.dart';
 
-abstract class LiteratureState extends Equatable {
-  const LiteratureState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class LiteratureLoadingState extends LiteratureState {}
-
-class LiteratureLoadingSuccessfulState extends LiteratureState {
+class LiteratureState extends Equatable {
   final List<ShortProductDataModel> listLiterature;
-  final int sortType;
+  final BookSortType sortType;
+  final bool isLoading;
 
-  const LiteratureLoadingSuccessfulState({
-    required this.listLiterature,
-    required this.sortType,
+  const LiteratureState({
+    this.listLiterature = const [],
+    this.sortType = BookSortType.bestSale,
+    this.isLoading = true,
   });
 
-  // @override
-  // List<Object> get props => [listLiterature, sortType];
+  @override
+  List<Object> get props => [isLoading, listLiterature, sortType];
+
+  LiteratureState copyWith({
+    bool? isLoading,
+    List<ShortProductDataModel>? listLiterature,
+    BookSortType? sortType,
+  }) {
+    return LiteratureState(
+      isLoading: isLoading ?? this.isLoading,
+      listLiterature: listLiterature ?? this.listLiterature,
+      sortType: sortType ?? this.sortType,
+    );
+  }
 }

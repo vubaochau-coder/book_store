@@ -8,7 +8,11 @@ abstract class LiteratureEvent extends Equatable {
 }
 
 class LiteratureLoadEvent extends LiteratureEvent {
-  final int options;
+  const LiteratureLoadEvent();
+}
 
-  const LiteratureLoadEvent({required this.options});
+class UpdateSortTypeEvent extends LiteratureEvent {
+  final BookSortType newType;
+
+  const UpdateSortTypeEvent({required this.newType});
 }

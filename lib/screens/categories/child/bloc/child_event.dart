@@ -8,7 +8,11 @@ abstract class ChildEvent extends Equatable {
 }
 
 class ChildLoadEvent extends ChildEvent {
-  final int options;
+  const ChildLoadEvent();
+}
 
-  const ChildLoadEvent({required this.options});
+class UpdateSortTypeEvent extends ChildEvent {
+  final BookSortType newType;
+
+  const UpdateSortTypeEvent({required this.newType});
 }
