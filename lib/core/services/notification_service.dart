@@ -5,6 +5,46 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/notification_model.dart';
 
 class NotificationService {
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamUserNoti() {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    return FirebaseFirestore.instance
+        .collection(FirebaseCollections.user)
+        .doc(uid)
+        .collection(FirebaseCollections.notification)
+        .orderBy('date', descending: true)
+        .snapshots();
+  }
+
+  Future<void> readNotiEvent(String notiId) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    final notiDocRef = FirebaseFirestore.instance
+        .collection(FirebaseCollections.user)
+        .doc(uid)
+        .collection(FirebaseCollections.notification)
+        .doc(notiId);
+    await notiDocRef.update({'isRead': true});
+  }
+
+  Future<void> readAllNotiEvent() async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    final notisQuery = await FirebaseFirestore.instance
+        .collection(FirebaseCollections.user)
+        .doc(uid)
+        .collection(FirebaseCollections.notification)
+        .where('isRead', isEqualTo: false)
+        .get();
+
+    await Future.wait([
+      ...notisQuery.docs.map(
+        (e) => e.reference.update(
+          {'isRead': true},
+        ),
+      )
+    ]);
+  }
+
   Future<void> createCancelTransactionNoti(String transId) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
     final model = NotificationModel(

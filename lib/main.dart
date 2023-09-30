@@ -64,7 +64,11 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => SearchBloc()),
           BlocProvider(create: (context) => FeedbackCountBloc()),
           BlocProvider(create: (context) => EditPasswordBloc()),
-          BlocProvider(create: (context) => NotificationBloc()),
+          BlocProvider(
+            create: (context) => NotificationBloc(
+              RepositoryProvider.of<MainRepository>(context).notiRepository,
+            ),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
