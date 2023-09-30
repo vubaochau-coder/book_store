@@ -1,3 +1,4 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/core/models/notification_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
@@ -10,72 +11,81 @@ class NotificationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
-      margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      margin: const EdgeInsets.symmetric(vertical: 2),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(4),
-        boxShadow: notiData.isRead
-            ? []
-            : [
-                const BoxShadow(
-                  blurRadius: 1,
-                  color: Colors.grey,
-                  offset: Offset(0, 1),
-                )
-              ],
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              !notiData.isRead
-                  ? Container(
-                      height: 8,
-                      width: 8,
-                      margin: const EdgeInsets.only(right: 6, top: 4),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: themeColor,
-                      ),
-                    )
-                  : const SizedBox(),
-              Expanded(
-                child: Text(
-                  notiData.title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
-                    color: notiData.isRead ? Colors.black54 : Colors.black,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
           Container(
-            color: Colors.white,
-            child: Text(
-              Converter.convertDateToString(notiData.date),
-              style: const TextStyle(
-                color: Colors.grey,
-                fontSize: 13,
-                fontWeight: FontWeight.w400,
+            margin: const EdgeInsets.only(right: 8, top: 4),
+            decoration: BoxDecoration(
+              color: notiData.isRead ? Colors.grey : AppColors.themeColor,
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: const Image(
+              height: 48,
+              width: 48,
+              image: AssetImage(
+                'images/logo_mini.png',
               ),
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            notiData.content,
-            style: TextStyle(
-              height: 1.4,
-              fontSize: 13,
-              color: notiData.isRead ? Colors.black54 : Colors.black,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        notiData.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color:
+                              notiData.isRead ? Colors.black54 : Colors.black,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      Converter.convertTimeNoti(notiData.date),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    !notiData.isRead
+                        ? Container(
+                            height: 8,
+                            width: 8,
+                            margin: const EdgeInsets.only(left: 4),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: themeColor,
+                            ),
+                          )
+                        : const SizedBox(),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  notiData.content,
+                  style: TextStyle(
+                    height: 1.4,
+                    fontSize: 13,
+                    color: notiData.isRead ? Colors.black54 : Colors.black,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -22,4 +22,8 @@ class Converter {
   static String convertDateToStringWithoutTime(DateTime date) {
     return dateFormat2.format(date);
   }
+
+  static String convertTimeNoti(DateTime time) {
+    return '${time.day}/${time.month.toString().padLeft(2, '0')} ${time.hour}:${time.minute.toString().padLeft(2, '0')}';
+  }
 }
