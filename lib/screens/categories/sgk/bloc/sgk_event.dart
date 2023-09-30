@@ -8,7 +8,11 @@ abstract class SgkEvent extends Equatable {
 }
 
 class SgkLoadEvent extends SgkEvent {
-  final int options;
+  const SgkLoadEvent();
+}
 
-  const SgkLoadEvent({required this.options});
+class UpdateSortTypeEvent extends SgkEvent {
+  final BookSortType newType;
+
+  const UpdateSortTypeEvent({required this.newType});
 }

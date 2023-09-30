@@ -8,7 +8,11 @@ abstract class ComicEvent extends Equatable {
 }
 
 class ComicLoadEvent extends ComicEvent {
-  final int options;
+  const ComicLoadEvent();
+}
 
-  const ComicLoadEvent({required this.options});
+class UpdateSortTypeEvent extends ComicEvent {
+  final BookSortType newType;
+
+  const UpdateSortTypeEvent({required this.newType});
 }

@@ -1,4 +1,5 @@
 import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/core/repositories/main_repository.dart';
 import 'package:book_store/custom_widgets/search_bar.dart';
 import 'package:book_store/screens/categories/child/bloc/child_bloc.dart';
 import 'package:book_store/screens/categories/child/ui/child_category_page.dart';
@@ -49,27 +50,34 @@ class _CategoryPageState extends State<CategoryPage>
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => SgkBloc()..add(const SgkLoadEvent(options: 0)),
+          create: (context) => SgkBloc(
+            RepositoryProvider.of<MainRepository>(context).categoryRepository,
+          )..add(const SgkLoadEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-              LiteratureBloc()..add(const LiteratureLoadEvent(options: 0)),
+          create: (context) => LiteratureBloc(
+            RepositoryProvider.of<MainRepository>(context).categoryRepository,
+          )..add(const LiteratureLoadEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-              ComicBloc()..add(const ComicLoadEvent(options: 0)),
+          create: (context) => ComicBloc(
+            RepositoryProvider.of<MainRepository>(context).categoryRepository,
+          )..add(const ComicLoadEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-              ChildBloc()..add(const ChildLoadEvent(options: 0)),
+          create: (context) => ChildBloc(
+            RepositoryProvider.of<MainRepository>(context).categoryRepository,
+          )..add(const ChildLoadEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-              ScienceBloc()..add(const ScicenceLoadEvent(options: 0)),
+          create: (context) => ScienceBloc(
+            RepositoryProvider.of<MainRepository>(context).categoryRepository,
+          )..add(const ScicenceLoadEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-              OtherBloc()..add(const OtherLoadEvent(options: 0)),
+          create: (context) => OtherBloc(
+            RepositoryProvider.of<MainRepository>(context).categoryRepository,
+          )..add(const OtherLoadEvent()),
         ),
       ],
       child: Scaffold(

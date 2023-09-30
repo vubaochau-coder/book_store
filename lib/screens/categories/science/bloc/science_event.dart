@@ -8,7 +8,11 @@ abstract class ScienceEvent extends Equatable {
 }
 
 class ScicenceLoadEvent extends ScienceEvent {
-  final int options;
+  const ScicenceLoadEvent();
+}
 
-  const ScicenceLoadEvent({required this.options});
+class UpdateSortTypeEvent extends ScienceEvent {
+  final BookSortType newType;
+
+  const UpdateSortTypeEvent({required this.newType});
 }

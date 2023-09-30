@@ -1,57 +1,76 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:book_store/core/models/short_protduct_data_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:book_store/core/repositories/category_repository.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../category_enum.dart';
 
 part 'literature_event.dart';
 part 'literature_state.dart';
 
 class LiteratureBloc extends Bloc<LiteratureEvent, LiteratureState> {
-  LiteratureBloc() : super(LiteratureLoadingState()) {
-    on<LiteratureLoadEvent>(literatureLoadEvent);
+  final CategoryRepository _categoryRepository;
+
+  LiteratureBloc(this._categoryRepository) : super(const LiteratureState()) {
+    on<LiteratureLoadEvent>(_onLoading);
+    on<UpdateSortTypeEvent>(_updateSortType);
   }
 
-  FutureOr<void> literatureLoadEvent(
-      LiteratureLoadEvent event, Emitter<LiteratureState> emit) async {
-    emit(LiteratureLoadingState());
-    List<ShortProductDataModel> productDatas = [];
+  _onLoading(LiteratureLoadEvent event, Emitter emit) async {
+    emit(state.copyWith(isLoading: true));
+    List<ShortProductDataModel> productDatas =
+        await _categoryRepository.getBookingByType('bt002');
 
-    switch (event.options) {
-      case 0:
-        final allProductQuery = await FirebaseFirestore.instance
-            .collection("Book")
-            .where('type', isEqualTo: 'bt002')
-            .orderBy('totalSold', descending: true)
-            .get();
-        for (var ele in allProductQuery.docs) {
-          productDatas.add(ShortProductDataModel.fromSnapshot(ele));
-        }
+    switch (state.sortType) {
+      case BookSortType.bestSale:
+        productDatas.sort(
+          (a, b) => a.totalSold.compareTo(b.totalSold),
+        );
         break;
-      case 1:
-        final allProductQuery = await FirebaseFirestore.instance
-            .collection("Book")
-            .where('type', isEqualTo: 'bt002')
-            .orderBy('price', descending: true)
-            .get();
-        for (var ele in allProductQuery.docs) {
-          productDatas.add(ShortProductDataModel.fromSnapshot(ele));
-        }
+      case BookSortType.descendingCost:
+        productDatas.sort(
+          (a, b) => a.price.compareTo(b.price),
+        );
         break;
-      case 2:
-        final allProductQuery = await FirebaseFirestore.instance
-            .collection("Book")
-            .where('type', isEqualTo: 'bt002')
-            .orderBy('price', descending: false)
-            .get();
-        for (var ele in allProductQuery.docs) {
-          productDatas.add(ShortProductDataModel.fromSnapshot(ele));
-        }
+
+      case BookSortType.ascendingCost:
+        productDatas.sort(
+          (a, b) => b.price.compareTo(a.price),
+        );
         break;
     }
 
-    emit(LiteratureLoadingSuccessfulState(
-        listLiterature: productDatas, sortType: event.options));
+    emit(
+      state.copyWith(
+        isLoading: false,
+        listLiterature: productDatas,
+      ),
+    );
+  }
+
+  _updateSortType(UpdateSortTypeEvent event, Emitter emit) {
+    if (event.newType != state.sortType) {
+      List<ShortProductDataModel> newList = List.from(state.listLiterature);
+
+      switch (event.newType) {
+        case BookSortType.bestSale:
+          newList.sort(
+            (a, b) => a.totalSold.compareTo(b.totalSold),
+          );
+          break;
+        case BookSortType.descendingCost:
+          newList.sort(
+            (a, b) => a.price.compareTo(b.price),
+          );
+          break;
+
+        case BookSortType.ascendingCost:
+          newList.sort(
+            (a, b) => b.price.compareTo(a.price),
+          );
+          break;
+      }
+      emit(state.copyWith(sortType: event.newType, listLiterature: newList));
+    }
   }
 }
