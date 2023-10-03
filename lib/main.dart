@@ -53,7 +53,11 @@ class MyApp extends StatelessWidget {
               RepositoryProvider.of<MainRepository>(context).favoriteRepository,
             ),
           ),
-          BlocProvider(create: (context) => CartBloc()),
+          BlocProvider(
+            create: (context) => CartBloc(
+              RepositoryProvider.of<MainRepository>(context).cartRepository,
+            ),
+          ),
           BlocProvider(create: (context) => UserBloc()),
           BlocProvider(
             create: (context) => CheckoutBloc(
