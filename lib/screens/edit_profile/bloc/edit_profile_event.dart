@@ -10,17 +10,35 @@ abstract class EditProfileEvent extends Equatable {
 class EditProfileLoadingEvent extends EditProfileEvent {}
 
 class EditProfileChangingEvent extends EditProfileEvent {
-  final File? image;
-  final String name;
-  final String phone;
-  final bool gender;
+  const EditProfileChangingEvent();
+}
+
+class UpdateGenderEvent extends EditProfileEvent {
+  final bool isMale;
+
+  const UpdateGenderEvent({required this.isMale});
+}
+
+class UpdateBirthdayEvent extends EditProfileEvent {
   final String birthday;
 
-  const EditProfileChangingEvent({
-    required this.image,
-    required this.name,
-    required this.phone,
-    required this.gender,
-    required this.birthday,
-  });
+  const UpdateBirthdayEvent({required this.birthday});
+}
+
+class UpdateNameEvent extends EditProfileEvent {
+  final String name;
+
+  const UpdateNameEvent({required this.name});
+}
+
+class UpdatePhoneEvent extends EditProfileEvent {
+  final String phone;
+
+  const UpdatePhoneEvent({required this.phone});
+}
+
+class UpdateAvatarEvent extends EditProfileEvent {
+  final File avatar;
+
+  const UpdateAvatarEvent({required this.avatar});
 }

@@ -252,6 +252,7 @@ class ProfilePage extends StatelessWidget {
                 AuthService().signOut();
               },
             ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

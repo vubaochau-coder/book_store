@@ -32,9 +32,7 @@ class OrderBillPage extends StatelessWidget {
                     height: 108,
                     fit: BoxFit.contain,
                   ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+                  const SizedBox(height: 12),
                   const Text(
                     'Đặt hàng thành công',
                     style: TextStyle(
@@ -43,9 +41,7 @@ class OrderBillPage extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(
-                    height: 6,
-                  ),
+                  const SizedBox(height: 6),
                   Center(
                     child: Text(
                       '${Converter.convertNumberToMoney(state.info.totalPrice)}đ',
@@ -56,22 +52,18 @@ class OrderBillPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 6,
-                  ),
+                  const SizedBox(height: 6),
                   const SizedBox(
                     width: 304,
                     child: Text(
                       'Cảm ơn vì đã đặt hàng trên IBOO\nBạn có thể theo dõi tình trạng đơn hàng trong mục Đơn hàng của tôi.',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),
                   ),
                   Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     elevation: 4,
                     margin: const EdgeInsets.only(
@@ -89,34 +81,22 @@ class OrderBillPage extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.grey[850],
                               fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(
-                            height: 16,
-                          ),
+                          const SizedBox(height: 26),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Mã đơn hàng',
-                                style: text1,
-                              ),
-                              Text(
-                                state.info.id,
-                                style: text2,
-                              ),
+                              Text('Mã đơn hàng', style: text1),
+                              Text(state.info.id, style: text2),
                             ],
                           ),
-                          SizedBox(
-                            height: space,
-                          ),
+                          SizedBox(height: space),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Ngày đặt',
-                                style: text1,
-                              ),
+                              Text('Ngày đặt', style: text1),
                               Text(
                                 Converter.convertDateToString(
                                     state.info.dateCreated),
@@ -126,16 +106,11 @@ class OrderBillPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: space,
-                          ),
+                          SizedBox(height: space),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Ngày giao (dự kiến)',
-                                style: text1,
-                              ),
+                              Text('Ngày giao (dự kiến)', style: text1),
                               Text(
                                 Converter.convertDateToStringWithoutTime(
                                     state.info.dateCompleted),
@@ -145,16 +120,11 @@ class OrderBillPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: space,
-                          ),
+                          SizedBox(height: space),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Phí vận chuyển',
-                                style: text1,
-                              ),
+                              Text('Phí vận chuyển', style: text1),
                               Text(
                                 '${Converter.convertNumberToMoney(state.info.transportPrice)}đ (${state.info.transport})',
                                 style: text2.copyWith(
@@ -163,34 +133,23 @@ class OrderBillPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: space,
-                          ),
+                          SizedBox(height: space),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Giá sản phẩm',
-                                style: text1,
-                              ),
+                              Text('Giá sản phẩm', style: text1),
                               Text(
                                 '${Converter.convertNumberToMoney(state.info.productPrice)}đ',
-                                style: text2.copyWith(
-                                  fontWeight: FontWeight.w400,
-                                ),
+                                style:
+                                    text2.copyWith(fontWeight: FontWeight.w400),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: space,
-                          ),
+                          SizedBox(height: space),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Tổng thanh toán',
-                                style: text1,
-                              ),
+                              Text('Tổng thanh toán', style: text1),
                               Text(
                                 '${Converter.convertNumberToMoney(state.info.totalPrice)}đ',
                                 style: text2.copyWith(
@@ -200,16 +159,11 @@ class OrderBillPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: space,
-                          ),
+                          SizedBox(height: space),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Trạng thái',
-                                style: text1,
-                              ),
+                              Text('Trạng thái', style: text1),
                               Text(
                                 state.info.paid
                                     ? 'Đã thanh toán'
@@ -257,14 +211,10 @@ class OrderBillPage extends StatelessWidget {
                             color: Colors.white,
                             size: 22,
                           ),
-                          SizedBox(
-                            width: 4,
-                          ),
+                          SizedBox(width: 4),
                           Text(
                             'Trở về màn hình chính',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
+                            style: TextStyle(color: Colors.white),
                           )
                         ],
                       ),

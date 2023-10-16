@@ -15,7 +15,7 @@ class CheckoutDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CheckoutBloc, CheckoutState>(
       builder: (context, state) {
-        if (state.isLoading) {
+        if (state.isLoading || state is CheckoutOrderSuccessfulState) {
           return const SizedBox();
         }
 

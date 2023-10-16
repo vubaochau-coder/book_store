@@ -1,14 +1,14 @@
 import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/core/repositories/main_repository.dart';
-import 'package:book_store/screens/transaction_status/delivered/bloc/delivered_bloc.dart';
-import 'package:book_store/screens/transaction_status/delivered/ui/delivered_transaction_page.dart';
-import 'package:book_store/screens/transaction_status/delivering/bloc/delivering_bloc.dart';
-import 'package:book_store/screens/transaction_status/delivering/ui/delivering_transaction_page.dart';
-import 'package:book_store/screens/transaction_status/unconfirmed/bloc/unconfirmed_bloc.dart';
-import 'package:book_store/screens/transaction_status/unconfirmed/ui/unconfirmed_transaction_page.dart';
-import 'package:book_store/screens/transaction_status/await_pickup/bloc/await_pickup_bloc.dart';
-import 'package:book_store/screens/transaction_status/await_pickup/ui/await_pickup_page.dart';
-import 'package:book_store/screens/transaction_status/cancelled/ui/cancelled_transaction_page.dart';
+import '../delivered/bloc/delivered_bloc.dart';
+import '../delivered/ui/delivered_transaction_page.dart';
+import '../delivering/bloc/delivering_bloc.dart';
+import '../delivering/ui/delivering_transaction_page.dart';
+import '../unconfirmed/bloc/unconfirmed_bloc.dart';
+import '../unconfirmed/ui/unconfirmed_transaction_page.dart';
+import '../await_pickup/bloc/await_pickup_bloc.dart';
+import '../await_pickup/ui/await_pickup_page.dart';
+import '../cancelled/ui/cancelled_transaction_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

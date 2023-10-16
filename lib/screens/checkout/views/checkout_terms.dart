@@ -13,7 +13,7 @@ class CheckoutTerms extends StatelessWidget {
         return previous.isLoading != current.isLoading;
       },
       builder: (context, state) {
-        if (state.isLoading) {
+        if (state.isLoading || state is CheckoutOrderSuccessfulState) {
           return const SizedBox();
         }
 

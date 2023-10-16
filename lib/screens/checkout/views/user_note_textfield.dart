@@ -2,10 +2,14 @@ import 'package:book_store/screens/checkout/bloc/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UserNoteTextField extends StatelessWidget {
-  final TextEditingController textController;
-  const UserNoteTextField({super.key, required this.textController});
+class UserNoteTextField extends StatefulWidget {
+  const UserNoteTextField({super.key});
 
+  @override
+  State<UserNoteTextField> createState() => _UserNoteTextFieldState();
+}
+
+class _UserNoteTextFieldState extends State<UserNoteTextField> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CheckoutBloc, CheckoutState>(
@@ -26,7 +30,11 @@ class UserNoteTextField extends StatelessWidget {
               const Text('Tin nhắn:'),
               Expanded(
                 child: TextField(
-                  controller: textController,
+                  onChanged: (value) {
+                    BlocProvider.of<CheckoutBloc>(context).add(
+                      UpdateUserNoteEvent(note: value),
+                    );
+                  },
                   textAlign: TextAlign.right,
                   style: const TextStyle(
                     fontSize: 14,

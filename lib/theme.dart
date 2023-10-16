@@ -24,19 +24,19 @@ InputBorder textFieldBorder2 = OutlineInputBorder(
 InputBorder textFieldBorder3 = OutlineInputBorder(
   borderRadius: BorderRadius.circular(6),
   borderSide: const BorderSide(
-    color: Colors.black,
+    color: Colors.grey,
     width: 1,
   ),
 );
 
 TextStyle text1 = const TextStyle(
   color: Colors.black87,
-  fontSize: 14,
+  fontSize: 13,
   fontWeight: FontWeight.w400,
 );
 
 TextStyle text2 = const TextStyle(
   color: Colors.black,
   fontSize: 15,
-  fontWeight: FontWeight.w500,
+  fontWeight: FontWeight.w600,
 );

@@ -8,6 +8,7 @@ class CheckoutState extends Equatable {
   final TransportModel? selectedTransport;
   final List<PaymentMethodModel> payments;
   final PaymentMethodModel? selectedPayments;
+  final String note;
 
   const CheckoutState({
     this.isLoading = false,
@@ -17,6 +18,7 @@ class CheckoutState extends Equatable {
     this.selectedPayments,
     this.showLoadingDialog = false,
     this.payments = const [],
+    this.note = '',
   });
 
   @override
@@ -28,11 +30,13 @@ class CheckoutState extends Equatable {
         payments,
         selectedPayments,
         selectedTransport,
+        note,
       ];
 
   CheckoutState copyWith({
     bool? isLoading,
     bool? showLoadingDialog,
+    String? note,
     AddressModel? userAddress,
     List<TransportModel>? transports,
     TransportModel? selectedTransport,
@@ -42,6 +46,7 @@ class CheckoutState extends Equatable {
     return CheckoutState(
       isLoading: isLoading ?? this.isLoading,
       showLoadingDialog: showLoadingDialog ?? this.showLoadingDialog,
+      note: note ?? this.note,
       userAddress: userAddress ?? this.userAddress,
       transports: transports ?? this.transports,
       payments: payments ?? this.payments,

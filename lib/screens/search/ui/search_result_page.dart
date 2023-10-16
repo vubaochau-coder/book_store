@@ -1,7 +1,8 @@
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/custom_widgets/product_item.dart';
 import 'package:book_store/core/models/short_protduct_data_model.dart';
 import 'package:book_store/screens/search/bloc/search_bloc.dart';
-import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,24 +33,26 @@ class _SearchResultPageState extends State<SearchResultPage> {
         return true;
       },
       child: Scaffold(
-        backgroundColor: background,
+        backgroundColor: AppColors.background,
         appBar: AppBar(
           title: Text(
             '"${widget.query}"',
-            style: const TextStyle(
+            style: AppTexts.appbarTitle.copyWith(
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          backgroundColor: themeColor,
-          foregroundColor: Colors.white,
+          backgroundColor: AppColors.themeColor,
+          foregroundColor: AppColors.contentColor,
           centerTitle: true,
           elevation: 0,
           actions: [
             PopupMenuButton<String>(
               icon: const Icon(Icons.filter_list),
+              position: PopupMenuPosition.under,
+
               //constraints: const BoxConstraints.tightFor(width: 144),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(6),
               ),
               onSelected: (value) {
                 switch (value) {
@@ -74,15 +77,33 @@ class _SearchResultPageState extends State<SearchResultPage> {
                 return [
                   const PopupMenuItem(
                     value: 'Bán chạy nhất',
-                    child: Text('Bán chạy nhất'),
+                    height: 38,
+                    child: Text(
+                      'Bán chạy nhất',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                   const PopupMenuItem(
                     value: 'Giá giảm dần',
-                    child: Text('Giá giảm dần'),
+                    height: 38,
+                    child: Text(
+                      'Giá giảm dần',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                   const PopupMenuItem(
                     value: 'Giá tăng dần',
-                    child: Text('Giá tăng dần'),
+                    height: 38,
+                    child: Text(
+                      'Giá tăng dần',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                 ];
               },

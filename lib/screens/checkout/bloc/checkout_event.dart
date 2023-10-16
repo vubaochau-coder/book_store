@@ -56,3 +56,9 @@ class CheckoutZaloPayOrderEvent extends CheckoutEvent {
     required this.fromCart,
   });
 }
+
+class UpdateUserNoteEvent extends CheckoutEvent {
+  final String note;
+
+  const UpdateUserNoteEvent({required this.note});
+}

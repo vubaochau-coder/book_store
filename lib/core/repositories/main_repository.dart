@@ -2,9 +2,11 @@ import 'package:book_store/core/repositories/address_repository.dart';
 import 'package:book_store/core/repositories/book_repository.dart';
 import 'package:book_store/core/repositories/cart_repository.dart';
 import 'package:book_store/core/repositories/category_repository.dart';
+import 'package:book_store/core/repositories/checkout_repository.dart';
 import 'package:book_store/core/repositories/favorite_repository.dart';
 import 'package:book_store/core/repositories/feedback_repository.dart';
 import 'package:book_store/core/repositories/notification_repository.dart';
+import 'package:book_store/core/repositories/search_repository.dart';
 import 'package:book_store/core/repositories/transaction_repository.dart';
 
 class MainRepository {
@@ -16,6 +18,8 @@ class MainRepository {
   late FavoriteRepository favoriteRepository;
   late CategoryRepository categoryRepository;
   late CartRepository cartRepository;
+  late CheckoutRepository checkoutRepository;
+  late SearchRepository searchRepository;
 
   MainRepository() {
     transRepository = TransactionRepository();
@@ -26,5 +30,7 @@ class MainRepository {
     favoriteRepository = FavoriteRepository();
     categoryRepository = CategoryRepository();
     cartRepository = CartRepository();
+    checkoutRepository = CheckoutRepository();
+    searchRepository = SearchRepository();
   }
 }

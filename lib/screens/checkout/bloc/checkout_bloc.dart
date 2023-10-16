@@ -3,16 +3,17 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:book_store/core/models/address_model.dart';
 import 'package:book_store/core/models/create_order_response.dart';
-import 'package:book_store/core/models/notification_model.dart';
 import 'package:book_store/core/models/payment_method_model.dart';
 import 'package:book_store/core/models/transaction_model.dart';
 import 'package:book_store/core/models/transport_model.dart';
 import 'package:book_store/core/repositories/address_repository.dart';
+import 'package:book_store/core/repositories/checkout_repository.dart';
+import 'package:book_store/core/repositories/notification_repository.dart';
 import 'package:book_store/utils/zalopay_app_config.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -26,8 +27,11 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       MethodChannel('flutter.native/channelPayOrder');
   StreamSubscription? _addressStream;
   final AddressRepository _addressRepository;
+  final CheckoutRepository _checkoutRepository;
+  final NotificationRepository _notiRepository;
 
-  CheckoutBloc(this._addressRepository)
+  CheckoutBloc(
+      this._addressRepository, this._checkoutRepository, this._notiRepository)
       : super(const CheckoutState(isLoading: true)) {
     on<CheckoutLoadingEvent>(_onLoading);
     on<CheckoutUpdateEmptyAddressEvent>(_onUpdateEmptyAddress);
@@ -36,6 +40,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     on<CheckoutZaloPayOrderEvent>(_onZaloPayOrder);
     on<CheckoutUpdatePaymentMethodEvent>(_onUpdatePaymentMethod);
     on<CheckoutUpdateTransportEvent>(_onUpdateTransport);
+    on<UpdateUserNoteEvent>(_updateUserNote);
   }
 
   @override
@@ -56,14 +61,9 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
         add(CheckoutUpdateAddressEvent(newAddress: userAddress));
       } else {
-        List<TransportModel> transports = [];
+        List<TransportModel> transports =
+            await _checkoutRepository.getTransports();
 
-        final transportQuery =
-            await FirebaseFirestore.instance.collection('Transport').get();
-        for (int i = 0; i < transportQuery.size; i++) {
-          transports
-              .add(TransportModel.fromSnapshot(transportQuery.docs[i], i == 0));
-        }
         add(CheckoutUpdateEmptyAddressEvent(transports: transports));
       }
     });
@@ -71,16 +71,10 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
   _onUpdateAdrress(CheckoutUpdateAddressEvent event, Emitter emit) async {
     if (state.isLoading) {
-      List<TransportModel> transports = [];
+      List<TransportModel> transports =
+          await _checkoutRepository.getTransports();
       List<PaymentMethodModel> payments =
           List.from(PaymentMethodModel.listPayment);
-
-      final transportQuery =
-          await FirebaseFirestore.instance.collection('Transport').get();
-      for (int i = 0; i < transportQuery.size; i++) {
-        transports
-            .add(TransportModel.fromSnapshot(transportQuery.docs[i], i == 0));
-      }
 
       emit(
         state.copyWith(
@@ -122,44 +116,21 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     if (state.userAddress != null) {
       emit(state.copyWith(showLoadingDialog: true));
 
-      String uid = FirebaseAuth.instance.currentUser!.uid;
-
       try {
-        final transactionCollection = FirebaseFirestore.instance
-            .collection('User')
-            .doc(uid)
-            .collection('Transaction');
-
-        await transactionCollection
-            .add(event.transaction.toJson())
+        await _checkoutRepository
+            .createTransaction(event.transaction)
             .then((value) async {
-          for (var ele in event.transaction.products) {
-            await FirebaseFirestore.instance
-                .collection('User')
-                .doc(uid)
-                .collection('Transaction')
-                .doc(value.id)
-                .collection('Products')
-                .add(ele.toJson());
-          }
+          await Future.wait([
+            _checkoutRepository.addProductToTransaction(
+                event.transaction.products, value),
+            _notiRepository.createOrderTransactionNoti(value),
+            event.fromCart
+                ? _checkoutRepository
+                    .deleteItemFromCart(event.transaction.products)
+                : Future.value(null),
+          ]);
 
-          await FirebaseFirestore.instance
-              .collection('User')
-              .doc(uid)
-              .collection('Notification')
-              .add(createNotification(value.id).toJson());
-
-          if (event.fromCart) {
-            final cartCollection = FirebaseFirestore.instance
-                .collection('User')
-                .doc(uid)
-                .collection('Cart');
-            for (var ele in event.transaction.products) {
-              await cartCollection.doc(ele.id).delete();
-            }
-          }
-
-          emit(CheckoutOrderSuccessfulState(idTransaction: value.id));
+          emit(CheckoutOrderSuccessfulState(idTransaction: value));
         });
       } on FirebaseException catch (e) {
         emit(state.copyWith(showLoadingDialog: false));
@@ -180,42 +151,21 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         final String result = await platform.invokeMethod(
             'payOrder', {"zptoken": createOrderResult.zptranstoken});
         if (result == 'Payment Success') {
-          String uid = FirebaseAuth.instance.currentUser!.uid;
           try {
-            final transactionCollection = FirebaseFirestore.instance
-                .collection('User')
-                .doc(uid)
-                .collection('Transaction');
-
-            await transactionCollection
-                .add(event.transaction.toJson())
+            await _checkoutRepository
+                .createTransaction(event.transaction)
                 .then((value) async {
-              for (var ele in event.transaction.products) {
-                await FirebaseFirestore.instance
-                    .collection('User')
-                    .doc(uid)
-                    .collection('Transaction')
-                    .doc(value.id)
-                    .collection('Products')
-                    .add(ele.toJson());
-              }
-              await FirebaseFirestore.instance
-                  .collection('User')
-                  .doc(uid)
-                  .collection('Notification')
-                  .add(createNotification(value.id).toJson());
+              await Future.wait([
+                _checkoutRepository.addProductToTransaction(
+                    event.transaction.products, value),
+                _notiRepository.createOrderTransactionNoti(value),
+                event.fromCart
+                    ? _checkoutRepository
+                        .deleteItemFromCart(event.transaction.products)
+                    : Future.value(null),
+              ]);
 
-              if (event.fromCart) {
-                final cartCollection = FirebaseFirestore.instance
-                    .collection('User')
-                    .doc(uid)
-                    .collection('Cart');
-                for (var ele in event.transaction.products) {
-                  await cartCollection.doc(ele.id).delete();
-                }
-              }
-
-              emit(CheckoutOrderSuccessfulState(idTransaction: value.id));
+              emit(CheckoutOrderSuccessfulState(idTransaction: value));
             });
           } on FirebaseException catch (e) {
             emit(state.copyWith(showLoadingDialog: false));
@@ -240,18 +190,6 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     } else if (state.userAddress == null) {
       Fluttertoast.showToast(msg: 'Vui lòng cung cấp địa chỉ giao hàng');
     }
-  }
-
-  NotificationModel createNotification(String checkOutID) {
-    return NotificationModel(
-      id: '',
-      title: 'Đặt hàng thành công',
-      content:
-          'Yêu cầu của đơn hàng $checkOutID đã được gửi đến cho người bán. Bạn có thể theo dõi trạng thái đơn hàng ở trong mục Đơn hàng của tôi.',
-      date: DateTime.now(),
-      isRead: false,
-      actionCode: 'order_0',
-    );
   }
 
   Future<CreateOrderResponse?> createOrder(int price) async {
@@ -289,7 +227,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     return CreateOrderResponse.fromJson(data);
   }
 
-  String getDescription(String? body) => "IBOO thanh toán cho đơn hàng  #$body";
+  String getDescription(String? body) => "IBOO thanh toán cho đơn hàng #$body";
 
   String getMacCreateOrder(String dataGetMac) {
     var hmac = Hmac(sha256, utf8.encode(ZaloAppConfig.key1));
@@ -310,5 +248,9 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
         showLoadingDialog: false,
       ),
     );
+  }
+
+  _updateUserNote(UpdateUserNoteEvent event, Emitter emit) {
+    emit(state.copyWith(note: event.note.trim()));
   }
 }

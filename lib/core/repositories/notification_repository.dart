@@ -28,4 +28,8 @@ class NotificationRepository {
   Future<void> createReceiveTransactionNoti(String transId) async {
     return await _service.createReceiveTransactionNoti(transId);
   }
+
+  Future<void> createOrderTransactionNoti(String transId) async {
+    return await _service.createOrderTransactionNoti(transId);
+  }
 }

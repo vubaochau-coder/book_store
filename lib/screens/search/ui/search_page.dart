@@ -28,15 +28,13 @@ class SearchPage extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state is SearchLoadingSuccessfulState) {
-          return buildSearchPage(context, state.searchedList);
-        } else if (state is SearchLoadingState) {
+        if (state.isLoading) {
           return const SearchLoadingPage();
-        } else if (state is SearchLoadingEmptyState) {
-          return buildSearchPage(context, []);
-        } else {
+        }
+        if (state is SearchCompletedState) {
           return const SizedBox();
         }
+        return buildSearchPage(context, state.searchedList);
       },
     );
   }
