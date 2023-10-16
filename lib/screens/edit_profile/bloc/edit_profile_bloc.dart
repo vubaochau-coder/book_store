@@ -12,16 +12,18 @@ part 'edit_profile_event.dart';
 part 'edit_profile_state.dart';
 
 class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
-  EditProfileBloc() : super(EditProfileLoadingState()) {
-    on<EditProfileLoadingEvent>(editProfileLoadingEvent);
-    on<EditProfileChangingEvent>(editProfileChangingEvent);
+  EditProfileBloc() : super(const EditProfileState()) {
+    on<EditProfileLoadingEvent>(_onLoadingEvent);
+    on<EditProfileChangingEvent>(_onChangingEvent);
+    on<UpdateGenderEvent>(_onUpdateGender);
+    on<UpdateBirthdayEvent>(_onUpdateBirthday);
+    on<UpdatePhoneEvent>(_onUpdatePhone);
+    on<UpdateNameEvent>(_onUpdateName);
+    on<UpdateAvatarEvent>(_onUpdateAvatar);
   }
 
-  FutureOr<void> editProfileLoadingEvent(
-      EditProfileLoadingEvent event, Emitter<EditProfileState> emit) async {
-    if (state is! EditProfileLoadingSuccessfulState) {
-      emit(EditProfileLoadingState());
-    }
+  _onLoadingEvent(EditProfileLoadingEvent event, Emitter emit) async {
+    emit(const EditProfileState(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
     String photoURL = FirebaseAuth.instance.currentUser!.photoURL!;
@@ -29,8 +31,6 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     String phoneNumber = '';
     bool isMale = true;
     String birthday = '';
-
-    //print("meta:" + FirebaseAuth.instance.currentUser!.providerData.toString());
 
     final userQuery =
         await FirebaseFirestore.instance.collection('User').doc(uid).get();
@@ -41,7 +41,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       birthday = (userQuery.data() as Map)['birthday'] ?? '';
     }
 
-    emit(EditProfileLoadingSuccessfulState(
+    emit(state.copyWith(
       avtURL: photoURL,
       name: displayName,
       phone: phoneNumber,
@@ -51,33 +51,38 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     ));
   }
 
-  FutureOr<void> editProfileChangingEvent(
-      EditProfileChangingEvent event, Emitter<EditProfileState> emit) async {
-    if (state is EditProfileLoadingSuccessfulState) {
-      final currentState = state as EditProfileLoadingSuccessfulState;
+  _onChangingEvent(EditProfileChangingEvent event, Emitter emit) async {
+    emit(state.copyWith(showDialogLoading: true));
 
-      emit(
-        EditProfileLoadingSuccessfulState(
-          avtURL: currentState.avtURL,
-          name: currentState.name,
-          phone: currentState.phone,
-          isMale: currentState.isMale,
-          birthday: currentState.birthday,
-          isLoading: true,
-        ),
-      );
+    bool haveError = false;
 
+    if (state.name.trim().isEmpty || state.name.trim().length < 6) {
+      emit(state.copyWith(isNameErr: true));
+      haveError = true;
+    }
+
+    if (state.phone.trim().isEmpty || state.phone.trim().length < 10) {
+      emit(state.copyWith(isPhoneErr: true));
+      haveError = true;
+    }
+
+    if (state.birthday.trim().isEmpty) {
+      emit(state.copyWith(isBirthdayErr: true));
+      haveError = true;
+    }
+
+    if (haveError == false) {
       String uid = FirebaseAuth.instance.currentUser!.uid;
       final currentUser = FirebaseAuth.instance.currentUser!;
 
-      await currentUser.updateDisplayName(event.name);
+      await currentUser.updateDisplayName(state.name.trim());
 
-      if (event.image != null) {
+      if (state.newAvatar != null) {
         final avatarImageRef = FirebaseStorage.instance
             .ref()
-            .child("Avatar/${event.image!.path.split('/').last}");
+            .child("Avatar/${state.newAvatar!.path.split('/').last}");
 
-        await avatarImageRef.putFile(event.image!).then((p0) async {
+        await avatarImageRef.putFile(state.newAvatar!).then((p0) async {
           String url = await p0.ref.getDownloadURL();
 
           await currentUser.updatePhotoURL(url);
@@ -87,9 +92,9 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       final userDoc = FirebaseFirestore.instance.collection('User').doc(uid);
 
       await userDoc.set({
-        'phoneNumber': event.phone,
-        'birthday': event.birthday,
-        'isMale': event.gender,
+        'phoneNumber': state.phone.trim(),
+        'birthday': state.birthday.trim(),
+        'isMale': state.isMale,
       }, SetOptions(merge: true));
 
       Fluttertoast.showToast(msg: 'Cập nhật thông tin thành công');
@@ -99,6 +104,28 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           emit(EditProfileNavigateState());
         },
       );
+    } else {
+      emit(state.copyWith(showDialogLoading: false));
     }
+  }
+
+  _onUpdateGender(UpdateGenderEvent event, Emitter emit) {
+    emit(state.copyWith(isMale: event.isMale));
+  }
+
+  _onUpdateBirthday(UpdateBirthdayEvent event, Emitter emit) {
+    emit(state.copyWith(birthday: event.birthday));
+  }
+
+  _onUpdatePhone(UpdatePhoneEvent event, Emitter emit) {
+    emit(state.copyWith(phone: event.phone));
+  }
+
+  _onUpdateName(UpdateNameEvent event, Emitter emit) {
+    emit(state.copyWith(name: event.name));
+  }
+
+  _onUpdateAvatar(UpdateAvatarEvent event, Emitter emit) {
+    emit(state.copyWith(newAvatar: event.avatar));
   }
 }

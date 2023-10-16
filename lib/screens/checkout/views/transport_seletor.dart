@@ -19,6 +19,10 @@ class TransportSelector extends StatelessWidget {
             previous.selectedTransport != current.selectedTransport;
       },
       builder: (context, state) {
+        if (state is CheckoutOrderSuccessfulState) {
+          return const SizedBox();
+        }
+
         return GestureDetector(
           onTap: state.isLoading
               ? null

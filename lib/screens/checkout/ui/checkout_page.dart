@@ -10,9 +10,9 @@ import 'package:book_store/screens/checkout/views/user_note_textfield.dart';
 import 'package:book_store/screens/order_bill/ui/order_bill_page.dart';
 import 'package:book_store/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/repositories/main_repository.dart';
 import '../views/address_selector.dart';
 import '../views/bottom_button.dart';
 import '../views/loading_layer.dart';
@@ -23,42 +23,55 @@ class CheckoutPage extends StatelessWidget {
   final List<CartItemModel> listProduct;
   final bool checkoutFromCart;
 
-  static const MethodChannel platform =
-      MethodChannel('flutter.native/channelPayOrder');
-
-  const CheckoutPage(
-      {super.key, required this.listProduct, required this.checkoutFromCart});
+  const CheckoutPage({
+    super.key,
+    required this.listProduct,
+    required this.checkoutFromCart,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CheckoutBloc, CheckoutState>(
-      bloc: BlocProvider.of<CheckoutBloc>(context)..add(CheckoutLoadingEvent()),
-      listener: (context, state) {
-        if (state is CheckoutOrderSuccessfulState) {
-          Navigator.of(context).pushAndRemoveUntil(
-            PageRouteSlideTransition(
-              child: OrderBillPage(
-                idTransaction: state.idTransaction,
+    return BlocProvider(
+      create: (context) => CheckoutBloc(
+        RepositoryProvider.of<MainRepository>(context).addressRepository,
+        RepositoryProvider.of<MainRepository>(context).checkoutRepository,
+        RepositoryProvider.of<MainRepository>(context).notiRepository,
+      )..add(CheckoutLoadingEvent()),
+      child: BlocConsumer<CheckoutBloc, CheckoutState>(
+        listener: (context, state) {
+          if (state is CheckoutOrderSuccessfulState) {
+            Navigator.of(context).pushAndRemoveUntil(
+              PageRouteSlideTransition(
+                child: OrderBillPage(
+                  idTransaction: state.idTransaction,
+                ),
               ),
-            ),
-            (route) => false,
+              (route) => false,
+            );
+          }
+        },
+        builder: (context, state) {
+          return _CheckOutPageContent(
+            listProduct: listProduct,
+            checkoutFromCart: checkoutFromCart,
           );
-        }
-      },
-      builder: (context, state) {
-        return _CheckOutPageContent(listProduct: listProduct);
-      },
+        },
+      ),
     );
   }
 }
 
 class _CheckOutPageContent extends StatelessWidget {
   final List<CartItemModel> listProduct;
-  const _CheckOutPageContent({required this.listProduct});
+  final bool checkoutFromCart;
+
+  const _CheckOutPageContent({
+    required this.listProduct,
+    required this.checkoutFromCart,
+  });
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController noteController = TextEditingController();
     return Stack(
       children: [
         Scaffold(
@@ -131,7 +144,7 @@ class _CheckOutPageContent extends StatelessWidget {
                         ),
                       ),
                       const TransportSelector(),
-                      UserNoteTextField(textController: noteController),
+                      const UserNoteTextField(),
                       const PaymentMethodSelector(),
                       CheckoutDetails(list: listProduct),
                       const CheckoutTerms(),
@@ -139,7 +152,10 @@ class _CheckOutPageContent extends StatelessWidget {
                   ),
                 ),
               ),
-              CheckoutBottomButton(list: listProduct),
+              CheckoutBottomButton(
+                list: listProduct,
+                fromCart: checkoutFromCart,
+              ),
             ],
           ),
         ),

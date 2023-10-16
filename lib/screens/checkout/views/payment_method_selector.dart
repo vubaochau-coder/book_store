@@ -17,7 +17,7 @@ class PaymentMethodSelector extends StatelessWidget {
             previous.selectedPayments != current.selectedPayments;
       },
       builder: (context, state) {
-        if (state.isLoading) {
+        if (state.isLoading || state is CheckoutOrderSuccessfulState) {
           return const SizedBox();
         }
 

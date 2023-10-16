@@ -1,24 +1,27 @@
 part of 'search_bloc.dart';
 
-abstract class SearchState extends Equatable {
-  const SearchState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class SearchLoadingState extends SearchState {}
-
-class SearchLoadingSuccessfulState extends SearchState {
+class SearchState extends Equatable {
+  final bool isLoading;
   final List<SearchSuggestionModel> searchedList;
 
-  const SearchLoadingSuccessfulState({required this.searchedList});
+  const SearchState({
+    this.isLoading = true,
+    this.searchedList = const [],
+  });
 
   @override
-  List<Object> get props => [searchedList];
-}
+  List<Object> get props => [isLoading, searchedList];
 
-class SearchLoadingEmptyState extends SearchState {}
+  SearchState copyWith({
+    bool? isLoading,
+    List<SearchSuggestionModel>? searchedList,
+  }) {
+    return SearchState(
+      isLoading: isLoading ?? this.isLoading,
+      searchedList: searchedList ?? this.searchedList,
+    );
+  }
+}
 
 class SearchCompletedState extends SearchState {
   final String query;

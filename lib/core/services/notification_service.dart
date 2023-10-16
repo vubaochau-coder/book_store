@@ -82,4 +82,24 @@ class NotificationService {
         .collection(FirebaseCollections.notification)
         .add(model.toJson());
   }
+
+  Future<void> createOrderTransactionNoti(String transId) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    final model = NotificationModel(
+      id: '',
+      title: 'Đặt hàng thành công',
+      content:
+          'Yêu cầu của đơn hàng $transId đã được gửi đến cho người bán. Bạn có thể theo dõi trạng thái đơn hàng ở trong mục Đơn hàng của tôi.',
+      date: DateTime.now(),
+      isRead: false,
+      actionCode: 'order_0',
+    );
+
+    await FirebaseFirestore.instance
+        .collection(FirebaseCollections.user)
+        .doc(uid)
+        .collection(FirebaseCollections.notification)
+        .add(model.toJson());
+  }
 }

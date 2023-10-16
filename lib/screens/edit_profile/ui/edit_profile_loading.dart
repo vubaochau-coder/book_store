@@ -1,4 +1,4 @@
-import 'package:book_store/theme.dart';
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -12,9 +12,7 @@ class EditProfileLoading extends StatelessWidget {
       children: [
         Stack(
           children: [
-            const SizedBox(
-              height: 250,
-            ),
+            const SizedBox(height: 250),
             Image.asset(
               'images/background.jpg',
               height: 190,
@@ -26,8 +24,8 @@ class EditProfileLoading extends StatelessWidget {
               left: 0,
               right: 0,
               child: Shimmer.fromColors(
-                baseColor: baseShimmer,
-                highlightColor: highlightShimmer,
+                baseColor: AppColors.baseShimmer,
+                highlightColor: AppColors.highlightShimmer,
                 child: Container(
                   width: 120,
                   height: 120,
@@ -47,12 +45,10 @@ class EditProfileLoading extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Shimmer.fromColors(
-                  baseColor: baseShimmer,
-                  highlightColor: highlightShimmer,
+                  baseColor: AppColors.baseShimmer,
+                  highlightColor: AppColors.highlightShimmer,
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                    ),
+                    decoration: const BoxDecoration(color: Colors.white),
                     child: const Text(
                       'Tên của bạn',
                       style: TextStyle(
@@ -63,30 +59,12 @@ class EditProfileLoading extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Container(
-                  height: 48,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 14,
-                ),
+                emptyContainer(),
                 Shimmer.fromColors(
-                  baseColor: baseShimmer,
-                  highlightColor: highlightShimmer,
+                  baseColor: AppColors.baseShimmer,
+                  highlightColor: AppColors.highlightShimmer,
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                    ),
+                    decoration: const BoxDecoration(color: Colors.white),
                     child: const Text(
                       'Số điện thoại',
                       style: TextStyle(
@@ -96,23 +74,7 @@ class EditProfileLoading extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Container(
-                  height: 48,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 14,
-                ),
+                emptyContainer(),
                 Row(
                   children: [
                     Expanded(
@@ -121,12 +83,11 @@ class EditProfileLoading extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Shimmer.fromColors(
-                            baseColor: baseShimmer,
-                            highlightColor: highlightShimmer,
+                            baseColor: AppColors.baseShimmer,
+                            highlightColor: AppColors.highlightShimmer,
                             child: Container(
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
+                              decoration:
+                                  const BoxDecoration(color: Colors.white),
                               child: const Text(
                                 'Giới tính',
                                 style: TextStyle(
@@ -136,38 +97,22 @@ class EditProfileLoading extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Container(
-                            height: 48,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 1,
-                              ),
-                            ),
-                          ),
+                          emptyContainer(),
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      width: 12,
-                    ),
+                    const SizedBox(width: 12),
                     Expanded(
                       flex: 2,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Shimmer.fromColors(
-                            baseColor: baseShimmer,
-                            highlightColor: highlightShimmer,
+                            baseColor: AppColors.baseShimmer,
+                            highlightColor: AppColors.highlightShimmer,
                             child: Container(
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                              ),
+                              decoration:
+                                  const BoxDecoration(color: Colors.white),
                               child: const Text(
                                 'Ngày sinh',
                                 style: TextStyle(
@@ -177,20 +122,7 @@ class EditProfileLoading extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Container(
-                            height: 48,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 1,
-                              ),
-                            ),
-                          ),
+                          emptyContainer(),
                         ],
                       ),
                     ),
@@ -208,7 +140,7 @@ class EditProfileLoading extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
-              backgroundColor: themeColor,
+              backgroundColor: AppColors.themeColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -224,6 +156,18 @@ class EditProfileLoading extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget emptyContainer() {
+    return Container(
+      height: 48,
+      width: double.infinity,
+      margin: const EdgeInsets.only(top: 8, bottom: 14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: Colors.grey, width: 1),
+      ),
     );
   }
 }

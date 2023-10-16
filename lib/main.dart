@@ -1,7 +1,6 @@
 import 'package:badges/badges.dart' as badge;
 import 'package:book_store/app_themes/app_fonts.dart';
 import 'package:book_store/authentication_service/auth_service.dart';
-import 'package:book_store/screens/checkout/bloc/checkout_bloc.dart';
 import 'package:book_store/screens/cart/bloc/cart_bloc.dart';
 import 'package:book_store/screens/cart/ui/cart_page.dart';
 import 'package:book_store/screens/edit_password/bloc/edit_pass_bloc.dart';
@@ -53,15 +52,18 @@ class MyApp extends StatelessWidget {
               RepositoryProvider.of<MainRepository>(context).favoriteRepository,
             ),
           ),
-          BlocProvider(create: (context) => CartBloc()),
-          BlocProvider(create: (context) => UserBloc()),
           BlocProvider(
-            create: (context) => CheckoutBloc(
-              RepositoryProvider.of<MainRepository>(context).addressRepository,
+            create: (context) => CartBloc(
+              RepositoryProvider.of<MainRepository>(context).cartRepository,
             ),
           ),
+          BlocProvider(create: (context) => UserBloc()),
           BlocProvider(create: (context) => BillBloc()),
-          BlocProvider(create: (context) => SearchBloc()),
+          BlocProvider(
+            create: (context) => SearchBloc(
+              RepositoryProvider.of<MainRepository>(context).searchRepository,
+            ),
+          ),
           BlocProvider(create: (context) => FeedbackCountBloc()),
           BlocProvider(create: (context) => EditPasswordBloc()),
           BlocProvider(
