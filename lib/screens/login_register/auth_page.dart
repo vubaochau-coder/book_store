@@ -1,5 +1,5 @@
-import 'package:book_store/screens/login_register/login_page.dart';
-import 'package:book_store/screens/login_register/register_page.dart';
+import 'login_page.dart';
+import 'register_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme.dart';
@@ -24,6 +24,11 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         height: double.infinity,
         decoration: BoxDecoration(
           color: themeColor.withAlpha(200),
+          image: const DecorationImage(
+            image: AssetImage('images/auth_background.png'),
+            opacity: 0.15,
+            fit: BoxFit.cover,
+          ),
         ),
         child: SafeArea(
           child: Column(
@@ -93,22 +98,22 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
 
   void moveToRegisterPage() {
     controller.nextPage(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 800),
       curve: Curves.ease,
     );
     backgroundController.previousPage(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 800),
       curve: Curves.ease,
     );
   }
 
   void moveToLoginPage() {
     controller.previousPage(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 800),
       curve: Curves.ease,
     );
     backgroundController.nextPage(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 800),
       curve: Curves.ease,
     );
   }

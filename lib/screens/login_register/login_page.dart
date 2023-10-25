@@ -1,3 +1,4 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/authentication_service/auth_service.dart';
 import 'package:book_store/screens/login_register/forgot_page.dart';
 import 'package:book_store/theme.dart';
@@ -56,14 +57,12 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
               Text(
                 'Đăng nhập',
                 style: TextStyle(
-                  color: themeColor,
+                  color: AppColors.themeColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 26,
                 ),
               ),
-              const SizedBox(
-                height: 29,
-              ),
+              const SizedBox(height: 29),
               TextField(
                 controller: emailLoginController,
                 keyboardType: TextInputType.emailAddress,
@@ -83,9 +82,7 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               TextField(
                 controller: passLoginController,
                 keyboardType: TextInputType.visiblePassword,
@@ -101,10 +98,10 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
                   errorBorder: textFieldBorder,
                   prefixIcon: Icon(
                     Icons.lock,
-                    color: themeColor,
+                    color: AppColors.themeColor,
                   ),
                   suffixIcon: IconButton(
-                    color: themeColor,
+                    color: AppColors.themeColor,
                     icon: isUnShowPass
                         ? const Icon(Icons.visibility_off)
                         : const Icon(Icons.visibility),
@@ -129,7 +126,8 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
                     child: Text(
                       'Quên mật khẩu?',
                       style: TextStyle(
-                        color: themeColor,
+                        color: AppColors.themeColor,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -147,7 +145,7 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
                               passLoginController.text.trim());
                         },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: themeColor,
+                    backgroundColor: AppColors.themeColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18),
                     ),
@@ -177,26 +175,20 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
                     child: Text(
                       'Đăng ký ngay',
                       style: TextStyle(
-                        color: themeColor,
+                        color: AppColors.themeColor,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16),
               const Row(
                 children: [
                   Expanded(
-                    child: Divider(
-                      color: Colors.black54,
-                      indent: 2,
-                    ),
+                    child: Divider(color: Colors.black54, indent: 2),
                   ),
-                  SizedBox(
-                    width: 2,
-                  ),
+                  SizedBox(width: 2),
                   Text(
                     'hoặc Đăng nhập bằng',
                     style: TextStyle(
@@ -213,9 +205,7 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -231,10 +221,7 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
                       fit: BoxFit.contain,
                     ),
                   ),
-                  const SizedBox(
-                    width: 42,
-                    height: 68,
-                  ),
+                  const SizedBox(width: 42, height: 68),
                   GestureDetector(
                     onTap: isVerifying
                         ? null

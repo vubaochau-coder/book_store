@@ -1,3 +1,5 @@
+import 'package:book_store/app_themes/app_colors.dart';
+import 'package:book_store/app_themes/app_text.dart';
 import 'package:book_store/theme.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,11 +26,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
+        title: Text(
           'Quên mật khẩu',
+          style: AppTexts.appbarTitle.copyWith(color: AppColors.themeColor),
         ),
         centerTitle: true,
-        foregroundColor: themeColor,
+        foregroundColor: AppColors.themeColor,
       ),
       body: Container(
         width: double.infinity,
