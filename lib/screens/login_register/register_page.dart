@@ -1,3 +1,4 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/authentication_service/auth_service.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,9 +67,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
                   fontSize: 26,
                 ),
               ),
-              const SizedBox(
-                height: 17,
-              ),
+              const SizedBox(height: 17),
               TextField(
                 controller: emailRegisterController,
                 keyboardType: TextInputType.emailAddress,
@@ -84,13 +83,11 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
                   errorBorder: textFieldBorder,
                   prefixIcon: Icon(
                     Icons.person,
-                    color: themeColor,
+                    color: AppColors.themeColor,
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               TextField(
                 controller: passRegisterController,
                 keyboardType: TextInputType.visiblePassword,
@@ -106,7 +103,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
                   errorBorder: textFieldBorder,
                   prefixIcon: Icon(
                     Icons.lock,
-                    color: themeColor,
+                    color: AppColors.themeColor,
                   ),
                   suffixIcon: IconButton(
                     color: themeColor,
@@ -120,9 +117,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
                 ),
                 obscureText: isUnShowPass,
               ),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               TextField(
                 controller: rePassRegisterController,
                 keyboardType: TextInputType.visiblePassword,
@@ -139,7 +134,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
                   errorBorder: textFieldBorder,
                   prefixIcon: Icon(
                     Icons.lock_reset,
-                    color: themeColor,
+                    color: AppColors.themeColor,
                   ),
                   suffixIcon: IconButton(
                     color: themeColor,
@@ -195,26 +190,20 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
                     child: Text(
                       'Đăng nhập',
                       style: TextStyle(
-                        color: themeColor,
+                        color: AppColors.themeColor,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16),
               const Row(
                 children: [
                   Expanded(
-                    child: Divider(
-                      color: Colors.black54,
-                      indent: 2,
-                    ),
+                    child: Divider(color: Colors.black54, indent: 2),
                   ),
-                  SizedBox(
-                    width: 2,
-                  ),
+                  SizedBox(width: 2),
                   Text(
                     'hoặc Đăng nhập bằng',
                     style: TextStyle(
@@ -224,16 +213,11 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
                     ),
                   ),
                   Expanded(
-                    child: Divider(
-                      color: Colors.black54,
-                      indent: 2,
-                    ),
+                    child: Divider(color: Colors.black54, indent: 2),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -249,10 +233,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
                       fit: BoxFit.contain,
                     ),
                   ),
-                  const SizedBox(
-                    width: 42,
-                    height: 68,
-                  ),
+                  const SizedBox(width: 42, height: 68),
                   GestureDetector(
                     onTap: isVerifying
                         ? null
