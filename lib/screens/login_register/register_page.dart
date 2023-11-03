@@ -62,7 +62,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
               Text(
                 'Đăng ký',
                 style: TextStyle(
-                  color: themeColor,
+                  color: AppColors.themeColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 26,
                 ),
@@ -106,7 +106,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
                     color: AppColors.themeColor,
                   ),
                   suffixIcon: IconButton(
-                    color: themeColor,
+                    color: AppColors.themeColor,
                     icon: isUnShowPass
                         ? const Icon(Icons.visibility_off)
                         : const Icon(Icons.visibility),
@@ -137,7 +137,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
                     color: AppColors.themeColor,
                   ),
                   suffixIcon: IconButton(
-                    color: themeColor,
+                    color: AppColors.themeColor,
                     icon: isUnShowPass
                         ? const Icon(Icons.visibility_off)
                         : const Icon(Icons.visibility),
@@ -160,7 +160,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
                           passRegisterController.text.trim(),
                           rePassRegisterController.text.trim()),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: themeColor,
+                    backgroundColor: AppColors.themeColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18),
                     ),
