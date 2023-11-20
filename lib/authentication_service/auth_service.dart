@@ -26,9 +26,11 @@ class AuthService {
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .snapshots(),
             builder: (context, snapshot) {
-              if (snapshot.data?.data() != null) {
+              if (snapshot.data?.data() != null &&
+                  snapshot.data!.data()!.isNotEmpty) {
                 BlocProvider.of<CartBloc>(context).add(CartLoadingEvent());
-                BlocProvider.of<UserBloc>(context).add(UserLoadingEvent());
+                BlocProvider.of<UserBloc>(context)
+                    .add(const UserLoadingEvent(firstTime: true));
                 BlocProvider.of<FeedbackCountBloc>(context)
                     .add(FeedbackCountLoadingEvent());
                 BlocProvider.of<NotificationBloc>(context)
@@ -96,8 +98,13 @@ class AuthService {
   }
 
   signOut() async {
-    await FirebaseAuth.instance.signOut();
-    await GoogleSignIn().signOut();
-    await FacebookAuth.instance.logOut();
+    await Future.wait([
+      FirebaseAuth.instance.signOut(),
+      GoogleSignIn().signOut(),
+      FacebookAuth.instance.logOut(),
+    ]);
+    // await FirebaseAuth.instance.signOut();
+    // await GoogleSignIn().signOut();
+    // await FacebookAuth.instance.logOut();
   }
 }

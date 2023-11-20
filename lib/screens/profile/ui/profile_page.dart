@@ -60,7 +60,7 @@ class ProfilePage extends StatelessWidget {
                                 .then((value) {
                               if (value != null && value == true) {
                                 BlocProvider.of<UserBloc>(context).add(
-                                  UserLoadingEvent(),
+                                  const UserLoadingEvent(firstTime: false),
                                 );
                               }
                             });
@@ -143,7 +143,8 @@ class ProfilePage extends StatelessWidget {
                                         .then((value) {
                                       if (value != null && value == true) {
                                         BlocProvider.of<UserBloc>(context).add(
-                                          UserLoadingEvent(),
+                                          const UserLoadingEvent(
+                                              firstTime: false),
                                         );
                                       }
                                     });

@@ -7,7 +7,13 @@ abstract class UserEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UserLoadingEvent extends UserEvent {}
+class UserLoadingEvent extends UserEvent {
+  final bool firstTime;
+
+  const UserLoadingEvent({required this.firstTime});
+}
+
+class StreamTransactionEvent extends UserEvent {}
 
 class UserUpdateProfileEvent extends UserEvent {
   final String name;
@@ -22,12 +28,10 @@ class UserUpdateEvent extends UserEvent {
   final int countZero;
   final int countOne;
   final int countTwo;
-  final UserModel model;
 
   const UserUpdateEvent({
     required this.countZero,
     required this.countOne,
     required this.countTwo,
-    required this.model,
   });
 }
