@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:book_store/core/constant/firebase_collections.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,25 +27,22 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     emit(const EditProfileState(isLoading: true));
 
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    String photoURL = FirebaseAuth.instance.currentUser!.photoURL!;
-    String displayName = FirebaseAuth.instance.currentUser!.displayName!;
-    String phoneNumber = '';
-    bool isMale = true;
-    String birthday = '';
 
-    final userQuery =
-        await FirebaseFirestore.instance.collection('User').doc(uid).get();
+    final userQuery = await FirebaseFirestore.instance
+        .collection(FirebaseCollections.user)
+        .doc(uid)
+        .get();
 
-    if (userQuery.exists) {
-      phoneNumber = (userQuery.data() as Map)['phoneNumber'] ?? '';
-      isMale = (userQuery.data() as Map)['isMale'] ?? true;
-      birthday = (userQuery.data() as Map)['birthday'] ?? '';
-    }
+    String name = userQuery.data()!['name'];
+    String phone = userQuery.data()!['phoneNumber'];
+    bool isMale = userQuery.data()!['isMale'];
+    String birthday = userQuery.data()!['birthday'];
+    String photoURL = userQuery.data()!['avatar'];
 
     emit(state.copyWith(
       avtURL: photoURL,
-      name: displayName,
-      phone: phoneNumber,
+      name: name,
+      phone: phone,
       isMale: isMale,
       birthday: birthday,
       isLoading: false,
@@ -73,9 +71,9 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
 
     if (haveError == false) {
       String uid = FirebaseAuth.instance.currentUser!.uid;
-      final currentUser = FirebaseAuth.instance.currentUser!;
+      // final currentUser = FirebaseAuth.instance.currentUser!;
 
-      await currentUser.updateDisplayName(state.name.trim());
+      // await currentUser.updateDisplayName(state.name.trim());
 
       if (state.newAvatar != null) {
         final avatarImageRef = FirebaseStorage.instance
@@ -85,17 +83,32 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         await avatarImageRef.putFile(state.newAvatar!).then((p0) async {
           String url = await p0.ref.getDownloadURL();
 
-          await currentUser.updatePhotoURL(url);
+          // await currentUser.updatePhotoURL(url);
+
+          final userDoc = FirebaseFirestore.instance
+              .collection(FirebaseCollections.user)
+              .doc(uid);
+
+          await userDoc.set({
+            'phoneNumber': state.phone.trim(),
+            'birthday': state.birthday.trim(),
+            'isMale': state.isMale,
+            'name': state.name.trim(),
+            'avatar': url,
+          }, SetOptions(merge: true));
         });
+      } else {
+        final userDoc = FirebaseFirestore.instance
+            .collection(FirebaseCollections.user)
+            .doc(uid);
+
+        await userDoc.set({
+          'phoneNumber': state.phone.trim(),
+          'birthday': state.birthday.trim(),
+          'isMale': state.isMale,
+          'name': state.name.trim(),
+        }, SetOptions(merge: true));
       }
-
-      final userDoc = FirebaseFirestore.instance.collection('User').doc(uid);
-
-      await userDoc.set({
-        'phoneNumber': state.phone.trim(),
-        'birthday': state.birthday.trim(),
-        'isMale': state.isMale,
-      }, SetOptions(merge: true));
 
       Fluttertoast.showToast(msg: 'Cập nhật thông tin thành công');
       await Future.delayed(

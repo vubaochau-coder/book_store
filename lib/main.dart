@@ -6,6 +6,7 @@ import 'package:book_store/screens/cart/ui/cart_page.dart';
 import 'package:book_store/screens/edit_password/bloc/edit_pass_bloc.dart';
 import 'package:book_store/screens/home/bloc/home_bloc.dart';
 import 'package:book_store/screens/home/ui/home_page.dart';
+import 'package:book_store/screens/init_profile/bloc/init_profile_bloc.dart';
 import 'package:book_store/screens/notification/bloc/notification_bloc.dart';
 import 'package:book_store/screens/notification/ui/notification_page.dart';
 import 'package:book_store/screens/order_bill/bloc/bill_bloc.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
       create: (context) => MainRepository(),
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (context) => InitProfileBloc()),
           BlocProvider(
               create: (context) => HomeBloc()..add(HomeLoadingEvent())),
           BlocProvider(

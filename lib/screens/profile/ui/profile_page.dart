@@ -60,7 +60,7 @@ class ProfilePage extends StatelessWidget {
                                 .then((value) {
                               if (value != null && value == true) {
                                 BlocProvider.of<UserBloc>(context).add(
-                                  UserLoadingEvent(),
+                                  const UserLoadingEvent(firstTime: false),
                                 );
                               }
                             });
@@ -101,34 +101,37 @@ class ProfilePage extends StatelessWidget {
                             child: Row(
                               children: [
                                 const SizedBox(width: 6),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                      height: 14,
-                                    ),
-                                    Text(
-                                      state.userModel!.name,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
+                                Expanded(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(
+                                        height: 14,
                                       ),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    const Text(
-                                      'Chỉnh sửa tài khoản',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w300,
+                                      Text(
+                                        state.userModel!.name,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      const SizedBox(height: 6),
+                                      const Text(
+                                        'Chỉnh sửa tài khoản',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                const Spacer(),
                                 IconButton(
                                   onPressed: () {
                                     Navigator.of(context)
@@ -140,7 +143,8 @@ class ProfilePage extends StatelessWidget {
                                         .then((value) {
                                       if (value != null && value == true) {
                                         BlocProvider.of<UserBloc>(context).add(
-                                          UserLoadingEvent(),
+                                          const UserLoadingEvent(
+                                              firstTime: false),
                                         );
                                       }
                                     });
@@ -248,8 +252,8 @@ class ProfilePage extends StatelessWidget {
             CustomListTile(
               title: 'Đăng xuất',
               leading: Icons.logout,
-              onPressed: () {
-                AuthService().signOut();
+              onPressed: () async {
+                await AuthService().signOut();
               },
             ),
             const SizedBox(height: 10),

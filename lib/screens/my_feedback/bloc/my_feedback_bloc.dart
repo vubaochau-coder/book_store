@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:book_store/core/constant/firebase_collections.dart';
 import 'package:book_store/core/models/unfeedback_item_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
@@ -62,9 +63,17 @@ class MyFeedbackBloc extends Bloc<MyFeedbackEvent, MyFeedbackState> {
   _onSubmitFeedback(MyFeedbackSubmitEvent event, Emitter emit) async {
     emit(state.copyWith(showLoadingDialog: true));
 
-    String userName = FirebaseAuth.instance.currentUser!.displayName!;
-    String imgUrl = FirebaseAuth.instance.currentUser!.photoURL!;
-    final feedbackColRef = FirebaseFirestore.instance.collection('Feedback');
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    final userInfoRef = FirebaseFirestore.instance
+        .collection(FirebaseCollections.user)
+        .doc(uid);
+
+    final userInfo = await userInfoRef.get();
+
+    String userName = userInfo.data()!['name'];
+    String imgUrl = userInfo.data()!['avatar'];
+    final feedbackColRef = FirebaseFirestore.instance
+        .collection(FirebaseCollections.productFeedback);
 
     await feedbackColRef.add({
       'bookID': event.bookID,
@@ -77,9 +86,9 @@ class MyFeedbackBloc extends Bloc<MyFeedbackEvent, MyFeedbackState> {
       String uid = FirebaseAuth.instance.currentUser!.uid;
 
       await FirebaseFirestore.instance
-          .collection('User')
+          .collection(FirebaseCollections.user)
           .doc(uid)
-          .collection('Feedback')
+          .collection(FirebaseCollections.myFeedback)
           .doc(event.feedbackID)
           .delete()
           .then((value) {
