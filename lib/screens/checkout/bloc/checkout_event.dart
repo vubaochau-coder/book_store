@@ -38,22 +38,26 @@ class CheckoutUpdateEmptyAddressEvent extends CheckoutEvent {
 }
 
 class CheckoutSimpleOrderEvent extends CheckoutEvent {
-  final TransactionModel transaction;
+  // final TransactionModel transaction;
+  final List<CartItemModel> list;
   final bool fromCart;
 
   const CheckoutSimpleOrderEvent({
-    required this.transaction,
+    // required this.transaction,
     required this.fromCart,
+    required this.list,
   });
 }
 
 class CheckoutZaloPayOrderEvent extends CheckoutEvent {
-  final TransactionModel transaction;
+  // final TransactionModel transaction;
   final bool fromCart;
+  final List<CartItemModel> list;
 
   const CheckoutZaloPayOrderEvent({
-    required this.transaction,
+    // required this.transaction,
     required this.fromCart,
+    required this.list,
   });
 }
 

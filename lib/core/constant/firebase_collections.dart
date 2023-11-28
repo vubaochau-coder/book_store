@@ -12,4 +12,5 @@ class FirebaseCollections {
   static String productFeedback = 'Feedback';
   static String notification = 'Notification';
   static String products = 'Products';
+  static String orders = 'Orders';
 }

@@ -19,6 +19,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../core/models/cart_item_model.dart';
+
 part 'checkout_event.dart';
 part 'checkout_state.dart';
 
@@ -116,22 +118,56 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     if (state.userAddress != null) {
       emit(state.copyWith(showLoadingDialog: true));
 
+      final transactionModel = TransactionModel(
+        id: '',
+        dateCreated: DateTime.now(),
+        dateCompleted: getDateCompleted(state.selectedTransport),
+        address: state.userAddress!.address,
+        transport: state.selectedTransport!.name,
+        note: state.note,
+        totalPrice: calculateTotalPrice(event.list, state.selectedTransport!),
+        productPrice: calculateTotalProductPrice(event.list) -
+            calculateTotalDiscount(event.list),
+        transportPrice: state.selectedTransport!.price,
+        products: event.list,
+        status: 0,
+        paid: false,
+        paymentMethod: 'Thanh toán khi nhận hàng',
+        phone: state.userAddress!.phone,
+        userName: state.userAddress!.name,
+      );
+
       try {
         await _checkoutRepository
-            .createTransaction(event.transaction)
+            .createTransaction2(transactionModel)
             .then((value) async {
           await Future.wait([
-            _checkoutRepository.addProductToTransaction(
-                event.transaction.products, value),
+            // _checkoutRepository.addProductToTransaction(
+            //     transactionModel.products, value),
             _notiRepository.createOrderTransactionNoti(value),
             event.fromCart
                 ? _checkoutRepository
-                    .deleteItemFromCart(event.transaction.products)
+                    .deleteItemFromCart(transactionModel.products)
                 : Future.value(null),
           ]);
 
           emit(CheckoutOrderSuccessfulState(idTransaction: value));
         });
+        // await _checkoutRepository
+        //     .createTransaction(transactionModel)
+        //     .then((value) async {
+        //   await Future.wait([
+        //     _checkoutRepository.addProductToTransaction(
+        //         transactionModel.products, value),
+        //     _notiRepository.createOrderTransactionNoti(value),
+        //     event.fromCart
+        //         ? _checkoutRepository
+        //             .deleteItemFromCart(transactionModel.products)
+        //         : Future.value(null),
+        //   ]);
+
+        //   emit(CheckoutOrderSuccessfulState(idTransaction: value));
+        // });
       } on FirebaseException catch (e) {
         emit(state.copyWith(showLoadingDialog: false));
         Fluttertoast.showToast(msg: "Error: ${e.message}");
@@ -145,28 +181,62 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     if (state.userAddress != null) {
       emit(state.copyWith(showLoadingDialog: true));
 
+      final transactionModel = TransactionModel(
+        id: '',
+        dateCreated: DateTime.now(),
+        dateCompleted: getDateCompleted(state.selectedTransport),
+        address: state.userAddress!.address,
+        transport: state.selectedTransport!.name,
+        note: state.note,
+        totalPrice: calculateTotalPrice(event.list, state.selectedTransport!),
+        productPrice: calculateTotalProductPrice(event.list) -
+            calculateTotalDiscount(event.list),
+        transportPrice: state.selectedTransport!.price,
+        products: event.list,
+        status: 0,
+        paid: true,
+        paymentMethod: 'ZaloPay',
+        phone: state.userAddress!.phone,
+        userName: state.userAddress!.name,
+      );
+
       var createOrderResult =
-          await createOrder(event.transaction.totalPrice.toInt());
+          await createOrder(transactionModel.totalPrice.toInt());
       if (createOrderResult != null) {
         final String result = await platform.invokeMethod(
             'payOrder', {"zptoken": createOrderResult.zptranstoken});
         if (result == 'Payment Success') {
           try {
             await _checkoutRepository
-                .createTransaction(event.transaction)
+                .createTransaction2(transactionModel)
                 .then((value) async {
               await Future.wait([
-                _checkoutRepository.addProductToTransaction(
-                    event.transaction.products, value),
+                // _checkoutRepository.addProductToTransaction(
+                //     transactionModel.products, value),
                 _notiRepository.createOrderTransactionNoti(value),
                 event.fromCart
                     ? _checkoutRepository
-                        .deleteItemFromCart(event.transaction.products)
+                        .deleteItemFromCart(transactionModel.products)
                     : Future.value(null),
               ]);
 
               emit(CheckoutOrderSuccessfulState(idTransaction: value));
             });
+            // await _checkoutRepository
+            //     .createTransaction(transactionModel)
+            //     .then((value) async {
+            //   await Future.wait([
+            //     _checkoutRepository.addProductToTransaction(
+            //         transactionModel.products, value),
+            //     _notiRepository.createOrderTransactionNoti(value),
+            //     event.fromCart
+            //         ? _checkoutRepository
+            //             .deleteItemFromCart(transactionModel.products)
+            //         : Future.value(null),
+            //   ]);
+
+            //   emit(CheckoutOrderSuccessfulState(idTransaction: value));
+            // });
           } on FirebaseException catch (e) {
             emit(state.copyWith(showLoadingDialog: false));
             Fluttertoast.showToast(msg: "Error: ${e.message}");
@@ -252,5 +322,38 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
 
   _updateUserNote(UpdateUserNoteEvent event, Emitter emit) {
     emit(state.copyWith(note: event.note.trim()));
+  }
+
+  double calculateTotalPrice(
+      List<CartItemModel> list, TransportModel transports) {
+    double result = 0;
+    for (var item in list) {
+      result += item.price * item.count;
+    }
+    result += transports.price;
+
+    return result;
+  }
+
+  DateTime getDateCompleted(TransportModel? transportModel) {
+    final dateNow = DateTime.now();
+    final dayFromNow = dateNow.add(Duration(days: transportModel!.max));
+    return dayFromNow;
+  }
+
+  double calculateTotalProductPrice(List<CartItemModel> list) {
+    double result = 0;
+    for (var item in list) {
+      result += item.priceBeforeDiscount * item.count;
+    }
+    return result;
+  }
+
+  double calculateTotalDiscount(List<CartItemModel> list) {
+    double result = 0;
+    for (var item in list) {
+      result += (item.priceBeforeDiscount - item.price) * item.count;
+    }
+    return result;
   }
 }

@@ -19,6 +19,10 @@ class CheckoutRepository {
     return await _service.createTransaction(transaction);
   }
 
+  Future<String> createTransaction2(TransactionModel transaction) async {
+    return await _service.createTransaction2(transaction);
+  }
+
   Future<void> addProductToTransaction(
       List<CartItemModel> products, String transactionId) async {
     return await _service.addProductToTransaction(products, transactionId);

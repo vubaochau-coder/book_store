@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:book_store/core/constant/firebase_collections.dart';
 import 'package:book_store/core/models/transaction_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 part 'bill_event.dart';
 part 'bill_state.dart';
@@ -18,12 +18,10 @@ class BillBloc extends Bloc<BillEvent, BillState> {
       BillLoadingEvent event, Emitter<BillState> emit) async {
     emit(BillLoadingState());
 
-    String uid = FirebaseAuth.instance.currentUser!.uid;
+    // String uid = FirebaseAuth.instance.currentUser!.uid;
 
     final transactionQuery = await FirebaseFirestore.instance
-        .collection('User')
-        .doc(uid)
-        .collection('Transaction')
+        .collection(FirebaseCollections.orders)
         .doc(event.billID)
         .get();
 

@@ -25,4 +25,8 @@ class TransactionRepository {
   Future<void> receiveTransaction(String transId) async {
     return await _service.receiveTransaction(transId);
   }
+
+  Future<Map<String, dynamic>> getOrderProduct(String productId) async {
+    return _service.getOrderProduct(productId);
+  }
 }

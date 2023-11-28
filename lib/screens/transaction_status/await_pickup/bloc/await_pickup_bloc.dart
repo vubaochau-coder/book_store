@@ -7,6 +7,8 @@ import 'package:book_store/core/repositories/transaction_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../../../../core/models/cart_item_model.dart';
+
 part 'await_pickup_event.dart';
 part 'await_pickup_state.dart';
 
@@ -39,17 +41,43 @@ class AwaitPickupBloc extends Bloc<AwaitPickupEvent, AwaitPickupState> {
       if (snapshotEvent.docs.isNotEmpty) {
         List<TransactionModel> list = [];
 
-        final futureGroup = await Future.wait(
-          snapshotEvent.docs.map(
-            (e) => _transactionRepository.getAllProductOfTransaction(e.id),
-          ),
-        );
+        // final futureGroup = await Future.wait(
+        //   snapshotEvent.docs.map(
+        //     (e) => _transactionRepository.getAllProductOfTransaction(e.id),
+        //   ),
+        // );
 
         for (int i = 0; i < snapshotEvent.size; i++) {
+          List<CartItemModel> prs = [];
+
+          List<Map<String, dynamic>> rawPrs =
+              List.from(snapshotEvent.docs[i].data()['products']);
+
+          final productsInfo = await Future.wait(
+            rawPrs.map(
+              (e) => _transactionRepository.getOrderProduct(e['productID']),
+            ),
+          );
+
+          for (int j = 0; j < rawPrs.length; j++) {
+            CartItemModel cartItem = CartItemModel(
+              id: '',
+              bookID: rawPrs[j]['productID'],
+              count: rawPrs[j]['count'],
+              price: rawPrs[j]['price'],
+              imgUrl: productsInfo[j]['imgURL'],
+              title: productsInfo[j]['productName'],
+              priceBeforeDiscount: rawPrs[j]['priceBeforeDiscount'],
+            );
+
+            prs.add(cartItem);
+          }
+
           list.add(
             TransactionModel.fromSnapshot(
               snapshotEvent.docs[i],
-              futureGroup[i],
+              // futureGroup[i],
+              prs,
             ),
           );
         }

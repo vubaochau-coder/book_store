@@ -24,7 +24,16 @@ class CheckoutService {
         .collection(FirebaseCollections.user)
         .doc(uid)
         .collection(FirebaseCollections.transaction)
-        .add(transaction.toJson());
+        .add(transaction.toJson(uid));
+
+    return doc.id;
+  }
+
+  Future<String> createTransaction2(TransactionModel transaction) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    final doc = await FirebaseFirestore.instance
+        .collection(FirebaseCollections.orders)
+        .add(transaction.toJson(uid));
 
     return doc.id;
   }
@@ -46,13 +55,22 @@ class CheckoutService {
 
   Future<void> deleteItemFromCart(List<CartItemModel> products) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    await Future.wait(
-      products.map((e) => FirebaseFirestore.instance
+    var batch = FirebaseFirestore.instance.batch();
+    for (var ele in products) {
+      batch.delete(FirebaseFirestore.instance
           .collection(FirebaseCollections.user)
           .doc(uid)
           .collection(FirebaseCollections.cart)
-          .doc(e.id)
-          .delete()),
-    );
+          .doc(ele.id));
+    }
+    await batch.commit();
+    // await Future.wait(
+    //   products.map((e) => FirebaseFirestore.instance
+    //       .collection(FirebaseCollections.user)
+    //       .doc(uid)
+    //       .collection(FirebaseCollections.cart)
+    //       .doc(e.id)
+    //       .delete()),
+    // );
   }
 }

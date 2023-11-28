@@ -1,5 +1,6 @@
-import 'package:book_store/screens/transaction_status/ui/abstract_transaction_item.dart';
+import "../../ui/abstract_transaction_item.dart";
 import 'package:book_store/theme.dart';
+import 'package:book_store/utils/date_time.dart';
 import 'package:flutter/material.dart';
 
 class DeliveringItem extends AbstractTransactionItem {
@@ -18,7 +19,7 @@ class DeliveringItem extends AbstractTransactionItem {
       children: [
         Expanded(
           child: Text(
-            'Nhận sản phẩm muộn nhất vào ${transactionData.dateCompleted}',
+            'Nhận sản phẩm muộn nhất vào ${DateTimeUtils.orderTime(transactionData.dateCompleted)}',
             style: const TextStyle(
               color: Colors.grey,
             ),

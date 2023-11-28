@@ -120,9 +120,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     _userStream?.cancel();
     _userStream = null;
     _userStream = FirebaseFirestore.instance
-        .collection(FirebaseCollections.user)
-        .doc(uid)
-        .collection(FirebaseCollections.transaction)
+        .collection(FirebaseCollections.orders)
+        .where('userId', isEqualTo: uid) //add
+        // .doc(uid)
+        // .collection(FirebaseCollections.transaction)
         .snapshots()
         .listen((snapshotEvent) async {
       int transactionZero = 0;

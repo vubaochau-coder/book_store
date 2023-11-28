@@ -6,6 +6,8 @@ class TransactionModel {
   final DateTime dateCreated;
   final DateTime dateCompleted;
   final String address;
+  final String userName;
+  final String phone;
   final String transport;
   final String note;
   final double totalPrice;
@@ -30,6 +32,8 @@ class TransactionModel {
     required this.status,
     required this.paid,
     required this.paymentMethod,
+    required this.userName,
+    required this.phone,
   });
 
   factory TransactionModel.fromSnapshot(
@@ -51,10 +55,17 @@ class TransactionModel {
       paid: snapshot.get('paid'),
       paymentMethod: snapshot.get('paymentMethod'),
       products: products,
+      userName: snapshot.data()!['userName'] ?? "",
+      phone: snapshot.data()!['phone'] ?? "",
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson(String uid) {
+    List<Map<String, dynamic>> p = [];
+    for (var ele in products) {
+      p.add(ele.toJson());
+    }
+
     return {
       'dateCreated': dateCreated,
       'dateCompleted': dateCompleted,
@@ -67,6 +78,10 @@ class TransactionModel {
       'status': status,
       'paid': paid,
       'paymentMethod': paymentMethod,
+      'userName': userName,
+      'phone': phone,
+      'userId': uid,
+      'products': p,
     };
   }
 }

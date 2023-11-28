@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/models/address_model.dart';
 import '../../../core/models/cart_item_model.dart';
-import '../../../core/models/transaction_model.dart';
 import '../../../core/models/transport_model.dart';
 import '../../../utils/convert.dart';
 
@@ -95,48 +94,52 @@ class CheckoutBottomButton extends StatelessWidget {
                       if (state.selectedPayments!.id == 'zalo') {
                         BlocProvider.of<CheckoutBloc>(context).add(
                           CheckoutZaloPayOrderEvent(
-                            transaction: TransactionModel(
-                              id: '',
-                              dateCreated: DateTime.now(),
-                              dateCompleted:
-                                  getDateCompleted(state.selectedTransport),
-                              address: getDefaultAddress(state.userAddress),
-                              transport: state.selectedTransport!.name,
-                              note: state.note,
-                              totalPrice: calculateTotalPrice(
-                                  list, state.selectedTransport!),
-                              productPrice: calculateTotalProductPrice(list) -
-                                  calculateTotalDiscount(list),
-                              transportPrice: state.selectedTransport!.price,
-                              products: list,
-                              status: 0,
-                              paid: true,
-                              paymentMethod: 'ZaloPay',
-                            ),
+                            // transaction: TransactionModel(
+                            //   id: '',
+                            //   dateCreated: DateTime.now(),
+                            //   dateCompleted:
+                            //       getDateCompleted(state.selectedTransport),
+                            //   address: getDefaultAddress(state.userAddress),
+                            //   transport: state.selectedTransport!.name,
+                            //   note: state.note,
+                            //   totalPrice: calculateTotalPrice(
+                            //       list, state.selectedTransport!),
+                            //   productPrice: calculateTotalProductPrice(list) -
+                            //       calculateTotalDiscount(list),
+                            //   transportPrice: state.selectedTransport!.price,
+                            //   products: list,
+                            //   status: 0,
+                            //   paid: true,
+                            //   paymentMethod: 'ZaloPay',
+                            // ),
+                            list: list,
                             fromCart: fromCart,
                           ),
                         );
                       } else {
                         BlocProvider.of<CheckoutBloc>(context).add(
                           CheckoutSimpleOrderEvent(
-                            transaction: TransactionModel(
-                              id: '',
-                              dateCreated: DateTime.now(),
-                              dateCompleted:
-                                  getDateCompleted(state.selectedTransport),
-                              address: getDefaultAddress(state.userAddress),
-                              transport: state.selectedTransport!.name,
-                              note: state.note,
-                              totalPrice: calculateTotalPrice(
-                                  list, state.selectedTransport!),
-                              productPrice: calculateTotalProductPrice(list) -
-                                  calculateTotalDiscount(list),
-                              transportPrice: state.selectedTransport!.price,
-                              products: list,
-                              status: 0,
-                              paid: false,
-                              paymentMethod: 'Thanh toán khi nhận hàng',
-                            ),
+                            // transaction: TransactionModel(
+                            //   id: '',
+                            //   dateCreated: DateTime.now(),
+                            //   dateCompleted:
+                            //       getDateCompleted(state.selectedTransport),
+                            //   address: getDefaultAddress(state.userAddress),
+                            //   transport: state.selectedTransport!.name,
+                            //   note: state.note,
+                            //   totalPrice: calculateTotalPrice(
+                            //       list, state.selectedTransport!),
+                            //   productPrice: calculateTotalProductPrice(list) -
+                            //       calculateTotalDiscount(list),
+                            //   transportPrice: state.selectedTransport!.price,
+                            //   products: list,
+                            //   status: 0,
+                            //   paid: false,
+                            //   paymentMethod: 'Thanh toán khi nhận hàng',
+                            //   phone: state.userAddress!.phone,
+                            //   userName: state.userAddress!.name,
+                            // ),
+                            list: list,
                             fromCart: fromCart,
                           ),
                         );
@@ -164,17 +167,6 @@ class CheckoutBottomButton extends StatelessWidget {
         );
       },
     );
-  }
-
-  double calculateTotalPrice(
-      List<CartItemModel> list, TransportModel transports) {
-    double result = 0;
-    for (var item in list) {
-      result += item.price * item.count;
-    }
-    result += transports.price;
-
-    return result;
   }
 
   String getDefaultAddress(AddressModel? address) {
