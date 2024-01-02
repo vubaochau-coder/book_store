@@ -1,3 +1,4 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/core/models/cart_item_model.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
@@ -51,7 +52,7 @@ class CheckoutItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14,
+                      fontSize: 13,
                     ),
                   ),
                   const Spacer(),
@@ -60,9 +61,10 @@ class CheckoutItem extends StatelessWidget {
                       Text(
                         'đ',
                         style: TextStyle(
-                          color: themeColor,
+                          color: AppColors.themeColor,
                           decoration: TextDecoration.underline,
-                          fontSize: 15,
+                          decorationColor: AppColors.themeColor,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -71,7 +73,7 @@ class CheckoutItem extends StatelessWidget {
                         style: TextStyle(
                           color: themeColor,
                           fontWeight: FontWeight.w600,
-                          fontSize: 17,
+                          fontSize: 15,
                         ),
                       ),
                       const SizedBox(
@@ -104,6 +106,7 @@ class CheckoutItem extends StatelessWidget {
                         'x${data.count}',
                         style: const TextStyle(
                           color: Colors.grey,
+                          fontSize: 13,
                         ),
                       )
                     ],

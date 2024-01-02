@@ -10,7 +10,8 @@ class TransactionRepository {
     _service = TransactionService();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> transactionStream(int status) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> transactionStream(
+      List<int> status) {
     return _service.transactionStream(status);
   }
 

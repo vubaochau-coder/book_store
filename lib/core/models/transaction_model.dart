@@ -65,6 +65,11 @@ class TransactionModel {
     for (var ele in products) {
       p.add(ele.toJson());
     }
+    int transportCode = transport == "Cơ bản"
+        ? 1
+        : transport == "Nhanh"
+            ? 2
+            : 3;
 
     return {
       'dateCreated': dateCreated,
@@ -82,6 +87,7 @@ class TransactionModel {
       'phone': phone,
       'userId': uid,
       'products': p,
+      'transportCode': transportCode,
     };
   }
 }

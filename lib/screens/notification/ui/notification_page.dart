@@ -61,11 +61,20 @@ class NotificationPage extends StatelessWidget {
                           case 'order_0':
                             pageIndex = 0;
                             break;
-                          case 'order_-1':
-                            pageIndex = 4;
+                          case 'order_1':
+                            pageIndex = 1;
+                            break;
+                          case 'order_2':
+                            pageIndex = 2;
                             break;
                           case 'order_3':
                             pageIndex = 3;
+                            break;
+                          case 'order_-1':
+                            pageIndex = 4;
+                            break;
+                          default:
+                            pageIndex = 0;
                             break;
                         }
                         Navigator.of(context).push(

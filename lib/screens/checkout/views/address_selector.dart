@@ -80,6 +80,7 @@ class AddressSelector extends StatelessWidget {
                             child: Text(
                               AddressUtils.convertAddressModel(
                                   state.userAddress),
+                              style: const TextStyle(fontSize: 14),
                             ),
                           ),
                         ],

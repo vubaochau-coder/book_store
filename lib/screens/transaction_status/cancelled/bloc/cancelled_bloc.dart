@@ -31,8 +31,7 @@ class CancelledBloc extends Bloc<CancelledEvent, CancelledState> {
     emit(state.copyWith(isLoading: true));
 
     _bookingStream = _transactionRepository
-        .transactionStream(-1)
-        .listen((snapshotEvent) async {
+        .transactionStream([-1]).listen((snapshotEvent) async {
       if (snapshotEvent.docs.isNotEmpty) {
         List<TransactionModel> list = [];
 

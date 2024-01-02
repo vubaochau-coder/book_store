@@ -27,7 +27,8 @@ class CustomListTile extends StatelessWidget {
             onPressed,
           ),
           child: ListTile(
-            horizontalTitleGap: 0,
+            horizontalTitleGap: 8,
+            contentPadding: const EdgeInsets.only(left: 16, right: 8),
             leading: Icon(
               leading,
               color: themeColor,

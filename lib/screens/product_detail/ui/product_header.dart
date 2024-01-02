@@ -1,3 +1,4 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/screens/product_detail/ui/star_point.dart';
 import 'package:book_store/theme.dart';
 import 'package:book_store/utils/convert.dart';
@@ -10,6 +11,7 @@ class ProductHeader extends StatelessWidget {
   final double discount;
   final int totalFeedback;
   final int totalSold;
+  final int stock;
 
   const ProductHeader({
     super.key,
@@ -18,6 +20,7 @@ class ProductHeader extends StatelessWidget {
     required this.discount,
     required this.totalFeedback,
     required this.totalSold,
+    required this.stock,
   });
 
   @override
@@ -43,13 +46,12 @@ class ProductHeader extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             softWrap: false,
           ),
-          const SizedBox(
-            height: 8,
-          ),
+          const SizedBox(height: 8),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                "${Converter.convertNumberToMoney(price * (1 - discount))} ",
+                Converter.convertNumberToMoney(price * (1 - discount)),
                 style: TextStyle(
                   color: themeColor,
                   fontSize: 22,
@@ -59,17 +61,16 @@ class ProductHeader extends StatelessWidget {
               Text(
                 'đ',
                 style: TextStyle(
-                  color: themeColor,
+                  color: AppColors.themeColor,
                   decoration: TextDecoration.underline,
+                  decorationColor: AppColors.themeColor,
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(
-                width: 8,
-              ),
+              const SizedBox(width: 8),
               Text(
-                "${Converter.convertNumberToMoney(price)} ",
+                Converter.convertNumberToMoney(price),
                 style: TextStyle(
                   decoration: TextDecoration.lineThrough,
                   color: Colors.grey[600],
@@ -82,7 +83,6 @@ class ProductHeader extends StatelessWidget {
                   decoration: TextDecoration.combine(
                     [
                       TextDecoration.lineThrough,
-                      TextDecoration.underline,
                     ],
                   ),
                   color: Colors.grey[600],
@@ -109,14 +109,24 @@ class ProductHeader extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: 6,
-          ),
+          const SizedBox(height: 6),
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               StarPoint(feedbackTotal: totalFeedback),
               Text(
                 " $totalFeedback đánh giá",
+                style: TextStyle(
+                  color: Colors.grey[600],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              Text(
+                'Kho: ${NumberFormat("###,##0").format(stock)}',
                 style: TextStyle(
                   color: Colors.grey[600],
                 ),

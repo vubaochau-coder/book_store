@@ -10,7 +10,7 @@ class CategoryLoadingPage extends StatelessWidget {
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.75,
+        childAspectRatio: 0.7,
       ),
       itemBuilder: (context, index) {
         return const ProductLoadingItem();

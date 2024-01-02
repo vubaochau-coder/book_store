@@ -114,6 +114,7 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                                 'x${transactionData.products[0].count}',
                                 style: const TextStyle(
                                   color: Colors.black,
+                                  fontSize: 12,
                                 ),
                               ),
                               Row(
@@ -129,7 +130,7 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                                         ],
                                       ),
                                       color: Colors.grey,
-                                      fontSize: 14,
+                                      fontSize: 13,
                                     ),
                                   ),
                                   Text(
@@ -139,7 +140,7 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                                     style: const TextStyle(
                                       decoration: TextDecoration.lineThrough,
                                       color: Colors.grey,
-                                      fontSize: 14,
+                                      fontSize: 13,
                                     ),
                                   ),
                                   const SizedBox(
@@ -150,7 +151,8 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                                     style: TextStyle(
                                       color: AppColors.themeColor,
                                       decoration: TextDecoration.underline,
-                                      fontSize: 15,
+                                      decorationColor: AppColors.themeColor,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
@@ -160,7 +162,7 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                                     style: TextStyle(
                                       color: AppColors.themeColor,
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 15,
+                                      fontSize: 14,
                                     ),
                                   ),
                                 ],
@@ -185,18 +187,21 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                         '${productCount(transactionData.products)} sản phẩm',
                         style: const TextStyle(
                           color: Colors.grey,
+                          fontSize: 13,
                         ),
                       ),
                       const Spacer(),
                       const Text(
                         'Tổng thanh toán: ',
+                        style: TextStyle(fontSize: 13),
                       ),
                       Text(
                         'đ',
                         style: TextStyle(
                           color: AppColors.themeColor,
                           decoration: TextDecoration.underline,
-                          fontSize: 17,
+                          decorationColor: AppColors.themeColor,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -205,7 +210,7 @@ abstract class AbstractTransactionItem extends StatelessWidget {
                             transactionData.totalPrice),
                         style: TextStyle(
                           color: AppColors.themeColor,
-                          fontSize: 17,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

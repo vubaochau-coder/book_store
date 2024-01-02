@@ -38,20 +38,20 @@ class CheckoutService {
     return doc.id;
   }
 
-  Future<void> addProductToTransaction(
-      List<CartItemModel> products, String transactionId) async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
+  // Future<void> addProductToTransaction(
+  //     List<CartItemModel> products, String transactionId) async {
+  //   String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    await Future.wait([
-      ...products.map((e) => FirebaseFirestore.instance
-          .collection(FirebaseCollections.user)
-          .doc(uid)
-          .collection(FirebaseCollections.transaction)
-          .doc(transactionId)
-          .collection(FirebaseCollections.products)
-          .add(e.toJson())),
-    ]);
-  }
+  //   await Future.wait([
+  //     ...products.map((e) => FirebaseFirestore.instance
+  //         .collection(FirebaseCollections.user)
+  //         .doc(uid)
+  //         .collection(FirebaseCollections.transaction)
+  //         .doc(transactionId)
+  //         .collection(FirebaseCollections.products)
+  //         .add(e.toJson())),
+  //   ]);
+  // }
 
   Future<void> deleteItemFromCart(List<CartItemModel> products) async {
     String uid = FirebaseAuth.instance.currentUser!.uid;
@@ -72,5 +72,44 @@ class CheckoutService {
     //       .doc(e.id)
     //       .delete()),
     // );
+  }
+
+  Future<void> decreaseMultiProduct(List<CartItemModel> product) async {
+    await Future.wait(product.map(
+      (e) => decreaseProductStock(e.bookID, e.count),
+    ));
+  }
+
+  Future<void> decreaseProductStock(String bookId, int count) async {
+    var ref = FirebaseFirestore.instance
+        .collection(FirebaseCollections.book)
+        .doc(bookId);
+    final query = await ref.get();
+    int stock = query.get('stock');
+
+    int newStock = stock - count;
+    await ref.update(
+      {
+        'stock': newStock,
+      },
+    );
+  }
+
+  Future<bool> checkProductQuantity(List<CartItemModel> products) async {
+    var ref = FirebaseFirestore.instance.collection(FirebaseCollections.book);
+
+    bool check = true;
+    for (var ele in products) {
+      int checkoutQuantity = ele.count;
+
+      final query = await ref.doc(ele.bookID).get();
+      int stock = query.get('stock');
+      if (checkoutQuantity > stock) {
+        check = false;
+        break;
+      }
+    }
+
+    return check;
   }
 }

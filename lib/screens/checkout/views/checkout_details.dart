@@ -138,6 +138,7 @@ class CheckoutDetails extends StatelessWidget {
                     style: TextStyle(
                       decoration: TextDecoration.underline,
                       color: AppColors.themeColor,
+                      decorationColor: AppColors.themeColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

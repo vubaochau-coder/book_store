@@ -33,8 +33,7 @@ class DeliveredBloc extends Bloc<DeliveredEvent, DeliveredState> {
     // String uid = FirebaseAuth.instance.currentUser!.uid;
 
     _bookingStream = _transactionRepository
-        .transactionStream(3)
-        .listen((snapshotEvent) async {
+        .transactionStream([4]).listen((snapshotEvent) async {
       if (snapshotEvent.docs.isNotEmpty) {
         List<TransactionModel> list = [];
 

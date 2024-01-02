@@ -86,6 +86,7 @@ class _CategoryPageState extends State<CategoryPage>
           titleSpacing: 10,
           leadingWidth: 62,
           backgroundColor: AppColors.themeColor,
+          foregroundColor: Colors.white,
           title: const MyCustomSearchBar(),
           centerTitle: true,
           elevation: 0,

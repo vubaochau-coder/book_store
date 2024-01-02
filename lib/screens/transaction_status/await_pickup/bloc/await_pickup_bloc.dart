@@ -36,8 +36,7 @@ class AwaitPickupBloc extends Bloc<AwaitPickupEvent, AwaitPickupState> {
     emit(state.copyWith(isLoading: true));
 
     _bookingStream = _transactionRepository
-        .transactionStream(1)
-        .listen((snapshotEvent) async {
+        .transactionStream([1, 2]).listen((snapshotEvent) async {
       if (snapshotEvent.docs.isNotEmpty) {
         List<TransactionModel> list = [];
 
@@ -115,8 +114,11 @@ class AwaitPickupBloc extends Bloc<AwaitPickupEvent, AwaitPickupState> {
     await _transactionRepository
         .cancelTransaction(event.transactionID)
         .then((value) async {
-      await _notificationRepository
-          .createCancelTransactionNoti(event.transactionID);
+      await Future.wait([
+        _notificationRepository
+            .createCancelTransactionNoti(event.transactionID),
+        _notificationRepository.sendCancelNotiToAdmin(event.transactionID),
+      ]);
       Fluttertoast.showToast(msg: 'Hủy đơn hàng thành công');
     });
   }

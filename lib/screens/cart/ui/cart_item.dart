@@ -82,42 +82,38 @@ class CartItem extends StatelessWidget {
                 Expanded(
                   child: Text(
                     cartData.title,
-                    maxLines: 3,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14.5,
+                      fontSize: 13,
                       color: Colors.black,
                     ),
                   ),
                 ),
-                const SizedBox(height: 8),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "${Converter.convertNumberToMoney(cartData.price)} đ",
+                      "${Converter.convertNumberToMoney(cartData.price)}đ",
                       style: TextStyle(
                         color: themeColor,
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                        fontSize: 14,
                       ),
                     ),
                     const SizedBox(
                       width: 6,
                     ),
                     Text(
-                      "${Converter.convertNumberToMoney(cartData.priceBeforeDiscount)} đ",
+                      "${Converter.convertNumberToMoney(cartData.priceBeforeDiscount)}đ",
                       style: TextStyle(
                         decoration: TextDecoration.lineThrough,
                         color: Colors.grey[600],
-                        fontSize: 13,
+                        fontSize: 12,
                       ),
                     ),
                   ],
-                ),
-                const SizedBox(
-                  height: 3,
                 ),
                 SizedBox(
                   height: 32,

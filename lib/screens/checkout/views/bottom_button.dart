@@ -52,9 +52,6 @@ class CheckoutBottomButton extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(
-                        height: 4,
-                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -63,8 +60,9 @@ class CheckoutBottomButton extends StatelessWidget {
                             style: TextStyle(
                               color: AppColors.themeColor,
                               decoration: TextDecoration.underline,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                              decorationColor: AppColors.themeColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           Text(

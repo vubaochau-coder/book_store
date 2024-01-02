@@ -1,3 +1,4 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:book_store/custom_widgets/custom_page_route.dart';
 import 'package:book_store/core/models/favorite_model.dart';
 import 'package:book_store/screens/cart/bloc/cart_bloc.dart';
@@ -78,6 +79,7 @@ class FavoriteItem extends StatelessWidget {
                             decoration: TextDecoration.underline,
                             fontSize: 13,
                             color: themeColor,
+                            decorationColor: AppColors.themeColor,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

@@ -22,22 +22,21 @@ class DeliveringItem extends AbstractTransactionItem {
             'Nhận sản phẩm muộn nhất vào ${DateTimeUtils.orderTime(transactionData.dateCompleted)}',
             style: const TextStyle(
               color: Colors.grey,
+              fontSize: 13,
             ),
           ),
         ),
-        Container(
+        const SizedBox(height: 4),
+        SizedBox(
           height: 36,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: Colors.grey,
-          ),
-          margin: const EdgeInsets.only(top: 4),
           child: ElevatedButton(
             onPressed: onReceived,
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 14),
               backgroundColor: themeColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
             ),
             child: const Text(
               'Đã nhận được hàng',

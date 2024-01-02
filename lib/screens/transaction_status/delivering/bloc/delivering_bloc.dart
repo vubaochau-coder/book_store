@@ -40,8 +40,7 @@ class DeliveringBloc extends Bloc<DeliveringEvent, DeliveringState> {
     emit(state.copyWith(isLoading: true));
 
     _bookingStream = _transactionRepository
-        .transactionStream(2)
-        .listen((snapshotEvent) async {
+        .transactionStream([3]).listen((snapshotEvent) async {
       if (snapshotEvent.docs.isNotEmpty) {
         List<TransactionModel> list = [];
 
@@ -133,6 +132,7 @@ class DeliveringBloc extends Bloc<DeliveringEvent, DeliveringState> {
       final futureGroup = await Future.wait([
         _notificationRepository
             .createReceiveTransactionNoti(event.transactionID),
+        _notificationRepository.sendReceiveNotiToAdmin(event.transactionID),
         _transactionRepository.getAllProductOfTransaction(event.transactionID),
       ]);
 

@@ -64,10 +64,11 @@ class ProductDetailPage extends StatelessWidget {
                         discount: state.productData!.discount,
                         totalFeedback: state.allFeedbacks.length,
                         totalSold: state.productData!.totalSold,
+                        stock: state.productData!.stock,
                       ),
                       Container(
                         color: Colors.white,
-                        margin: const EdgeInsets.only(top: 12),
+                        margin: const EdgeInsets.only(top: 8),
                         padding: const EdgeInsets.only(bottom: 6),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +103,7 @@ class ProductDetailPage extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 12, bottom: 8),
+                        margin: const EdgeInsets.only(top: 8, bottom: 8),
                         padding: const EdgeInsets.only(bottom: 6),
                         color: Colors.white,
                         child: Column(
@@ -157,7 +158,7 @@ class ProductDetailPage extends StatelessWidget {
                             ),
                             const Divider(
                               color: Colors.grey,
-                              height: 2,
+                              height: 1,
                             ),
                             CommentList(feedbacks: state.feedbacks),
                           ],
@@ -185,6 +186,7 @@ class ProductDetailPage extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: splashColor,
+                            elevation: 0,
                             backgroundColor: Colors.white,
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,
@@ -251,7 +253,7 @@ class ProductDetailPage extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
-                              fontSize: 15,
+                              fontSize: 14,
                             ),
                           ),
                         ),

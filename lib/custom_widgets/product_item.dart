@@ -7,6 +7,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../app_themes/app_colors.dart';
+
 class ProductItem extends StatelessWidget {
   final ShortProductDataModel data;
   const ProductItem({super.key, required this.data});
@@ -68,9 +70,7 @@ class ProductItem extends StatelessWidget {
                       );
                     },
                   ),
-                  const SizedBox(
-                    height: 6,
-                  ),
+                  const SizedBox(height: 6),
                   Text(
                     data.title,
                     style: const TextStyle(
@@ -84,6 +84,7 @@ class ProductItem extends StatelessWidget {
                   ),
                   const Spacer(),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         'đ',
@@ -91,6 +92,7 @@ class ProductItem extends StatelessWidget {
                           color: themeColor,
                           decoration: TextDecoration.underline,
                           fontSize: 12,
+                          decorationColor: AppColors.themeColor,
                         ),
                       ),
                       Text(
@@ -102,12 +104,9 @@ class ProductItem extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const Spacer(),
                     ],
                   ),
-                  const SizedBox(
-                    height: 2,
-                  ),
+                  const SizedBox(height: 2),
                   Row(
                     children: [
                       Text(
@@ -139,9 +138,7 @@ class ProductItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 8,
-                  )
+                  const SizedBox(height: 8),
                 ],
               ),
             ),

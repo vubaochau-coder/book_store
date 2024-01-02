@@ -4,12 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class TransactionService {
-  Stream<QuerySnapshot<Map<String, dynamic>>> transactionStream(int status) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> transactionStream(
+      List<int> status) {
     final String uid = FirebaseAuth.instance.currentUser!.uid;
 
     return FirebaseFirestore.instance
         .collection(FirebaseCollections.orders)
-        .where('status', isEqualTo: status)
+        .where('status', whereIn: status)
         .where('userId', isEqualTo: uid)
         .snapshots();
 
@@ -99,19 +100,33 @@ class TransactionService {
   }
 
   Future<void> cancelTransaction(String transId) async {
-    // String uid = FirebaseAuth.instance.currentUser!.uid;
-
     final docRef = FirebaseFirestore.instance
         .collection(FirebaseCollections.orders)
         .doc(transId);
+    final data = await docRef.get();
 
-    // final docRef = FirebaseFirestore.instance
-    //     .collection(FirebaseCollections.user)
-    //     .doc(uid)
-    //     .collection(FirebaseCollections.transaction)
-    //     .doc(transId);
+    List<Map<String, dynamic>> products = List.from(data.data()!['products']);
+    await Future.wait([
+      ...products.map(
+        (e) => increaseProductStock(e['productID'], e['count']),
+      ),
+      docRef.update({'status': -1}),
+    ]);
+  }
 
-    await docRef.update({'status': -1});
+  Future<void> increaseProductStock(String bookId, int count) async {
+    var ref = FirebaseFirestore.instance
+        .collection(FirebaseCollections.book)
+        .doc(bookId);
+    final query = await ref.get();
+    int stock = query.get('stock');
+
+    int newStock = stock + count;
+    await ref.update(
+      {
+        'stock': newStock,
+      },
+    );
   }
 
   Future<void> receiveTransaction(String transId) async {
@@ -129,7 +144,7 @@ class TransactionService {
 
     await docRef.update({
       'dateCompleted': DateTime.now(),
-      'status': 3,
+      'status': 4,
     });
   }
 

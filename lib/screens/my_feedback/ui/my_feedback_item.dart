@@ -45,8 +45,8 @@ class MyFeedbackItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  itemModel.bookTitle,
-                  maxLines: 3,
+                  '${itemModel.bookTitle}\n',
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 13,

@@ -25,18 +25,18 @@ class OtherBloc extends Bloc<OtherEvent, OtherState> {
     switch (state.sortType) {
       case BookSortType.bestSale:
         productDatas.sort(
-          (a, b) => a.totalSold.compareTo(b.totalSold),
+          (a, b) => b.totalSold.compareTo(a.totalSold),
         );
         break;
       case BookSortType.descendingCost:
         productDatas.sort(
-          (a, b) => a.price.compareTo(b.price),
+          (a, b) => b.price.compareTo(a.price),
         );
         break;
 
       case BookSortType.ascendingCost:
         productDatas.sort(
-          (a, b) => b.price.compareTo(a.price),
+          (a, b) => a.price.compareTo(b.price),
         );
         break;
     }
@@ -56,18 +56,18 @@ class OtherBloc extends Bloc<OtherEvent, OtherState> {
       switch (event.newType) {
         case BookSortType.bestSale:
           newList.sort(
-            (a, b) => a.totalSold.compareTo(b.totalSold),
+            (a, b) => b.totalSold.compareTo(a.totalSold),
           );
           break;
         case BookSortType.descendingCost:
           newList.sort(
-            (a, b) => a.price.compareTo(b.price),
+            (a, b) => b.price.compareTo(a.price),
           );
           break;
 
         case BookSortType.ascendingCost:
           newList.sort(
-            (a, b) => b.price.compareTo(a.price),
+            (a, b) => a.price.compareTo(b.price),
           );
           break;
       }

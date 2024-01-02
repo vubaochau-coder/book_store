@@ -45,6 +45,7 @@ class BottomButton extends StatelessWidget {
                         style: TextStyle(
                           color: AppColors.themeColor,
                           decoration: TextDecoration.underline,
+                          decorationColor: AppColors.themeColor,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),

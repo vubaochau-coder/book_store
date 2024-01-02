@@ -66,7 +66,7 @@ class HomePageLoading extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 0.75,
+              childAspectRatio: 0.7,
             ),
             itemBuilder: (context, index) {
               return const ProductLoadingItem();

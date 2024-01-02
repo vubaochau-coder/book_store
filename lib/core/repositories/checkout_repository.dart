@@ -23,12 +23,20 @@ class CheckoutRepository {
     return await _service.createTransaction2(transaction);
   }
 
-  Future<void> addProductToTransaction(
-      List<CartItemModel> products, String transactionId) async {
-    return await _service.addProductToTransaction(products, transactionId);
-  }
+  // Future<void> addProductToTransaction(
+  //     List<CartItemModel> products, String transactionId) async {
+  //   return await _service.addProductToTransaction(products, transactionId);
+  // }
 
   Future<void> deleteItemFromCart(List<CartItemModel> products) async {
     return await _service.deleteItemFromCart(products);
+  }
+
+  Future<void> decreaseMultiProduct(List<CartItemModel> product) async {
+    return _service.decreaseMultiProduct(product);
+  }
+
+  Future<bool> checkProductQuantity(List<CartItemModel> products) async {
+    return _service.checkProductQuantity(products);
   }
 }

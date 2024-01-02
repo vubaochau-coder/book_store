@@ -13,6 +13,7 @@ class ProductDataModel {
   final double star;
   final int totalSold;
   final List<String> imageURL;
+  final int stock;
 
   ProductDataModel({
     required this.id,
@@ -27,6 +28,7 @@ class ProductDataModel {
     required this.star,
     required this.totalSold,
     required this.imageURL,
+    required this.stock,
   });
 
   factory ProductDataModel.fromSnapshot(
@@ -46,6 +48,7 @@ class ProductDataModel {
       star: double.parse(data['star'].toString()),
       totalSold: int.parse(data['totalSold'].toString()),
       imageURL: List.from(data['listURL']),
+      stock: data['stock'],
     );
   }
 }

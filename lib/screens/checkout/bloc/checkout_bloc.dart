@@ -118,59 +118,53 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     if (state.userAddress != null) {
       emit(state.copyWith(showLoadingDialog: true));
 
-      final transactionModel = TransactionModel(
-        id: '',
-        dateCreated: DateTime.now(),
-        dateCompleted: getDateCompleted(state.selectedTransport),
-        address: state.userAddress!.address,
-        transport: state.selectedTransport!.name,
-        note: state.note,
-        totalPrice: calculateTotalPrice(event.list, state.selectedTransport!),
-        productPrice: calculateTotalProductPrice(event.list) -
-            calculateTotalDiscount(event.list),
-        transportPrice: state.selectedTransport!.price,
-        products: event.list,
-        status: 0,
-        paid: false,
-        paymentMethod: 'Thanh toán khi nhận hàng',
-        phone: state.userAddress!.phone,
-        userName: state.userAddress!.name,
-      );
+      bool checkStock =
+          await _checkoutRepository.checkProductQuantity(event.list);
 
-      try {
-        await _checkoutRepository
-            .createTransaction2(transactionModel)
-            .then((value) async {
-          await Future.wait([
-            // _checkoutRepository.addProductToTransaction(
-            //     transactionModel.products, value),
-            _notiRepository.createOrderTransactionNoti(value),
-            event.fromCart
-                ? _checkoutRepository
-                    .deleteItemFromCart(transactionModel.products)
-                : Future.value(null),
-          ]);
+      if (checkStock == true) {
+        final transactionModel = TransactionModel(
+          id: '',
+          dateCreated: DateTime.now(),
+          dateCompleted: getDateCompleted(state.selectedTransport),
+          address: state.userAddress!.address,
+          transport: state.selectedTransport!.name,
+          note: state.note,
+          totalPrice: calculateTotalPrice(event.list, state.selectedTransport!),
+          productPrice: calculateTotalProductPrice(event.list) -
+              calculateTotalDiscount(event.list),
+          transportPrice: state.selectedTransport!.price,
+          products: event.list,
+          status: 0,
+          paid: false,
+          paymentMethod: 'Thanh toán khi nhận hàng',
+          phone: state.userAddress!.phone,
+          userName: state.userAddress!.name,
+        );
 
-          emit(CheckoutOrderSuccessfulState(idTransaction: value));
-        });
-        // await _checkoutRepository
-        //     .createTransaction(transactionModel)
-        //     .then((value) async {
-        //   await Future.wait([
-        //     _checkoutRepository.addProductToTransaction(
-        //         transactionModel.products, value),
-        //     _notiRepository.createOrderTransactionNoti(value),
-        //     event.fromCart
-        //         ? _checkoutRepository
-        //             .deleteItemFromCart(transactionModel.products)
-        //         : Future.value(null),
-        //   ]);
+        try {
+          await _checkoutRepository
+              .createTransaction2(transactionModel)
+              .then((value) async {
+            await Future.wait([
+              _notiRepository.createOrderTransactionNoti(value),
+              _notiRepository.sendCreateNotiToAdmin(value),
+              _checkoutRepository
+                  .decreaseMultiProduct(transactionModel.products),
+              event.fromCart
+                  ? _checkoutRepository
+                      .deleteItemFromCart(transactionModel.products)
+                  : Future.value(null),
+            ]);
 
-        //   emit(CheckoutOrderSuccessfulState(idTransaction: value));
-        // });
-      } on FirebaseException catch (e) {
+            emit(CheckoutOrderSuccessfulState(idTransaction: value));
+          });
+        } on FirebaseException catch (e) {
+          emit(state.copyWith(showLoadingDialog: false));
+          Fluttertoast.showToast(msg: "Error: ${e.message}");
+        }
+      } else {
         emit(state.copyWith(showLoadingDialog: false));
-        Fluttertoast.showToast(msg: "Error: ${e.message}");
+        Fluttertoast.showToast(msg: "Số lượng hàng trong kho không đủ");
       }
     } else if (state.userAddress == null) {
       Fluttertoast.showToast(msg: 'Vui lòng cung cấp địa chỉ giao hàng');
@@ -181,81 +175,75 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     if (state.userAddress != null) {
       emit(state.copyWith(showLoadingDialog: true));
 
-      final transactionModel = TransactionModel(
-        id: '',
-        dateCreated: DateTime.now(),
-        dateCompleted: getDateCompleted(state.selectedTransport),
-        address: state.userAddress!.address,
-        transport: state.selectedTransport!.name,
-        note: state.note,
-        totalPrice: calculateTotalPrice(event.list, state.selectedTransport!),
-        productPrice: calculateTotalProductPrice(event.list) -
-            calculateTotalDiscount(event.list),
-        transportPrice: state.selectedTransport!.price,
-        products: event.list,
-        status: 0,
-        paid: true,
-        paymentMethod: 'ZaloPay',
-        phone: state.userAddress!.phone,
-        userName: state.userAddress!.name,
-      );
+      bool checkStock =
+          await _checkoutRepository.checkProductQuantity(event.list);
 
-      var createOrderResult =
-          await createOrder(transactionModel.totalPrice.toInt());
-      if (createOrderResult != null) {
-        final String result = await platform.invokeMethod(
-            'payOrder', {"zptoken": createOrderResult.zptranstoken});
-        if (result == 'Payment Success') {
-          try {
-            await _checkoutRepository
-                .createTransaction2(transactionModel)
-                .then((value) async {
-              await Future.wait([
-                // _checkoutRepository.addProductToTransaction(
-                //     transactionModel.products, value),
-                _notiRepository.createOrderTransactionNoti(value),
-                event.fromCart
-                    ? _checkoutRepository
-                        .deleteItemFromCart(transactionModel.products)
-                    : Future.value(null),
-              ]);
+      if (checkStock == true) {
+        final transactionModel = TransactionModel(
+          id: '',
+          dateCreated: DateTime.now(),
+          dateCompleted: getDateCompleted(state.selectedTransport),
+          address: state.userAddress!.address,
+          transport: state.selectedTransport!.name,
+          note: state.note,
+          totalPrice: calculateTotalPrice(event.list, state.selectedTransport!),
+          productPrice: calculateTotalProductPrice(event.list) -
+              calculateTotalDiscount(event.list),
+          transportPrice: state.selectedTransport!.price,
+          products: event.list,
+          status: 0,
+          paid: true,
+          paymentMethod: 'ZaloPay',
+          phone: state.userAddress!.phone,
+          userName: state.userAddress!.name,
+        );
 
-              emit(CheckoutOrderSuccessfulState(idTransaction: value));
-            });
-            // await _checkoutRepository
-            //     .createTransaction(transactionModel)
-            //     .then((value) async {
-            //   await Future.wait([
-            //     _checkoutRepository.addProductToTransaction(
-            //         transactionModel.products, value),
-            //     _notiRepository.createOrderTransactionNoti(value),
-            //     event.fromCart
-            //         ? _checkoutRepository
-            //             .deleteItemFromCart(transactionModel.products)
-            //         : Future.value(null),
-            //   ]);
+        var createOrderResult =
+            await createOrder(transactionModel.totalPrice.toInt());
+        if (createOrderResult != null) {
+          final String result = await platform.invokeMethod(
+              'payOrder', {"zptoken": createOrderResult.zptranstoken});
+          if (result == 'Payment Success') {
+            try {
+              await _checkoutRepository
+                  .createTransaction2(transactionModel)
+                  .then((value) async {
+                await Future.wait([
+                  _notiRepository.createOrderTransactionNoti(value),
+                  _notiRepository.sendCreateNotiToAdmin(value),
+                  _checkoutRepository
+                      .decreaseMultiProduct(transactionModel.products),
+                  event.fromCart
+                      ? _checkoutRepository
+                          .deleteItemFromCart(transactionModel.products)
+                      : Future.value(null),
+                ]);
 
-            //   emit(CheckoutOrderSuccessfulState(idTransaction: value));
-            // });
-          } on FirebaseException catch (e) {
-            emit(state.copyWith(showLoadingDialog: false));
-            Fluttertoast.showToast(msg: "Error: ${e.message}");
+                emit(CheckoutOrderSuccessfulState(idTransaction: value));
+              });
+            } on FirebaseException catch (e) {
+              emit(state.copyWith(showLoadingDialog: false));
+              Fluttertoast.showToast(msg: "Error: ${e.message}");
+            }
+          } else {
+            switch (result) {
+              case 'User Canceled':
+                emit(state.copyWith(showLoadingDialog: false));
+                Fluttertoast.showToast(msg: "Thanh toán bị hủy");
+                break;
+              case 'Payment failed':
+                emit(state.copyWith(showLoadingDialog: false));
+                Fluttertoast.showToast(msg: "Lỗi thanh toán");
+                break;
+            }
           }
         } else {
-          switch (result) {
-            case 'User Canceled':
-              emit(state.copyWith(showLoadingDialog: false));
-              Fluttertoast.showToast(msg: "Thanh toán bị hủy");
-              break;
-            case 'Payment failed':
-              emit(state.copyWith(showLoadingDialog: false));
-              Fluttertoast.showToast(msg: "Lỗi thanh toán");
-              break;
-          }
+          emit(state.copyWith(showLoadingDialog: false));
+          Fluttertoast.showToast(msg: "Lỗi không xác định");
         }
       } else {
         emit(state.copyWith(showLoadingDialog: false));
-        Fluttertoast.showToast(msg: "Lỗi không xác định");
+        Fluttertoast.showToast(msg: "Số lượng hàng trong kho không đủ");
       }
     } else if (state.userAddress == null) {
       Fluttertoast.showToast(msg: 'Vui lòng cung cấp địa chỉ giao hàng');

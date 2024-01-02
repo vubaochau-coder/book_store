@@ -35,8 +35,7 @@ class UnconfirmedBloc extends Bloc<UnconfirmedEvent, UnconfirmedState> {
     emit(state.copyWith(isLoading: true));
 
     _bookingStream = _transactionRepository
-        .transactionStream(0)
-        .listen((snapshotEvent) async {
+        .transactionStream([0]).listen((snapshotEvent) async {
       if (snapshotEvent.docs.isNotEmpty) {
         List<TransactionModel> list = [];
 
@@ -123,8 +122,12 @@ class UnconfirmedBloc extends Bloc<UnconfirmedEvent, UnconfirmedState> {
     await _transactionRepository
         .cancelTransaction(event.transactionID)
         .then((value) async {
-      await _notificationRepository
-          .createCancelTransactionNoti(event.transactionID);
+      await Future.wait([
+        _notificationRepository
+            .createCancelTransactionNoti(event.transactionID),
+        _notificationRepository.sendCancelNotiToAdmin(event.transactionID),
+      ]);
+
       Fluttertoast.showToast(msg: 'Hủy đơn hàng thành công');
     });
   }

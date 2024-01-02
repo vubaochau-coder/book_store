@@ -50,7 +50,7 @@ class TransactionProduct extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 14,
+                    fontSize: 13,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -62,7 +62,7 @@ class TransactionProduct extends StatelessWidget {
                       'x${productData.count}',
                       style: const TextStyle(
                         color: Colors.black,
-                        fontSize: 14,
+                        fontSize: 13,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -99,6 +99,7 @@ class TransactionProduct extends StatelessWidget {
                           style: TextStyle(
                             color: AppColors.themeColor,
                             decoration: TextDecoration.underline,
+                            decorationColor: AppColors.themeColor,
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                           ),

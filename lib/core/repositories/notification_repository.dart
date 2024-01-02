@@ -32,4 +32,16 @@ class NotificationRepository {
   Future<void> createOrderTransactionNoti(String transId) async {
     return await _service.createOrderTransactionNoti(transId);
   }
+
+  Future<void> sendCreateNotiToAdmin(String transId) async {
+    return _service.sendCreateNotiToAdmin(transId);
+  }
+
+  Future<void> sendCancelNotiToAdmin(String transId) async {
+    return _service.sendCancelNotiToAdmin(transId);
+  }
+
+  Future<void> sendReceiveNotiToAdmin(String transId) async {
+    return _service.sendReceiveNotiToAdmin(transId);
+  }
 }

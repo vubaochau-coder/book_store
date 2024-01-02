@@ -102,4 +102,49 @@ class NotificationService {
         .collection(FirebaseCollections.notification)
         .add(model.toJson());
   }
+
+  Future<void> sendCreateNotiToAdmin(String transId) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    await FirebaseFirestore.instance
+        .collection(FirebaseCollections.adminNoti)
+        .add({
+      'date': DateTime.now(),
+      'isRead': false,
+      'orderId': transId,
+      'status': 0,
+      'type': 'order',
+      'userId': uid,
+    });
+  }
+
+  Future<void> sendCancelNotiToAdmin(String transId) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    await FirebaseFirestore.instance
+        .collection(FirebaseCollections.adminNoti)
+        .add({
+      'date': DateTime.now(),
+      'isRead': false,
+      'orderId': transId,
+      'status': -1,
+      'type': 'order',
+      'userId': uid,
+    });
+  }
+
+  Future<void> sendReceiveNotiToAdmin(String transId) async {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+    await FirebaseFirestore.instance
+        .collection(FirebaseCollections.adminNoti)
+        .add({
+      'date': DateTime.now(),
+      'isRead': false,
+      'orderId': transId,
+      'status': 4,
+      'type': 'order',
+      'userId': uid,
+    });
+  }
 }

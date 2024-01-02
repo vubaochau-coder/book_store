@@ -32,11 +32,12 @@ class CartItemModel extends Equatable {
   });
 
   factory CartItemModel.fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> documentSnapshot,
-      double pPrice,
-      double pBPrice,
-      String url,
-      String pTitle) {
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot,
+    double pPrice,
+    double pBPrice,
+    String url,
+    String pTitle,
+  ) {
     final data = documentSnapshot.data()!;
     return CartItemModel(
       id: documentSnapshot.id,

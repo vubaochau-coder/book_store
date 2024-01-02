@@ -39,7 +39,7 @@ class CommentList extends StatelessWidget {
             separatorBuilder: (context, index) {
               return const Divider(
                 height: 8,
-                thickness: 2,
+                thickness: 1,
                 indent: 12,
                 endIndent: 12,
               );

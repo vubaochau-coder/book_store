@@ -59,9 +59,9 @@ class _PaymentMethodListPageState extends State<PaymentMethodListPage> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    setState(() {
-                      selectedIndex = index;
-                    });
+                    // setState(() {
+                    //   selectedIndex = index;
+                    // });
                   },
                   child: Container(
                     height: 64,
