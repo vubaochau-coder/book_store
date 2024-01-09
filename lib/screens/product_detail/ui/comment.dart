@@ -20,13 +20,8 @@ class CommentList extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  Icon(
-                    Icons.edit_note_sharp,
-                    size: 68,
-                  ),
-                  Text(
-                    'Hiện chưa có nhận xét nào về sản phẩm này',
-                  ),
+                  Icon(Icons.edit_note_sharp, size: 68),
+                  Text('Hiện chưa có nhận xét nào về sản phẩm này'),
                 ],
               ),
             ),
@@ -63,16 +58,14 @@ class CommentList extends StatelessWidget {
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                 image: imageProvider,
-                                fit: BoxFit.contain,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           );
                         },
                       ),
                     ),
-                    const SizedBox(
-                      width: 4,
-                    ),
+                    const SizedBox(width: 4),
                     Expanded(
                       flex: 8,
                       child: Column(
@@ -84,6 +77,10 @@ class CommentList extends StatelessWidget {
                             children: [
                               Text(
                                 feedbacks[index].userName,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               Text(
                                 Converter.convertDateToStringWithoutTime(
@@ -91,7 +88,7 @@ class CommentList extends StatelessWidget {
                                 ),
                                 style: const TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 13,
+                                  fontSize: 11,
                                 ),
                               ),
                             ],
@@ -100,11 +97,10 @@ class CommentList extends StatelessWidget {
                             height: 18,
                             child: buildRating(feedbacks[index].rating),
                           ),
-                          const SizedBox(
-                            height: 8,
-                          ),
+                          const SizedBox(height: 8),
                           Text(
                             feedbacks[index].review,
+                            style: const TextStyle(fontSize: 13),
                           ),
                         ],
                       ),

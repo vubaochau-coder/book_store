@@ -27,11 +27,9 @@ class NotificationItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
             ),
             child: const Image(
-              height: 48,
-              width: 48,
-              image: AssetImage(
-                'images/logo_mini.png',
-              ),
+              height: 32,
+              width: 32,
+              image: AssetImage('images/logo_mini.png'),
             ),
           ),
           Expanded(
@@ -49,7 +47,7 @@ class NotificationItem extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 15,
+                          fontSize: 14,
                           color:
                               notiData.isRead ? Colors.black54 : Colors.black,
                         ),
@@ -59,7 +57,7 @@ class NotificationItem extends StatelessWidget {
                       Converter.convertTimeNoti(notiData.date),
                       style: const TextStyle(
                         color: Colors.grey,
-                        fontSize: 12,
+                        fontSize: 11,
                         fontWeight: FontWeight.w400,
                       ),
                     ),

@@ -88,10 +88,10 @@ class _TransportListPageState extends State<TransportListPage> {
                     });
                   },
                   child: Container(
-                    height: 64,
+                    // height: 64,
                     color: Colors.white,
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                           height: 64,
@@ -132,6 +132,9 @@ class _TransportListPageState extends State<TransportListPage> {
                                         color: indexSelected == index
                                             ? AppColors.themeColor
                                             : Colors.grey,
+                                        decorationColor: indexSelected == index
+                                            ? AppColors.themeColor
+                                            : Colors.grey,
                                         fontSize:
                                             indexSelected == index ? 16 : 15,
                                         fontWeight: indexSelected == index
@@ -159,6 +162,7 @@ class _TransportListPageState extends State<TransportListPage> {
                                     ),
                                   ],
                                 ),
+                                const SizedBox(height: 8),
                                 Text(
                                   'Nhận hàng sau ${widget.transports[index].min}-${widget.transports[index].max} ngày',
                                   style: TextStyle(
@@ -189,7 +193,7 @@ class _TransportListPageState extends State<TransportListPage> {
               separatorBuilder: (context, index) {
                 return const Divider(
                   height: 0,
-                  thickness: 2,
+                  thickness: 1,
                 );
               },
               itemCount: widget.transports.length,

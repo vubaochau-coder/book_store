@@ -61,6 +61,8 @@ class OrderBillLoading extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               elevation: 4,
+              color: Colors.white,
+              surfaceTintColor: Colors.white,
               margin: const EdgeInsets.only(
                 left: 8,
                 right: 8,

@@ -83,10 +83,14 @@ class AddressSettingPage extends StatelessWidget {
                                         indent: 2,
                                         endIndent: 2,
                                       ),
-                                      Text(
-                                        state.listAddress[index].phone,
-                                        style: const TextStyle(
-                                          fontSize: 14,
+                                      Expanded(
+                                        child: Text(
+                                          state.listAddress[index].phone,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -147,16 +151,9 @@ class AddressSettingPage extends StatelessWidget {
   }
 
   Widget addNewAddressButton(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 48,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: themeColor,
-          width: 1,
-        ),
-      ),
       child: ElevatedButton(
         onPressed: () {
           Navigator.of(context)
@@ -184,6 +181,13 @@ class AddressSettingPage extends StatelessWidget {
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: themeColor,
+              width: 1,
+            ),
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

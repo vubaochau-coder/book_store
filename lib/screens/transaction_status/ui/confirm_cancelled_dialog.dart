@@ -11,6 +11,7 @@ class CancelledConfirmDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
       ),
+      surfaceTintColor: Colors.white,
       actionsAlignment: MainAxisAlignment.center,
       actionsPadding: const EdgeInsets.only(bottom: 8),
       title: Row(

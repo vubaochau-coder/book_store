@@ -47,6 +47,7 @@ class MyFeedbackPage extends StatelessWidget {
                           showModalBottomSheet(
                             context: context,
                             isScrollControlled: true,
+                            backgroundColor: Colors.white,
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(8),

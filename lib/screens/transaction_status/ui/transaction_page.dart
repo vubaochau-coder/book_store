@@ -95,16 +95,16 @@ class _TransactionPageState extends State<TransactionPage>
           children: [
             Container(
               alignment: Alignment.center,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 3,
-                    offset: const Offset(0, 1),
-                  ),
-                ],
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: Colors.grey.withOpacity(0.5),
+                //     spreadRadius: 2,
+                //     blurRadius: 3,
+                //     offset: const Offset(0, 1),
+                //   ),
+                // ],
               ),
               child: TabBar(
                 controller: tabController,

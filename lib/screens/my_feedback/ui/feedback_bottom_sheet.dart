@@ -33,25 +33,16 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
-              Icons.remove,
-              color: Colors.black,
-            ),
+            const Icon(Icons.remove, color: Colors.black),
             const Text(
               'Sản phẩm',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 18,
-              ),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
             ),
             Container(
               margin: const EdgeInsets.only(top: 18, bottom: 18),
               padding: const EdgeInsets.symmetric(vertical: 2),
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 1,
-                ),
+                border: Border.all(color: Colors.grey, width: 1),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Row(
@@ -93,10 +84,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
             ),
             const Text(
               'Đánh giá của bạn',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 18,
-              ),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
             ),
             const SizedBox(height: 8),
             RatingBar(
@@ -111,18 +99,9 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
                 userRating = value;
               },
               ratingWidget: RatingWidget(
-                full: const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                half: const Icon(
-                  Icons.star_half,
-                  color: Colors.amber,
-                ),
-                empty: const Icon(
-                  Icons.star_border,
-                  color: Colors.amber,
-                ),
+                full: const Icon(Icons.star, color: Colors.amber),
+                half: const Icon(Icons.star_half, color: Colors.amber),
+                empty: const Icon(Icons.star_border, color: Colors.amber),
               ),
             ),
             const SizedBox(height: 16),
@@ -141,15 +120,11 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: Colors.grey,
-                  ),
+                  borderSide: const BorderSide(color: Colors.grey),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 28,
-            ),
+            const SizedBox(height: 28),
             SizedBox(
               width: double.infinity,
               height: 44,
@@ -168,7 +143,10 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text('Hoàn tất'),
+                child: const Text(
+                  'Hoàn tất',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],

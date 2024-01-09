@@ -19,16 +19,15 @@ class CancelledItem extends AbstractTransactionItem {
         Container(
           height: 36,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: Colors.grey,
-          ),
           margin: const EdgeInsets.only(top: 4),
           child: ElevatedButton(
             onPressed: onReOrder,
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 28),
               backgroundColor: themeColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
             ),
             child: const Text(
               'Mua lại',

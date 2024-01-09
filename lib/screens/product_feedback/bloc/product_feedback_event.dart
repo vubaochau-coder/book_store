@@ -22,3 +22,13 @@ class ProductFeedbackFilterEvent extends ProductFeedbackEvent {
 
   const ProductFeedbackFilterEvent({required this.sortType});
 }
+
+class ReportFeedbackEvent extends ProductFeedbackEvent {
+  final String feedbackId;
+  final String reportType;
+
+  const ReportFeedbackEvent({
+    required this.feedbackId,
+    required this.reportType,
+  });
+}

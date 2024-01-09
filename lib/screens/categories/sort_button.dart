@@ -23,7 +23,7 @@ class SortButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             color: Colors.black.withOpacity(0.8),
           ),
-          elevation: 4,
+          // elevation: 4,
           offset: const Offset(0, -5),
         ),
         buttonStyleData: const ButtonStyleData(
@@ -37,13 +37,13 @@ class SortButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: Colors.white,
-            boxShadow: const [
-              BoxShadow(
-                blurRadius: 1,
-                color: Colors.grey,
-                offset: Offset(0, 1),
-              ),
-            ],
+            // boxShadow: const [
+            //   BoxShadow(
+            //     blurRadius: 1,
+            //     color: Colors.grey,
+            //     offset: Offset(0, 1),
+            //   ),
+            // ],
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,7 +53,7 @@ class SortButton extends StatelessWidget {
                 style: const TextStyle(
                   overflow: TextOverflow.ellipsis,
                   color: Colors.black,
-                  fontSize: 14,
+                  fontSize: 13,
                 ),
                 maxLines: 1,
               ),

@@ -56,7 +56,7 @@ class NotificationPage extends StatelessWidget {
                                 notiID: state.showedNotis[index].id),
                           );
                         }
-                        int pageIndex = 0;
+                        int pageIndex = -1;
                         switch (state.showedNotis[index].actionCode) {
                           case 'order_0':
                             pageIndex = 0;
@@ -74,14 +74,16 @@ class NotificationPage extends StatelessWidget {
                             pageIndex = 4;
                             break;
                           default:
-                            pageIndex = 0;
+                            pageIndex = -1;
                             break;
                         }
-                        Navigator.of(context).push(
-                          PageRouteSlideTransition(
-                            child: TransactionPage(currentIndex: pageIndex),
-                          ),
-                        );
+                        if (pageIndex != -1) {
+                          Navigator.of(context).push(
+                            PageRouteSlideTransition(
+                              child: TransactionPage(currentIndex: pageIndex),
+                            ),
+                          );
+                        }
                       },
                       child: NotificationItem(
                         notiData: state.showedNotis[index],

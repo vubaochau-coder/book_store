@@ -98,13 +98,14 @@ class AuthService {
   }
 
   signOut() async {
-    await Future.wait([
-      FirebaseAuth.instance.signOut(),
-      GoogleSignIn().signOut(),
-      FacebookAuth.instance.logOut(),
-    ]);
-    // await FirebaseAuth.instance.signOut();
-    // await GoogleSignIn().signOut();
-    // await FacebookAuth.instance.logOut();
+    // await Future.wait([
+    //   FirebaseAuth.instance.signOut(),
+    //   GoogleSignIn().signOut(),
+    //   FacebookAuth.instance.logOut(),
+    // ]);
+
+    await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
+    await FacebookAuth.instance.logOut();
   }
 }

@@ -94,16 +94,16 @@ class _CategoryPageState extends State<CategoryPage>
         body: Column(
           children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.transparent,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 3,
-                    offset: const Offset(0, 1),
-                  ),
-                ],
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: Colors.grey.withOpacity(0.5),
+                //     spreadRadius: 1,
+                //     blurRadius: 2,
+                //     offset: const Offset(0, 1),
+                //   ),
+                // ],
               ),
               child: SafeArea(
                 child: Container(
@@ -126,6 +126,7 @@ class _CategoryPageState extends State<CategoryPage>
                     padding: EdgeInsets.zero,
                     indicatorPadding: EdgeInsets.zero,
                     labelPadding: EdgeInsets.zero,
+                    labelStyle: const TextStyle(fontSize: 13),
                     tabs: [
                       myTab('images/Category/textbook.png', "S. Giáo khoa"),
                       myTab('images/Category/book.png', 'Văn học'),

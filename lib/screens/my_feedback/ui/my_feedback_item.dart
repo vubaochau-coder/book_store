@@ -63,6 +63,7 @@ class MyFeedbackItem extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
                         decoration: TextDecoration.underline,
+                        decorationColor: AppColors.themeColor,
                       ),
                     ),
                     Text(

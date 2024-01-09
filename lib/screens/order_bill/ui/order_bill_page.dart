@@ -1,5 +1,5 @@
+import 'package:book_store/authentication_service/auth_service.dart';
 import 'package:book_store/custom_widgets/custom_page_route_2.dart';
-import 'package:book_store/main.dart';
 import 'package:book_store/screens/order_bill/bloc/bill_bloc.dart';
 import 'package:book_store/screens/order_bill/ui/order_bill_loading.dart';
 import 'package:book_store/theme.dart';
@@ -66,14 +66,14 @@ class OrderBillPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     elevation: 4,
-                    margin: const EdgeInsets.only(
-                      left: 8,
-                      right: 8,
-                      top: 24,
-                    ),
+                    color: Colors.white,
+                    surfaceTintColor: Colors.white,
+                    margin: const EdgeInsets.only(left: 8, right: 8, top: 24),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 18),
+                        vertical: 20,
+                        horizontal: 18,
+                      ),
                       child: Column(
                         children: [
                           Text(
@@ -193,7 +193,9 @@ class OrderBillPage extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pushAndRemoveUntil(
-                          PageRouteSlideTransition2(child: const RootPage()),
+                          PageRouteSlideTransition2(
+                            child: AuthService().handleAuthState(),
+                          ),
                           (route) => false,
                         );
                       },

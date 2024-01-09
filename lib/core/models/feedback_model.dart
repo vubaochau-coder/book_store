@@ -8,6 +8,9 @@ class FeedbackModel {
   final String userImg;
   final DateTime dateSubmit;
   final double rating;
+  final bool isReply;
+  final bool isLike;
+  final String adminReply;
 
   FeedbackModel({
     required this.id,
@@ -17,6 +20,9 @@ class FeedbackModel {
     required this.userImg,
     required this.dateSubmit,
     required this.rating,
+    required this.isLike,
+    required this.isReply,
+    required this.adminReply,
   });
 
   factory FeedbackModel.fromSnaphot(
@@ -30,6 +36,9 @@ class FeedbackModel {
       userImg: snapshot.get('userImg'),
       dateSubmit: temp.toDate(),
       rating: double.parse(snapshot.get('rating').toString()),
+      isLike: snapshot.get('isLiked'),
+      isReply: snapshot.get('isReply'),
+      adminReply: snapshot.get('adminReply'),
     );
   }
 }

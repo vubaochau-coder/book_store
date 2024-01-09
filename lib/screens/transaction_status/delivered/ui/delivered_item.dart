@@ -20,30 +20,25 @@ class DeliveredItem extends AbstractTransactionItem {
         Expanded(
           child: Text(
             'Đơn hàng được giao vào ngày\n${transactionData.dateCompleted}',
-            style: const TextStyle(
-              color: Colors.grey,
-            ),
+            style: const TextStyle(color: Colors.grey),
           ),
         ),
         Container(
           height: 36,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: Colors.grey,
-          ),
           margin: const EdgeInsets.only(top: 4),
           child: ElevatedButton(
             onPressed: onReOrder,
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 28),
               backgroundColor: themeColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
             ),
             child: const Text(
               'Mua lại',
-              style: TextStyle(
-                color: Colors.white,
-              ),
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ),

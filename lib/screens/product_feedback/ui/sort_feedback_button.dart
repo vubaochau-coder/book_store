@@ -33,27 +33,29 @@ class SortFeedbackButton extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 1,
-                    color: Colors.grey,
-                    offset: Offset(0, 1),
-                  ),
-                ],
               ),
               child: Container(
                 constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width -
                       (20 + 10 + 150 + 32 + 32),
                 ),
-                padding: EdgeInsets.zero,
-                child: Text(
-                  convertEnumToString(state.sortType),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  maxLines: 1,
+                padding: const EdgeInsets.only(left: 12, right: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      convertEnumToString(state.sortType),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 1,
+                    ),
+                    const Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      size: 20,
+                    ),
+                  ],
                 ),
               ),
             ),

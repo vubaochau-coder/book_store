@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:book_store/core/constant/firebase_collections.dart';
 import 'package:book_store/core/models/feedback_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 part 'product_feedback_event.dart';
 part 'product_feedback_state.dart';
@@ -10,6 +13,7 @@ class ProductFeedbackBloc
   ProductFeedbackBloc() : super(const ProductFeedbackState()) {
     on<ProductFeedbackLoadingEvent>(_onLoading);
     on<ProductFeedbackFilterEvent>(_onFilter);
+    on<ReportFeedbackEvent>(_onReport);
   }
 
   _onLoading(ProductFeedbackLoadingEvent event, Emitter emit) async {
@@ -70,5 +74,17 @@ class ProductFeedbackBloc
         sortType: event.sortType,
       ),
     );
+  }
+
+  _onReport(ReportFeedbackEvent event, Emitter emit) async {
+    await FirebaseFirestore.instance
+        .collection(FirebaseCollections.report)
+        .add({
+      'feedbackId': event.feedbackId,
+      'report': event.reportType,
+      'date': DateTime.now(),
+      'status': 0,
+    });
+    Fluttertoast.showToast(msg: 'Báo cáo của bạn đã được gửi');
   }
 }

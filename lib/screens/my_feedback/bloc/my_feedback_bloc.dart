@@ -82,8 +82,14 @@ class MyFeedbackBloc extends Bloc<MyFeedbackEvent, MyFeedbackState> {
       'dateSubmit': DateTime.now(),
       'rating': event.rating,
       'review': event.review,
+      'isHide': false,
+      'isLiked': false,
+      'isRead': false,
+      'isReply': false,
+      'adminReply': '',
+      'userId': uid,
     }).then((value) async {
-      String uid = FirebaseAuth.instance.currentUser!.uid;
+      // String uid = FirebaseAuth.instance.currentUser!.uid;
 
       await FirebaseFirestore.instance
           .collection(FirebaseCollections.user)
