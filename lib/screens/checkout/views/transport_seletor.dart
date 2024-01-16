@@ -66,22 +66,17 @@ class TransportSelector extends StatelessWidget {
                       size: 18,
                       color: AppColors.themeColor,
                     ),
-                    const SizedBox(
-                      width: 4,
-                    ),
+                    const SizedBox(width: 4),
                     const Text(
                       'Phương thức vận chuyển',
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
                 ),
-                const Divider(
-                  color: Colors.grey,
-                  height: 24,
-                ),
+                const Divider(color: Colors.grey, height: 24),
                 state.isLoading
                     ? Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,9 +112,7 @@ class TransportSelector extends StatelessWidget {
                           Expanded(
                             child: Text(
                               state.selectedTransport!.name,
-                              style: const TextStyle(
-                                fontSize: 16,
-                              ),
+                              style: const TextStyle(fontSize: 15),
                             ),
                           ),
                           const Text(
@@ -139,9 +132,7 @@ class TransportSelector extends StatelessWidget {
                           ),
                         ],
                       ),
-                const SizedBox(
-                  height: 4,
-                ),
+                const SizedBox(height: 4),
                 state.isLoading
                     ? Shimmer.fromColors(
                         baseColor: AppColors.baseShimmer,
@@ -156,9 +147,7 @@ class TransportSelector extends StatelessWidget {
                       )
                     : Text(
                         'Nhận hàng sau ${state.selectedTransport!.min}-${state.selectedTransport!.max} ngày',
-                        style: const TextStyle(
-                          color: Colors.grey,
-                        ),
+                        style: TextStyle(color: Colors.grey[600]),
                       ),
               ],
             ),

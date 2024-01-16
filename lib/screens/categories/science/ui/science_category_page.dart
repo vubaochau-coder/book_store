@@ -15,7 +15,7 @@ class ScienceCategoryPage extends StatelessWidget {
       children: [
         Container(
           width: 170,
-          padding: const EdgeInsets.only(top: 8, bottom: 8, left: 4),
+          padding: const EdgeInsets.only(top: 4, bottom: 4, left: 4),
           child: const ScienceSortButton(),
         ),
         Expanded(

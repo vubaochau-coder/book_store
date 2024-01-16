@@ -40,6 +40,7 @@ class UnconfirmedTransactionItem extends AbstractTransactionItem {
       transactionData.paid ? 'Đã thanh toán' : 'Chưa thanh toán',
       style: TextStyle(
         color: transactionData.paid ? Colors.green : themeColor,
+        fontSize: 12,
       ),
     );
   }

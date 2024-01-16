@@ -27,6 +27,7 @@ class FeedbackService {
 
     final limitFeedbackQuery = await ref
         .where('bookID', isEqualTo: bookId)
+        .where('isHide', isEqualTo: false)
         .orderBy('dateSubmit', descending: true)
         .get();
 
@@ -44,6 +45,7 @@ class FeedbackService {
 
     final limitFeedbackQuery = await ref
         .where('bookID', isEqualTo: bookId)
+        .where('isHide', isEqualTo: false)
         .orderBy('dateSubmit', descending: true)
         .limit(limit)
         .get();

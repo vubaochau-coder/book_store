@@ -136,7 +136,7 @@ class DeliveringBloc extends Bloc<DeliveringEvent, DeliveringState> {
         _transactionRepository.getAllProductOfTransaction(event.transactionID),
       ]);
 
-      List<CartItemModel> products = futureGroup[1] as List<CartItemModel>;
+      List<CartItemModel> products = futureGroup[2] as List<CartItemModel>;
 
       await Future.wait([
         ...products

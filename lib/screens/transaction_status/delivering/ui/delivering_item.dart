@@ -22,13 +22,14 @@ class DeliveringItem extends AbstractTransactionItem {
             'Nhận sản phẩm muộn nhất vào ${DateTimeUtils.orderTime(transactionData.dateCompleted)}',
             style: const TextStyle(
               color: Colors.grey,
-              fontSize: 13,
+              fontSize: 12,
             ),
           ),
         ),
         const SizedBox(height: 4),
-        SizedBox(
+        Container(
           height: 36,
+          margin: const EdgeInsets.only(top: 4),
           child: ElevatedButton(
             onPressed: onReceived,
             style: ElevatedButton.styleFrom(
@@ -56,6 +57,7 @@ class DeliveringItem extends AbstractTransactionItem {
       'Đang giao hàng',
       style: TextStyle(
         color: themeColor,
+        fontSize: 12,
       ),
     );
   }

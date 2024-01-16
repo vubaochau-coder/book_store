@@ -138,6 +138,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           transactionOne++;
         }
         if (int.parse(ele.get('status').toString()) == 2) {
+          transactionOne++;
+        }
+        if (int.parse(ele.get('status').toString()) == 3) {
           transactionTwo++;
         }
       }

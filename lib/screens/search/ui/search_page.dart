@@ -17,6 +17,7 @@ class SearchPage extends StatelessWidget {
       bloc: BlocProvider.of<SearchBloc>(context)..add(SearchLoadingEvent()),
       listener: (context, state) {
         if (state is SearchCompletedState) {
+          FocusManager.instance.primaryFocus?.unfocus();
           Navigator.of(context).push(
             PageRouteSlideTransition(
               child: SearchResultPage(
@@ -55,6 +56,7 @@ class SearchPage extends StatelessWidget {
           child: TextField(
             autofocus: true,
             controller: searchController,
+            style: const TextStyle(fontSize: 13),
             textInputAction: TextInputAction.search,
             onEditingComplete: () {
               if (searchController.text.trim().isNotEmpty) {

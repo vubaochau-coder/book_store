@@ -11,6 +11,8 @@ class ReceivedConfirmDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
       ),
+      surfaceTintColor: Colors.white,
+      backgroundColor: Colors.white,
       actionsAlignment: MainAxisAlignment.center,
       actionsPadding: const EdgeInsets.only(bottom: 8),
       title: Row(
@@ -46,6 +48,7 @@ class ReceivedConfirmDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
               backgroundColor: Colors.white,
+              surfaceTintColor: Colors.white,
             ),
             child: Text(
               'Hủy bỏ',

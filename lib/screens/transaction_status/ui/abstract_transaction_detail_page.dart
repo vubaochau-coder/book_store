@@ -75,7 +75,7 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
                                     transactionData.status)['subTitle']!,
                                 style: TextStyle(
                                   color: AppColors.themeColor,
-                                  fontSize: 14,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -446,10 +446,16 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
         };
       case 2:
         return {
+          'title': 'Chờ lấy hàng',
+          'subTitle':
+              'Đơn hàng của bạn đang chờ để chuyển giao cho đơn vị vận chuyển'
+        };
+      case 3:
+        return {
           'title': 'Đang vận chuyển',
           'subTitle': 'Đơn hàng của bạn đang trên đường đến với bạn'
         };
-      case 3:
+      case 4:
         return {
           'title': 'Đơn hàng đã hoàn thành',
           'subTitle': 'Cảm ơn bạn đã mua sắm tại IBOO!'
@@ -468,8 +474,10 @@ abstract class AbstractTransactionDetailPage extends StatelessWidget {
       case 1:
         return FontAwesomeIcons.boxesPacking;
       case 2:
-        return FontAwesomeIcons.truckFast;
+        return FontAwesomeIcons.boxesPacking;
       case 3:
+        return FontAwesomeIcons.truckFast;
+      case 4:
         return FontAwesomeIcons.peopleCarryBox;
       default:
         return Icons.error;

@@ -122,7 +122,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       width: double.infinity,
                       height: 44,
                       margin:
-                          const EdgeInsets.only(bottom: 14, left: 6, right: 6),
+                          const EdgeInsets.only(bottom: 8, left: 6, right: 6),
                       child: ElevatedButton(
                         onPressed: () {
                           BlocProvider.of<EditProfileBloc>(context).add(

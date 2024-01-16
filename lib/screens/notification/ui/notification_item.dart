@@ -38,16 +38,16 @@ class NotificationItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: Text(
                         notiData.title,
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 14,
+                          fontSize: 13,
                           color:
                               notiData.isRead ? Colors.black54 : Colors.black,
                         ),
@@ -65,7 +65,7 @@ class NotificationItem extends StatelessWidget {
                         ? Container(
                             height: 8,
                             width: 8,
-                            margin: const EdgeInsets.only(left: 4),
+                            margin: const EdgeInsets.only(left: 4, top: 4),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: themeColor,

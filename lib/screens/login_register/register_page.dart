@@ -71,6 +71,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
               TextField(
                 controller: emailRegisterController,
                 keyboardType: TextInputType.emailAddress,
+                style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   errorText: emailValidate ? emailRegisterError : null,
                   hintText: 'Email đăng nhập',
@@ -91,6 +92,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
               TextField(
                 controller: passRegisterController,
                 keyboardType: TextInputType.visiblePassword,
+                style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   errorText: passValidate ? passRegisterError : null,
                   hintText: 'Mật khẩu',
@@ -121,6 +123,7 @@ class _DefaultRegisterPageState extends State<DefaultRegisterPage> {
               TextField(
                 controller: rePassRegisterController,
                 keyboardType: TextInputType.visiblePassword,
+                style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   errorText:
                       confirmPassValidate ? confirmPassRegisterError : null,

@@ -41,9 +41,7 @@ class PaymentMethodSelector extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
             margin: const EdgeInsets.only(top: 4),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
+            decoration: const BoxDecoration(color: Colors.white),
             child: Column(
               children: [
                 Row(
@@ -53,21 +51,17 @@ class PaymentMethodSelector extends StatelessWidget {
                       size: 18,
                       color: AppColors.themeColor,
                     ),
-                    const SizedBox(
-                      width: 4,
-                    ),
+                    const SizedBox(width: 4),
                     const Text(
                       'Phương thức thanh toán',
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 4,
-                ),
+                const SizedBox(height: 4),
                 Row(
                   children: [
                     const Icon(
@@ -75,23 +69,19 @@ class PaymentMethodSelector extends StatelessWidget {
                       size: 20,
                       color: Colors.transparent,
                     ),
-                    const SizedBox(
-                      width: 4,
-                    ),
+                    const SizedBox(width: 4),
                     Text(
                       state.selectedPayments!.name,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         color: AppColors.themeColor,
                       ),
                     ),
-                    const SizedBox(
-                      width: 4,
-                    ),
+                    const SizedBox(width: 4),
                     state.selectedPayments!.id == 'zalo'
                         ? Image.asset(
                             state.selectedPayments!.image,
-                            height: 20,
+                            height: 18,
                           )
                         : const SizedBox(),
                     const Spacer(),

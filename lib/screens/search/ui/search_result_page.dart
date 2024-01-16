@@ -49,8 +49,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
             PopupMenuButton<String>(
               icon: const Icon(Icons.filter_list),
               position: PopupMenuPosition.under,
-
-              //constraints: const BoxConstraints.tightFor(width: 144),
+              surfaceTintColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(6),
               ),
@@ -131,7 +130,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
                           text: 'Tìm kiếm ',
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontSize: 16,
+                            fontSize: 14,
                             color: Colors.black,
                           ),
                         ),
@@ -139,7 +138,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
                           text: '"${widget.query}"',
                           style: const TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 16,
+                            fontSize: 15,
                             color: Colors.black,
                           ),
                         ),
@@ -150,7 +149,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
                     '${widget.listProducts.length} kết quả',
                     style: const TextStyle(
                       fontWeight: FontWeight.w400,
-                      fontSize: 15,
+                      fontSize: 13,
                     ),
                   ),
                 ],

@@ -36,9 +36,7 @@ class _UserNoteTextFieldState extends State<UserNoteTextField> {
                     );
                   },
                   textAlign: TextAlign.right,
-                  style: const TextStyle(
-                    fontSize: 14,
-                  ),
+                  style: const TextStyle(fontSize: 13),
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.zero,
                     hintText: 'Tin nhắn cho người bán...',

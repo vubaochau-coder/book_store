@@ -36,21 +36,17 @@ class CheckoutDetails extends StatelessWidget {
                     size: 18,
                     color: AppColors.themeColor,
                   ),
-                  const SizedBox(
-                    width: 4,
-                  ),
+                  const SizedBox(width: 4),
                   const Text(
                     'Chi tiết thanh toán',
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 8,
-              ),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   const Text(
@@ -72,9 +68,7 @@ class CheckoutDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              const SizedBox(height: 4),
               Row(
                 children: [
                   const Text(
@@ -95,9 +89,7 @@ class CheckoutDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              const SizedBox(height: 4),
               Row(
                 children: [
                   const Text(
@@ -119,9 +111,7 @@ class CheckoutDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              const SizedBox(height: 4),
               Row(
                 children: [
                   const Text(

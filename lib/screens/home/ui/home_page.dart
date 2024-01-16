@@ -77,21 +77,19 @@ class _HomePageState extends State<HomePage> {
                 child: CategoryList(),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 4,
-                horizontal: 12,
-              ),
-              margin: const EdgeInsets.symmetric(
-                vertical: 4,
-                horizontal: 2,
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 8,
+                left: 14,
+                right: 14,
+                bottom: 4,
               ),
               child: Text(
                 'GỢI Ý CHO BẠN',
                 style: TextStyle(
                   color: themeColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
                 ),
               ),
             ),

@@ -57,7 +57,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 style: TextStyle(
                   color: themeColor,
                   fontWeight: FontWeight.w500,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ),
               const SizedBox(
@@ -66,6 +66,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               TextField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
+                style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   errorText: emailForgotValidate ? emailForgotError : null,
                   prefixIcon: Icon(
@@ -80,14 +81,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
               ),
               sendSuccess
-                  ? const Text(
-                      'Mail khôi phục mật khẩu đã được gửi thành công, vui lòng kiểm tra hộp thư để hoàn tất việc khôi phục mật khẩu',
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                  ? const Padding(
+                      padding: EdgeInsets.only(top: 4),
+                      child: Text(
+                        'Mail khôi phục mật khẩu đã được gửi thành công, vui lòng kiểm tra hộp thư để hoàn tất việc khôi phục mật khẩu',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     )
                   : const SizedBox(),
               Container(

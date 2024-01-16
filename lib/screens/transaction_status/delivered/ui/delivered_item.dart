@@ -20,7 +20,7 @@ class DeliveredItem extends AbstractTransactionItem {
         Expanded(
           child: Text(
             'Đơn hàng được giao vào ngày\n${transactionData.dateCompleted}',
-            style: const TextStyle(color: Colors.grey),
+            style: const TextStyle(color: Colors.grey, fontSize: 12),
           ),
         ),
         Container(
@@ -54,6 +54,7 @@ class DeliveredItem extends AbstractTransactionItem {
           'Hoàn thành',
           style: TextStyle(
             color: Colors.green[600],
+            fontSize: 12,
           ),
         ),
         Icon(

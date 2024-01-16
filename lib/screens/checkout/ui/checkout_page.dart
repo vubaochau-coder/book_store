@@ -110,22 +110,17 @@ class _CheckOutPageContent extends StatelessWidget {
                                   color: themeColor,
                                   size: 18,
                                 ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
+                                const SizedBox(width: 4),
                                 const Text(
                                   'Sản phẩm',
                                   style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ],
                             ),
-                            const Divider(
-                              height: 12,
-                              thickness: 1,
-                            ),
+                            const Divider(height: 12, thickness: 1),
                             ListView.separated(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,

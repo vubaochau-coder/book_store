@@ -60,6 +60,7 @@ class NotiFilterButton extends StatelessWidget {
                       'Đọc hết',
                       style: TextStyle(
                         color: AppColors.themeColor,
+                        fontSize: 13,
                       ),
                     ),
                     const SizedBox(width: 4),
@@ -94,10 +95,10 @@ class NotiFilterButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: select ? AppColors.themeColor.withAlpha(50) : Colors.white,
+        color: select ? AppColors.themeColor.withAlpha(30) : Colors.white,
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
-          color: select ? AppColors.themeColor : Colors.grey,
+          color: select ? AppColors.themeColor : Colors.grey[300]!,
         ),
       ),
       child: Text(
@@ -105,7 +106,7 @@ class NotiFilterButton extends StatelessWidget {
         style: TextStyle(
           color: select ? AppColors.themeColor : Colors.grey,
           fontWeight: select ? FontWeight.w600 : FontWeight.w400,
-          fontSize: 14,
+          fontSize: 12,
         ),
       ),
     );

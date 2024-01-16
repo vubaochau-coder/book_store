@@ -225,7 +225,7 @@ class _EditPasswordPageState extends State<EditPasswordPage> {
                     'Tính năng "Đổi mật khẩu" chỉ áp dụng cho phương thức đăng nhập bằng Email và Password',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.grey[600],
                     ),
                   ),

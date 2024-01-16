@@ -97,18 +97,11 @@ class _TransactionPageState extends State<TransactionPage>
               alignment: Alignment.center,
               decoration: const BoxDecoration(
                 color: Colors.white,
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: Colors.grey.withOpacity(0.5),
-                //     spreadRadius: 2,
-                //     blurRadius: 3,
-                //     offset: const Offset(0, 1),
-                //   ),
-                // ],
               ),
               child: TabBar(
                 controller: tabController,
                 isScrollable: true,
+                tabAlignment: TabAlignment.start,
                 labelColor: AppColors.themeColor,
                 unselectedLabelColor: Colors.grey[400],
                 indicator: BoxDecoration(

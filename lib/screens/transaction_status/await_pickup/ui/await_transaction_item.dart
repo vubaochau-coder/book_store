@@ -27,6 +27,7 @@ class AwaitPickupTransactionItem extends AbstractTransactionItem {
             'Chờ lấy hàng',
             style: TextStyle(
               color: Colors.white,
+              fontSize: 12,
             ),
           ),
         ),
@@ -40,6 +41,7 @@ class AwaitPickupTransactionItem extends AbstractTransactionItem {
       'Chưa thanh toán',
       style: TextStyle(
         color: themeColor,
+        fontSize: 12,
       ),
     );
   }

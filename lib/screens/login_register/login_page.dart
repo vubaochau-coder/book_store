@@ -66,6 +66,7 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
               TextField(
                 controller: emailLoginController,
                 keyboardType: TextInputType.emailAddress,
+                style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   errorText: emailValidate ? emailLoginError : null,
                   hintText: 'Email đăng nhập',
@@ -85,6 +86,7 @@ class _DefaultLoginPageState extends State<DefaultLoginPage> {
               const SizedBox(height: 12),
               TextField(
                 controller: passLoginController,
+                style: const TextStyle(fontSize: 14),
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
                   errorText: passValidate ? passLoginError : null,

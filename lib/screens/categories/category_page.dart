@@ -119,6 +119,7 @@ class _CategoryPageState extends State<CategoryPage>
                     isScrollable: true,
                     unselectedLabelColor: Colors.grey[400],
                     labelColor: themeColor,
+                    tabAlignment: TabAlignment.start,
                     indicator: BoxDecoration(
                       color: themeColor.withAlpha(50),
                       borderRadius: BorderRadius.circular(6),

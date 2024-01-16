@@ -9,7 +9,7 @@ class HeaderContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+      padding: const EdgeInsets.only(bottom: 6),
       child: Row(
         children: [
           Icon(
@@ -21,7 +21,7 @@ class HeaderContent extends StatelessWidget {
             title,
             style: const TextStyle(
               fontWeight: FontWeight.w600,
-              fontSize: 15,
+              fontSize: 14,
             ),
           ),
         ],

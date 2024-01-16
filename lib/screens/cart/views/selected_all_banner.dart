@@ -18,6 +18,7 @@ class SelectedAllBanner extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           color: Colors.white,
+          surfaceTintColor: Colors.white,
           margin: const EdgeInsets.only(bottom: 4),
           elevation: 1,
           child: Padding(

@@ -12,6 +12,7 @@ class CancelledConfirmDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       surfaceTintColor: Colors.white,
+      backgroundColor: Colors.white,
       actionsAlignment: MainAxisAlignment.center,
       actionsPadding: const EdgeInsets.only(bottom: 8),
       title: Row(
@@ -47,6 +48,7 @@ class CancelledConfirmDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
               ),
               backgroundColor: Colors.white,
+              surfaceTintColor: Colors.white,
             ),
             child: Text(
               'Hủy bỏ',

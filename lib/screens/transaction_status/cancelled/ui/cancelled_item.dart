@@ -49,6 +49,7 @@ class CancelledItem extends AbstractTransactionItem {
           'Đã hủy',
           style: TextStyle(
             color: themeColor,
+            fontSize: 12,
           ),
         ),
         Icon(

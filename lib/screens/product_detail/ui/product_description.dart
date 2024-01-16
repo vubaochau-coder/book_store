@@ -1,3 +1,4 @@
+import 'package:book_store/app_themes/app_colors.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 
@@ -40,11 +41,15 @@ class ProductDescription extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 6),
                       child: Text(
                         'Tác giả',
+                        style: TextStyle(fontSize: 13),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6),
-                      child: Text(author),
+                      child: Text(
+                        author,
+                        style: const TextStyle(color: Colors.black),
+                      ),
                     ),
                   ],
                 ),
@@ -52,11 +57,17 @@ class ProductDescription extends StatelessWidget {
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(bottom: 6),
-                      child: Text('NXB'),
+                      child: Text(
+                        'NXB',
+                        style: TextStyle(fontSize: 13),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6),
-                      child: Text(publisher),
+                      child: Text(
+                        publisher,
+                        style: const TextStyle(color: Colors.black),
+                      ),
                     ),
                   ],
                 ),
@@ -64,27 +75,34 @@ class ProductDescription extends StatelessWidget {
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(bottom: 6),
-                      child: Text('Năm XB'),
+                      child: Text(
+                        'Năm XB',
+                        style: TextStyle(fontSize: 13),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6),
-                      child: Text(publishingYear),
+                      child: Text(
+                        publishingYear,
+                        style: const TextStyle(color: Colors.black),
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
           ),
+          const SizedBox(height: 8),
           ExpandableText(
             description.replaceAll('\n', '\n'),
             expandText: 'Xem thêm',
             collapseText: 'Ẩn bớt',
+            linkColor: AppColors.themeColor,
             maxLines: 4,
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontSize: 14,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 13,
               fontWeight: FontWeight.w400,
-              height: 1.2,
             ),
           ),
         ],

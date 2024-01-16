@@ -57,7 +57,7 @@ class AddressSelector extends StatelessWidget {
                           const Text(
                             'Địa chỉ giao hàng',
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
