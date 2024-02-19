@@ -17,3 +17,6 @@ Design pattern được áp dụng:
 
 Backend:
     + Firebase
+
+Video demo (full tính năng): https://youtu.be/uVPrYeOtBgs
+Video demo (sau cập nhật giao diện): https://youtu.be/HX1Cvi4TFpE
